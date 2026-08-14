@@ -6,6 +6,11 @@ from utils.caption_utils import (
     build_caption_filename,
     build_captioned_video_filename,
 )
+from config.caption_config import SUPPORTED_CAPTION_LANGUAGES
+from utils.caption_utils import (
+    get_supported_caption_languages,
+    validate_caption_language,
+)
 
 
 def test_build_srt_filename() -> None:
@@ -82,3 +87,33 @@ def test_empty_video_filename() -> None:
             "en",
             "srt",
         )
+
+
+def test_supported_caption_languages() -> None:
+    languages = get_supported_caption_languages()
+
+    assert languages["en"] == "English"
+    assert languages["te"] == "Telugu"
+    assert languages["hi"] == "Hindi"
+
+
+def test_supported_caption_languages_returns_copy() -> None:
+    languages = get_supported_caption_languages()
+
+    languages["xx"] = "Test"
+
+    assert "xx" not in SUPPORTED_CAPTION_LANGUAGES
+
+
+def test_valid_caption_language() -> None:
+    assert validate_caption_language("en") is True
+    assert validate_caption_language("te") is True
+
+
+def test_caption_language_is_case_insensitive() -> None:
+    assert validate_caption_language("EN") is True
+    assert validate_caption_language("Te") is True
+
+
+def test_invalid_caption_language() -> None:
+    assert validate_caption_language("xyz") is False

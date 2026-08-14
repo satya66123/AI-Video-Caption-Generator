@@ -1,6 +1,7 @@
 """Caption utility functions."""
 
 from pathlib import Path
+from config.caption_config import SUPPORTED_CAPTION_LANGUAGES
 
 
 def _get_video_stem(video_path: str | Path) -> str:
@@ -54,3 +55,13 @@ def validate_caption_input() -> bool:
     Full validation will be implemented in a later phase.
     """
     return True
+
+
+def get_supported_caption_languages() -> dict[str, str]:
+    """Return supported caption languages."""
+    return SUPPORTED_CAPTION_LANGUAGES.copy()
+
+
+def validate_caption_language(language_code: str) -> bool:
+    """Validate a caption language code."""
+    return language_code.strip().lower() in SUPPORTED_CAPTION_LANGUAGES

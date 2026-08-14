@@ -30,3 +30,11 @@ class CaptionRecord:
     def to_dict(self) -> dict[str, Any]:
         """Convert the record to a JSON-compatible dictionary."""
         return asdict(self)
+
+@dataclass
+class CaptionSegment:
+    """A single timestamped caption segment."""
+
+    start: float
+    end: float
+    text: str
