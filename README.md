@@ -811,10 +811,25 @@ Burn Captions
   ↓
 Download Final Video
 ```
+---
+
+## 🎬 v1.0.0 Release
+
+![AI Video Caption Generator v1.0.0](docs/screenshots/AI-Video-Caption-Generator-pic.png)
+[![Tests](https://img.shields.io/badge/153%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Version](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
+
+---
+
+## **153 Tests Passed • 0 Failed • 100% Pass Rate • v1.0.0**
+
+## 🚀 [GitHub Repository](https://github.com/satya66123/AI-Video-Caption-Generator)  
+## 📦 [Release Notes — v1.0.0](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
 
 **Status: Core release complete ✅**
 
-**Tests: 145 passed ✅**
+**Tests: 153 passed ✅**
 
 **GitHub Actions: Passing ✅**
 ---
@@ -822,7 +837,7 @@ Download Final Video
 ## 📊 Project Status
 
 [![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
-[![Tests](https://img.shields.io/badge/Tests-145%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-153%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 
 **Status: Core Release Complete ✅**
@@ -835,6 +850,6 @@ Download Final Video
 - ✅ Dashboard complete
 - ✅ Sidebar navigation complete
 - ✅ Settings / Help / About complete
-- ✅ 145 automated tests passing
+- ✅ 153 automated tests passing
 - ✅ GitHub Actions CI passing
 - ✅ Manual end-to-end testing completed
