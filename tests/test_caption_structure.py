@@ -28,6 +28,22 @@ def test_translation_provider_import() -> None:
     assert TranslationProvider is not None
 
 
+def test_video_caption_burn_service_import() -> None:
+    """Verify the video caption burn service can be imported."""
+    from services.video_caption_burn_service import (
+        VideoCaptionBurnService,
+    )
+
+    assert VideoCaptionBurnService is not None
+
+
+def test_caption_file_service_import() -> None:
+    """Verify the caption file service can be imported."""
+    from services.caption_file_service import CaptionFileService
+
+    assert CaptionFileService is not None
+
+
 def test_ollama_translation_provider_import() -> None:
     """Verify the Ollama provider can be imported."""
     from providers.ollama_translation_provider import (

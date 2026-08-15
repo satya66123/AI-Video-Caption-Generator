@@ -12,7 +12,7 @@ class OllamaTranslationProvider(TranslationProvider):
 
     def __init__(
         self,
-        model: str = "translategemma:12b",
+        model: str = "qwen2.5:1.5b",
         base_url: str = "http://localhost:11434",
     ) -> None:
         """Initialize the Ollama provider."""

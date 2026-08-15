@@ -41,7 +41,7 @@ def test_ollama_translation(mock_urlopen) -> None:
 def test_default_translation_model() -> None:
     provider = OllamaTranslationProvider()
 
-    assert provider.model == "translategemma:12b"
+    assert provider.model == "qwen2.5:1.5b"
 
 @patch("providers.ollama_translation_provider.urllib.request.urlopen")
 def test_empty_ollama_response_is_rejected(mock_urlopen) -> None:
