@@ -10,7 +10,7 @@ env/
 
 # Environment variables
 .env
-.env.*
+.env
 
 # Pytest
 .pytest_cache/

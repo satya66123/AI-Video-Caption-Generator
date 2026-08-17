@@ -1,13 +1,9 @@
 """AI Video Caption Generator application."""
 
-from pathlib import Path
-
-import streamlit as st
-
 from agents.caption_agent import CaptionAgent
 from agents.dashboard_agent import DashboardAgent
-from providers.ollama_translation_provider import (
-    OllamaTranslationProvider,
+from providers.translation_provider_factory import (
+    TranslationProviderFactory,
 )
 from services.caption_generation_service import (
     CaptionGenerationService,
@@ -19,6 +15,14 @@ from services.video_caption_burn_service import (
 from services.transcript_service import TranscriptService
 
 
+
+import os
+from pathlib import Path
+
+import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()
 # ============================================================
 # Directories
 # ============================================================
@@ -69,6 +73,10 @@ def render_sidebar() -> str:
 
     with st.sidebar:
 
+        # ----------------------------------------------------
+        # Application Header
+        # ----------------------------------------------------
+
         st.markdown(
             """
             <div style="text-align:center;">
@@ -85,6 +93,10 @@ def render_sidebar() -> str:
         )
 
         st.divider()
+
+        # ----------------------------------------------------
+        # Navigation
+        # ----------------------------------------------------
 
         st.markdown("### 🧭 Navigation")
 
@@ -104,33 +116,177 @@ def render_sidebar() -> str:
         st.divider()
 
         # ----------------------------------------------------
-        # Current AI Model
+        # AI Provider Configuration
         # ----------------------------------------------------
 
-        st.markdown("### 🤖 AI Model")
+        st.markdown("### 🤖 AI Provider")
 
-        st.info(
-            "qwen2.5:1.5b",
-            icon="🤖",
+        translation_providers = {
+            "Ollama": {
+                "key": "ollama",
+                "model": "qwen2.5:1.5b",
+            },
+            "OpenAI": {
+                "key": "openai",
+                "model": "gpt-5-mini",
+            },
+            "Anthropic": {
+                "key": "anthropic",
+                "model": "claude-sonnet-4-5",
+            },
+            "Gemini": {
+                "key": "gemini",
+                "model": "gemini-3.6-flash",
+            },
+        }
+
+        provider_names = list(
+            translation_providers.keys()
+        )
+
+        current_provider = st.session_state.get(
+            "translation_provider",
+            "ollama",
+        )
+
+        provider_keys = [
+            config["key"]
+            for config in translation_providers.values()
+        ]
+
+        if current_provider in provider_keys:
+            provider_index = provider_keys.index(
+                current_provider
+            )
+        else:
+            provider_index = 0
+
+        selected_provider = st.selectbox(
+            "Provider",
+            provider_names,
+            index=provider_index,
+            key="sidebar_provider",
+            help=(
+                "Select the AI provider used "
+                "for caption translation."
+            ),
+        )
+
+        provider_config = translation_providers[
+            selected_provider
+        ]
+
+        provider_key = provider_config["key"]
+        translation_model = provider_config["model"]
+
+        # ----------------------------------------------------
+        # Save Provider + Model to Session
+        # ----------------------------------------------------
+
+        st.session_state[
+            "translation_provider"
+        ] = provider_key
+
+        st.session_state[
+            "translation_model"
+        ] = translation_model
+
+        # ----------------------------------------------------
+        # Show Selected Model
+        # ----------------------------------------------------
+
+        st.text_input(
+            "Model",
+            value=translation_model,
+            disabled=True,
+            key="sidebar_model_display",
         )
 
         # ----------------------------------------------------
-        # Default Language
+        # Provider Status
+        # ----------------------------------------------------
+
+        if provider_key == "ollama":
+
+            st.success(
+                "🟢 Local Ollama",
+            )
+
+        elif provider_key == "openai":
+
+            if os.getenv("OPENAI_API_KEY"):
+                st.success(
+                    "🟢 OpenAI configured",
+                )
+            else:
+                st.warning(
+                    "🔴 OpenAI API key missing",
+                )
+
+        elif provider_key == "anthropic":
+
+            if os.getenv("ANTHROPIC_API_KEY"):
+                st.success(
+                    "🟢 Anthropic configured",
+                )
+            else:
+                st.warning(
+                    "🔴 Anthropic API key missing",
+                )
+
+        elif provider_key == "gemini":
+
+            if os.getenv("GEMINI_API_KEY"):
+                st.success(
+                    "🟢 Gemini configured",
+                )
+            else:
+                st.warning(
+                    "🔴 Gemini API key missing",
+                )
+
+        st.divider()
+
+        # ----------------------------------------------------
+        # Current Language
         # ----------------------------------------------------
 
         st.markdown("### 🌐 Language")
 
-        st.write("English")
+        current_language = st.session_state.get(
+            "default_caption_language",
+            "en",
+        )
+
+        language_name = next(
+            (
+                name
+                for name, code
+                in CAPTION_LANGUAGES.items()
+                if code == current_language
+            ),
+            "English",
+        )
+
+        st.write(language_name)
+
+        st.divider()
 
         # ----------------------------------------------------
         # System Status
         # ----------------------------------------------------
 
-        st.divider()
-
         st.markdown("### 🟢 System Status")
 
-        st.write("🟢 Ollama")
+        if provider_key == "ollama":
+            st.write("🟢 Ollama")
+        elif provider_key == "openai":
+            st.write("🟢 OpenAI")
+        elif provider_key == "anthropic":
+            st.write("🟢 Anthropic")
+        elif provider_key == "gemini":
+            st.write("🟢 Gemini")
+
         st.write("🟢 Whisper")
         st.write("🟢 FFmpeg")
 
@@ -185,16 +341,66 @@ def create_caption_agent() -> CaptionAgent:
     # Whisper
     # --------------------------------------------------------
 
+    whisper_model = st.session_state.get(
+        "whisper_model",
+        "base",
+    )
+
     transcript_service = TranscriptService(
-        model_name="base",
+        model_name=whisper_model,
     )
 
     # --------------------------------------------------------
-    # Local Ollama Translation
+    # Translation Provider
     # --------------------------------------------------------
 
-    translation_provider = OllamaTranslationProvider(
-        model="qwen2.5:1.5b",
+    provider_name = st.session_state.get(
+        "translation_provider",
+        "ollama",
+    )
+
+    translation_model = st.session_state.get(
+        "translation_model",
+        "qwen2.5:1.5b",
+    )
+
+    # --------------------------------------------------------
+    # API Key
+    # --------------------------------------------------------
+
+    api_key = None
+
+    if provider_name == "openai":
+        api_key = os.getenv(
+            "OPENAI_API_KEY"
+        )
+
+    elif provider_name == "anthropic":
+        api_key = os.getenv(
+            "ANTHROPIC_API_KEY"
+        )
+
+    elif provider_name == "gemini":
+        api_key = os.getenv(
+            "GEMINI_API_KEY"
+        )
+
+    # --------------------------------------------------------
+    # Provider Factory
+    # --------------------------------------------------------
+
+    provider_kwargs = {
+        "model": translation_model,
+    }
+
+    if api_key:
+        provider_kwargs["api_key"] = api_key
+
+    translation_provider = (
+        TranslationProviderFactory.create(
+            provider_name,
+            **provider_kwargs,
+        )
     )
 
     # --------------------------------------------------------
@@ -224,6 +430,10 @@ def create_caption_agent() -> CaptionAgent:
             OUTPUT_DIR,
         )
     )
+
+    # --------------------------------------------------------
+    # Caption Agent
+    # --------------------------------------------------------
 
     return CaptionAgent(
         transcript_service=transcript_service,
@@ -865,9 +1075,11 @@ def render_settings() -> None:
 
     st.divider()
 
-    st.subheader(
-        "📝 Whisper Model"
-    )
+    # ========================================================
+    # Whisper
+    # ========================================================
+
+    st.subheader("📝 Whisper Model")
 
     whisper_models = [
         "tiny",
@@ -885,8 +1097,10 @@ def render_settings() -> None:
     whisper_model = st.selectbox(
         "Whisper model",
         whisper_models,
-        index=whisper_models.index(
-            current_whisper
+        index=(
+            whisper_models.index(current_whisper)
+            if current_whisper in whisper_models
+            else whisper_models.index("base")
         ),
         help=(
             "Larger models may improve transcription "
@@ -894,29 +1108,217 @@ def render_settings() -> None:
         ),
     )
 
-    st.session_state[
-        "whisper_model"
-    ] = whisper_model
+    st.session_state["whisper_model"] = whisper_model
 
     st.divider()
 
-    st.subheader(
-        "🤖 Ollama Model"
+    # ========================================================
+    # Translation Provider
+    # ========================================================
+
+    st.subheader("🤖 Translation Provider")
+
+    translation_providers = {
+        "Ollama": {
+            "key": "ollama",
+            "model": "qwen2.5:1.5b",
+        },
+        "OpenAI": {
+            "key": "openai",
+            "model": "gpt-5-mini",
+        },
+        "Anthropic": {
+            "key": "anthropic",
+            "model": "claude-sonnet-4-5",
+        },
+        "Gemini": {
+            "key": "gemini",
+            "model": "gemini-3.6-flash",
+        },
+    }
+
+    provider_names = list(
+        translation_providers.keys()
     )
 
-    ollama_model = st.text_input(
-        "Local Ollama model",
-        value=st.session_state.get(
-            "ollama_model",
-            "qwen2.5:1.5b",
+    current_provider = st.session_state.get(
+        "translation_provider",
+        "ollama",
+    )
+
+    provider_keys = [
+        config["key"]
+        for config in translation_providers.values()
+    ]
+
+    provider_index = (
+        provider_keys.index(current_provider)
+        if current_provider in provider_keys
+        else 0
+    )
+
+    selected_provider = st.selectbox(
+        "AI provider",
+        provider_names,
+        index=provider_index,
+        help=(
+            "Select the AI provider used for "
+            "caption translation."
         ),
     )
 
+    provider_config = translation_providers[
+        selected_provider
+    ]
+
+    provider_key = provider_config["key"]
+    translation_model = provider_config["model"]
+
     st.session_state[
-        "ollama_model"
-    ] = ollama_model
+        "translation_provider"
+    ] = provider_key
+
+    st.session_state[
+        "translation_model"
+    ] = translation_model
+
+    st.text_input(
+        "Translation model",
+        value=translation_model,
+        disabled=True,
+    )
+
+    st.caption(
+        f"Provider: **{selected_provider}**  |  "
+        f"Model: `{translation_model}`"
+    )
+
+    # ========================================================
+    # Provider Status
+    # ========================================================
+
+    if provider_key == "ollama":
+
+        st.success(
+            "🟢 Ollama is a local provider."
+        )
+
+        st.caption(
+            "No cloud API key is required."
+        )
+
+    elif provider_key == "openai":
+
+        if os.getenv("OPENAI_API_KEY"):
+            st.success(
+                "🟢 OpenAI API key configured."
+            )
+        else:
+            st.warning(
+                "🔴 OpenAI API key is missing."
+            )
+
+        st.caption(
+            "API key is read from OPENAI_API_KEY."
+        )
+
+    elif provider_key == "anthropic":
+
+        if os.getenv("ANTHROPIC_API_KEY"):
+            st.success(
+                "🟢 Anthropic API key configured."
+            )
+        else:
+            st.warning(
+                "🔴 Anthropic API key is missing."
+            )
+
+        st.caption(
+            "API key is read from ANTHROPIC_API_KEY."
+        )
+
+    elif provider_key == "gemini":
+
+        if os.getenv("GEMINI_API_KEY"):
+            st.success(
+                "🟢 Gemini API key configured."
+            )
+        else:
+            st.warning(
+                "🔴 Gemini API key is missing."
+            )
+
+        st.caption(
+            "API key is read from GEMINI_API_KEY."
+        )
 
     st.divider()
+
+    # ========================================================
+    # Available Providers
+    # ========================================================
+
+    st.subheader("🌐 Available AI Providers")
+
+    columns = st.columns(4)
+
+    for column, (
+        provider_name,
+        config,
+    ) in zip(
+        columns,
+        translation_providers.items(),
+    ):
+
+        with column:
+
+            st.markdown(
+                f"### {provider_name}"
+            )
+
+            st.caption(
+                config["model"]
+            )
+
+            if config["key"] == "ollama":
+
+                st.write("🟢 Local")
+
+            elif config["key"] == "openai":
+
+                status = (
+                    "🟢 Configured"
+                    if os.getenv("OPENAI_API_KEY")
+                    else "🔴 Missing"
+                )
+
+                st.write(status)
+
+            elif config["key"] == "anthropic":
+
+                status = (
+                    "🟢 Configured"
+                    if os.getenv("ANTHROPIC_API_KEY")
+                    else "🔴 Missing"
+                )
+
+                st.write(status)
+
+            elif config["key"] == "gemini":
+
+                status = (
+                    "🟢 Configured"
+                    if os.getenv("GEMINI_API_KEY")
+                    else "🔴 Missing"
+                )
+
+                st.write(status)
+
+    st.divider()
+
+    # ========================================================
+    # Caption Language
+    # ========================================================
 
     st.subheader(
         "🌐 Default Caption Language"
@@ -941,6 +1343,10 @@ def render_settings() -> None:
     )
 
     st.divider()
+
+    # ========================================================
+    # Directories
+    # ========================================================
 
     st.subheader(
         "📁 Application Directories"

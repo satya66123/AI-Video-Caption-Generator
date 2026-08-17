@@ -1,8 +1,13 @@
-"""Tests for the application settings page."""
+"""Tests for the application settings agent/page."""
 
+import os
 from unittest.mock import MagicMock, patch
 
-from pages.settings_agent import main
+from pages.settings_agent import (
+    TRANSLATION_PROVIDERS,
+    _get_api_key_status,
+    main,
+)
 
 
 def create_streamlit_mock() -> MagicMock:
@@ -13,14 +18,165 @@ def create_streamlit_mock() -> MagicMock:
 
     mock_st.selectbox.side_effect = [
         "base",
+        "Ollama",
         "en",
     ]
 
     mock_st.text_input.return_value = (
-        "translategemma:12b"
+        "qwen2.5:1.5b"
     )
 
+    mock_st.columns.return_value = [
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+    ]
+
     return mock_st
+
+
+def test_translation_providers_configuration() -> None:
+    """Verify all supported translation providers."""
+    assert list(
+        TRANSLATION_PROVIDERS.keys()
+    ) == [
+        "Ollama",
+        "OpenAI",
+        "Anthropic",
+        "Gemini",
+    ]
+
+    assert (
+        TRANSLATION_PROVIDERS["Ollama"]["key"]
+        == "ollama"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["Ollama"]["model"]
+        == "qwen2.5:1.5b"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["OpenAI"]["key"]
+        == "openai"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["OpenAI"]["model"]
+        == "gpt-5-mini"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["Anthropic"]["key"]
+        == "anthropic"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["Anthropic"]["model"]
+        == "claude-sonnet-4-5"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["Gemini"]["key"]
+        == "gemini"
+    )
+
+    assert (
+        TRANSLATION_PROVIDERS["Gemini"]["model"]
+        == "gemini-3.6-flash"
+    )
+
+
+def test_get_api_key_status_ollama() -> None:
+    """Verify Ollama status."""
+    assert (
+        _get_api_key_status("ollama")
+        == "🟢 Local Ollama"
+    )
+
+
+def test_get_api_key_status_unknown_provider() -> None:
+    """Verify unknown provider status."""
+    assert (
+        _get_api_key_status("unknown")
+        == "🔴 Unknown provider"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"OPENAI_API_KEY": "test-openai-key"},
+)
+def test_get_api_key_status_openai_configured() -> None:
+    """Verify configured OpenAI API key."""
+    assert (
+        _get_api_key_status("openai")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_openai_missing() -> None:
+    """Verify missing OpenAI API key."""
+    assert (
+        _get_api_key_status("openai")
+        == "🔴 API key missing"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"ANTHROPIC_API_KEY": "test-anthropic-key"},
+)
+def test_get_api_key_status_anthropic_configured() -> None:
+    """Verify configured Anthropic API key."""
+    assert (
+        _get_api_key_status("anthropic")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_anthropic_missing() -> None:
+    """Verify missing Anthropic API key."""
+    assert (
+        _get_api_key_status("anthropic")
+        == "🔴 API key missing"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"GEMINI_API_KEY": "test-gemini-key"},
+)
+def test_get_api_key_status_gemini_configured() -> None:
+    """Verify configured Gemini API key."""
+    assert (
+        _get_api_key_status("gemini")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_gemini_missing() -> None:
+    """Verify missing Gemini API key."""
+    assert (
+        _get_api_key_status("gemini")
+        == "🔴 API key missing"
+    )
 
 
 def test_settings_renders_title() -> None:
@@ -49,8 +205,7 @@ def test_settings_renders_description() -> None:
         main()
 
         mock_st.write.assert_any_call(
-            "Configure the models and default caption "
-            "processing options."
+            "Configure caption-generation preferences."
         )
 
 
@@ -65,7 +220,7 @@ def test_settings_renders_whisper_section() -> None:
         main()
 
         mock_st.subheader.assert_any_call(
-            "📝 Whisper"
+            "📝 Whisper Model"
         )
 
 
@@ -103,8 +258,8 @@ def test_settings_whisper_model() -> None:
         )
 
 
-def test_settings_renders_translation_section() -> None:
-    """Render the translation settings section."""
+def test_settings_renders_translation_provider() -> None:
+    """Render the translation provider section."""
     mock_st = create_streamlit_mock()
 
     with patch(
@@ -114,12 +269,12 @@ def test_settings_renders_translation_section() -> None:
         main()
 
         mock_st.subheader.assert_any_call(
-            "✨ Translation"
+            "🤖 Translation Provider"
         )
 
 
-def test_settings_ollama_model() -> None:
-    """Select and store the Ollama model."""
+def test_settings_translation_provider() -> None:
+    """Select and store the translation provider."""
     mock_st = create_streamlit_mock()
 
     with patch(
@@ -128,21 +283,147 @@ def test_settings_ollama_model() -> None:
     ):
         main()
 
-        mock_st.text_input.assert_called_once_with(
-            "Ollama translation model",
-            value="translategemma:12b",
-            help=(
-                "Local Ollama model used for "
-                "caption translation."
-            ),
+        selectbox_calls = (
+            mock_st.selectbox.call_args_list
         )
+
+        provider_call = selectbox_calls[1]
+
+        assert provider_call.args[0] == (
+            "AI provider"
+        )
+
+        assert provider_call.args[1] == [
+            "Ollama",
+            "OpenAI",
+            "Anthropic",
+            "Gemini",
+        ]
 
         assert (
             mock_st.session_state[
-                "ollama_model"
+                "translation_provider"
             ]
-            == "translategemma:12b"
+            == "ollama"
         )
+
+
+def test_settings_translation_model() -> None:
+    """Store the selected provider model."""
+    mock_st = create_streamlit_mock()
+
+    with patch(
+        "pages.settings_agent.st",
+        mock_st,
+    ):
+        main()
+
+        assert (
+            mock_st.session_state[
+                "translation_model"
+            ]
+            == "qwen2.5:1.5b"
+        )
+
+        mock_st.text_input.assert_called_once_with(
+            "Default model",
+            value="qwen2.5:1.5b",
+            disabled=True,
+        )
+
+
+def test_settings_renders_selected_provider() -> None:
+    """Render selected provider information."""
+    mock_st = create_streamlit_mock()
+
+    with patch(
+        "pages.settings_agent.st",
+        mock_st,
+    ):
+        main()
+
+        mock_st.markdown.assert_any_call(
+            "### Ollama"
+        )
+
+        mock_st.caption.assert_any_call(
+            "Provider: **Ollama**  |  "
+            "Model: **qwen2.5:1.5b**"
+        )
+
+
+def test_settings_renders_ollama_info() -> None:
+    """Render Ollama information."""
+    mock_st = create_streamlit_mock()
+
+    with patch(
+        "pages.settings_agent.st",
+        mock_st,
+    ):
+        main()
+
+        mock_st.info.assert_any_call(
+            "Ollama runs locally and does not require "
+            "a cloud API key."
+        )
+
+
+def test_settings_renders_available_providers() -> None:
+    """Render all available providers."""
+    mock_st = create_streamlit_mock()
+
+    columns = [
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+    ]
+
+    mock_st.columns.return_value = columns
+
+    with patch(
+        "pages.settings_agent.st",
+        mock_st,
+    ):
+        main()
+
+        mock_st.subheader.assert_any_call(
+            "🌐 Available AI Providers"
+        )
+
+        mock_st.columns.assert_called_once_with(
+            4
+        )
+
+
+def test_settings_renders_all_provider_names() -> None:
+    """Render all provider names."""
+    mock_st = create_streamlit_mock()
+
+    columns = [
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+        MagicMock(),
+    ]
+
+    mock_st.columns.return_value = columns
+
+    with patch(
+        "pages.settings_agent.st",
+        mock_st,
+    ):
+        main()
+
+        rendered_markdown = [
+            call.args[0]
+            for call in mock_st.markdown.call_args_list
+        ]
+
+        assert "### Ollama" in rendered_markdown
+        assert "### OpenAI" in rendered_markdown
+        assert "### Anthropic" in rendered_markdown
+        assert "### Gemini" in rendered_markdown
 
 
 def test_settings_renders_language_section() -> None:
@@ -174,7 +455,7 @@ def test_settings_default_language() -> None:
             mock_st.selectbox.call_args_list
         )
 
-        language_call = selectbox_calls[1]
+        language_call = selectbox_calls[2]
 
         assert language_call.args[0] == (
             "Default caption language"
@@ -212,7 +493,7 @@ def test_settings_language_format_function() -> None:
         main()
 
         language_call = (
-            mock_st.selectbox.call_args_list[1]
+            mock_st.selectbox.call_args_list[2]
         )
 
         format_func = language_call.kwargs[
@@ -244,7 +525,8 @@ def test_settings_saves_session_values() -> None:
 
         assert mock_st.session_state == {
             "whisper_model": "base",
-            "ollama_model": "translategemma:12b",
+            "translation_provider": "ollama",
+            "translation_model": "qwen2.5:1.5b",
             "default_caption_language": "en",
         }
 
@@ -284,16 +566,3 @@ def test_settings_output_directories() -> None:
             "outputs/   → Captioned videos",
             language="text",
         )
-
-
-def test_settings_renders_dividers() -> None:
-    """Render all expected section dividers."""
-    mock_st = create_streamlit_mock()
-
-    with patch(
-        "pages.settings_agent.st",
-        mock_st,
-    ):
-        main()
-
-        assert mock_st.divider.call_count == 4
