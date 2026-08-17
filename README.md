@@ -2,15 +2,136 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
-[![PyTest](https://img.shields.io/badge/tests-153%20passed-brightgreen.svg)](https://pytest.org/)
+[![PyTest](https://img.shields.io/badge/tests-177%20passed-brightgreen.svg)](https://pytest.org/)
 [![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Ollama](https://img.shields.io/badge/AI-Ollama-black.svg)](https://ollama.com/)
+[![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991.svg)](https://openai.com/)
+[![Anthropic](https://img.shields.io/badge/AI-Anthropic-orange.svg)](https://www.anthropic.com/)
+[![Gemini](https://img.shields.io/badge/AI-Gemini-4285F4.svg)](https://ai.google.dev/)
 [![Whisper](https://img.shields.io/badge/Speech-Whisper-blueviolet.svg)](https://github.com/openai/whisper)
 [![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-green.svg)](https://ffmpeg.org/)
 [![GitHub](https://img.shields.io/badge/GitHub-Nekkanti%20Satya%20Srinath-black.svg)](https://github.com/satya66123)
 
 An AI-powered video caption generation application built with Python and Streamlit. It automatically processes uploaded videos, detects spoken language, generates timestamped captions, translates captions into supported languages using a local Ollama model, exports SRT/VTT files, and permanently burns captions into the final video with FFmpeg.
+
+---
+
+# 📌 Stable Releases
+
+This README maintains both stable releases in the same file.
+
+| Version | Status | Scope |
+|---|---|---|
+| **v1.0.0** | ✅ Stable | Core local-first video caption generation |
+| **v1.1.0** | ✅ Stable | Multi-provider AI translation support |
+
+## 🚀 v1.1.0 — Multi-Provider AI Translation
+
+**Current stable release**
+
+v1.1.0 extends the v1.0.0 core workflow with selectable AI translation providers.
+
+[![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.1.0)
+[![Tests](https://img.shields.io/badge/177%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+
+### v1.1.0 Providers
+
+| Provider | Default Model | Mode |
+|---|---|---|
+| 🦙 Ollama | `qwen2.5:1.5b` | Local |
+| 🟢 OpenAI | `gpt-5-mini` | API |
+| 🟣 Anthropic | `claude-sonnet-4-5` | API |
+| 🔵 Gemini | `gemini-3.6-flash` | API |
+
+### v1.1.0 Highlights
+
+- 🤖 Provider selection directly from the sidebar
+- 🧠 Provider and model stored in Streamlit session state
+- 🔌 Translation Provider Factory
+- 🦙 Ollama local translation
+- 🟢 OpenAI translation
+- 🟣 Anthropic translation
+- 🔵 Gemini translation
+- 🔐 Environment-based API-key configuration
+- 🔒 API keys are never displayed in the UI
+- ⚙️ Provider configuration/status in Settings
+- 🧪 Expanded test coverage
+- ✅ 177 automated tests passing
+- 🔄 GitHub Actions CI passing
+- 🎥 Manual end-to-end verification completed for all four providers
+- 📄 SRT/VTT generation preserved
+- 🔥 FFmpeg caption burning preserved
+- 💾 Original uploaded video preserved
+
+### v1.1.0 Flow
+
+```text
+Upload Video
+     ↓
+Save Original Video
+     ↓
+Whisper Transcription
+     ↓
+Language Detection
+     ↓
+Select Caption Language
+     ↓
+Select AI Provider + Model
+     ↓
+Translation Provider Factory
+     ↓
+Ollama / OpenAI / Anthropic / Gemini
+     ↓
+Generate SRT + VTT
+     ↓
+FFmpeg Caption Burn
+     ↓
+Final Captioned Video
+```
+
+### v1.1.0 Verification
+
+```text
+177 passed
+0 failed
+100% pass rate
+
+Ollama     → SRT + VTT + Captioned Video + Original Video ✅
+OpenAI     → SRT + VTT + Captioned Video + Original Video ✅
+Anthropic  → SRT + VTT + Captioned Video + Original Video ✅
+Gemini     → SRT + VTT + Captioned Video + Original Video ✅
+```
+
+## 🎬 v1.0.0 — Core Caption Generator
+
+**Original stable release**
+
+v1.0.0 delivered the complete core video-caption workflow using Whisper, local Ollama translation, SRT/VTT generation, and FFmpeg caption burning.
+
+[![Version](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
+[![Tests](https://img.shields.io/badge/153%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+
+### v1.0.0 Core Workflow
+
+```text
+Upload
+  ↓
+Transcribe with Whisper
+  ↓
+Detect Language
+  ↓
+Translate with Ollama
+  ↓
+Generate SRT + VTT
+  ↓
+Burn Captions with FFmpeg
+  ↓
+Final Captioned Video
+```
+
 
 ## ✨ Features
 
@@ -19,6 +140,10 @@ An AI-powered video caption generation application built with Python and Streaml
 - 🌐 Spoken-language detection
 - 💬 Multilingual caption generation
 - 🤖 Local Ollama translation support
+- 🟢 OpenAI translation support (v1.1.0)
+- 🟣 Anthropic translation support (v1.1.0)
+- 🔵 Gemini translation support (v1.1.0)
+- 🔀 Sidebar AI provider/model selection (v1.1.0)
 - 📄 SRT caption generation
 - 📄 VTT caption generation
 - 🔥 Permanent caption burning with FFmpeg
@@ -59,8 +184,9 @@ An AI-powered video caption generation application built with Python and Streaml
 └──────────┬───────────┘
            ↓
 ┌──────────────────────┐
-│ Local Ollama         │
-│ Translation          │
+│ Select AI Provider   │
+│ Ollama / OpenAI /    │
+│ Anthropic / Gemini   │
 └──────────┬───────────┘
            ↓
      ┌─────┴─────┐
@@ -122,7 +248,10 @@ Both files contain timestamped caption segments.
 | Streamlit | Web UI |
 | OpenAI Whisper | Speech transcription |
 | Ollama | Local AI translation |
-| TranslateGemma | Local translation model support |
+| OpenAI | AI translation provider |
+| Anthropic | AI translation provider |
+| Gemini | AI translation provider |
+| TranslateGemma / Qwen | Local translation model support |
 | FFmpeg | Video processing and caption burning |
 | PyTest | Automated testing |
 | JSON / local files | Lightweight application storage |
@@ -137,7 +266,7 @@ The translation provider communicates with a locally running Ollama instance.
 Example model:
 
 ```text
-translategemma:12b
+qwen2.5:1.5b
 ```
 
 The application can be configured through the Settings page.
@@ -147,7 +276,7 @@ The application can be configured through the Settings page.
 Example:
 
 ```powershell
-ollama pull translategemma:12b
+ollama pull qwen2.5:1.5b
 ```
 
 Start Ollama if required:
@@ -202,7 +331,11 @@ AI-Video-Caption-Generator/
 │
 ├── providers/
 │   ├── translation_provider.py
-│   └── ollama_translation_provider.py
+│   ├── ollama_translation_provider.py
+│   ├── openai_translation_provider.py
+│   ├── anthropic_translation_provider.py
+│   ├── gemini_translation_provider.py
+│   └── translation_provider_factory.py
 │
 ├── services/
 │   ├── caption_generation_service.py
@@ -280,7 +413,7 @@ ollama --version
 ### 5. Install the translation model
 
 ```powershell
-ollama pull translategemma:12b
+ollama pull qwen2.5:1.5b
 ```
 
 ### 6. Run the application
@@ -338,7 +471,8 @@ Browse generated SRT and VTT files.
 Configure:
 
 - Whisper model
-- Ollama translation model
+- AI translation provider and default model
+- Whisper model
 - Default caption language
 
 ### ❓ Help
@@ -386,7 +520,7 @@ pytest tests/test_dashboard_agent.py -v
 ### Current Test Status
 
 ```text
-145 passed
+177 passed
 0 failed
 ```
 
@@ -649,7 +783,7 @@ ollama serve
 Install the model:
 
 ```powershell
-ollama pull translategemma:12b
+ollama pull qwen2.5:1.5b
 ```
 
 ### FFmpeg not found
@@ -698,7 +832,7 @@ The implemented and manually verified workflow produces:
 **Complete ✅**
 
 ```text
-145 passed
+177 passed
 ```
 
 ### GitHub CI
@@ -706,6 +840,32 @@ The implemented and manually verified workflow produces:
 **Passing ✅**
 
 The GitHub Actions test workflow is passing.
+
+
+# 📊 Release Comparison
+
+| Capability | v1.0.0 Stable | v1.1.0 Stable |
+|---|---:|---:|
+| Video upload | ✅ | ✅ |
+| Original video preservation | ✅ | ✅ |
+| Whisper transcription | ✅ | ✅ |
+| Language detection | ✅ | ✅ |
+| SRT generation | ✅ | ✅ |
+| VTT generation | ✅ | ✅ |
+| FFmpeg caption burning | ✅ | ✅ |
+| Captioned video output | ✅ | ✅ |
+| Dashboard | ✅ | ✅ |
+| Settings / Help / About | ✅ | ✅ |
+| Ollama translation | ✅ | ✅ |
+| OpenAI translation | ❌ | ✅ |
+| Anthropic translation | ❌ | ✅ |
+| Gemini translation | ❌ | ✅ |
+| Sidebar provider selection | ❌ | ✅ |
+| Translation Provider Factory | ❌ | ✅ |
+| Environment API-key handling | ❌ | ✅ |
+| Automated tests | 153 | 177 |
+| GitHub Actions | ✅ | ✅ |
+| Manual E2E verification | ✅ | ✅ |
 
 ## 🗺️ Future Improvements
 
@@ -763,7 +923,6 @@ AI / Full-Stack Developer
 
 - GitHub: https://github.com/satya66123
 - LinkedIn: https://www.linkedin.com/in/satya-srinath-nekkanti-08b012a3/
-- Phone: +91 7396531602
 
 ## 📫 Contact
 
@@ -771,7 +930,6 @@ AI / Full-Stack Developer
 
 - GitHub: https://github.com/satya66123
 - LinkedIn: https://www.linkedin.com/in/satya-srinath-nekkanti-08b012a3/
-- Phone: +91 7396531602
 
 For project questions, issues, feature requests, or collaboration, please use the GitHub repository's Issues or Discussions where available.
 
@@ -822,14 +980,14 @@ Download Final Video
 
 ---
 
-## **153 Tests Passed • 0 Failed • 100% Pass Rate • v1.0.0**
+## **177 Tests Passed • 0 Failed • 100% Pass Rate • v1.0.0**
 
 ## 🚀 [GitHub Repository](https://github.com/satya66123/AI-Video-Caption-Generator)  
 ## 📦 [Release Notes — v1.0.0](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
 
 **Status: Core release complete ✅**
 
-**Tests: 153 passed ✅**
+**Tests: 177 passed ✅**
 
 **GitHub Actions: Passing ✅**
 ---
@@ -837,7 +995,7 @@ Download Final Video
 ## 📊 Project Status
 
 [![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
-[![Tests](https://img.shields.io/badge/Tests-153%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-177%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 
 **Status: Core Release Complete ✅**
@@ -853,3 +1011,26 @@ Download Final Video
 - ✅ 153 automated tests passing
 - ✅ GitHub Actions CI passing
 - ✅ Manual end-to-end testing completed
+
+
+
+# 🏆 Stable Release Summary
+
+```text
+AI Video Caption Generator
+────────────────────────────────────────
+v1.0.0 → Core Caption Generator
+         Stable ✅
+
+v1.1.0 → Multi-Provider AI Translation
+         Stable ✅
+
+Automated Tests: 177 passed
+Manual Provider Tests: 4/4 passed
+GitHub Actions: Passing
+Current Stable: v1.1.0
+```
+
+**v1.0.0 remains documented as the original stable core release.  
+v1.1.0 is the current stable release with multi-provider AI translation support.**
+
