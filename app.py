@@ -48,7 +48,7 @@ st.set_page_config(
 # Application Constants
 # ============================================================
 
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.3.0"
 
 CAPTION_LANGUAGES = {
     "English": "en",
@@ -125,18 +125,42 @@ def render_sidebar() -> str:
             "Ollama": {
                 "key": "ollama",
                 "model": "qwen2.5:1.5b",
+                "environment_variable": None,
             },
             "OpenAI": {
                 "key": "openai",
                 "model": "gpt-5-mini",
+                "environment_variable": "OPENAI_API_KEY",
             },
             "Anthropic": {
                 "key": "anthropic",
                 "model": "claude-sonnet-4-5",
+                "environment_variable": "ANTHROPIC_API_KEY",
             },
             "Gemini": {
                 "key": "gemini",
                 "model": "gemini-3.6-flash",
+                "environment_variable": "GEMINI_API_KEY",
+            },
+            "Mistral": {
+                "key": "mistral",
+                "model": "mistral-medium-latest",
+                "environment_variable": "MISTRAL_API_KEY",
+            },
+            "Groq": {
+                "key": "groq",
+                "model": "llama-3.1-8b-instant",
+                "environment_variable": "GROQ_API_KEY",
+            },
+            "Cohere": {
+                "key": "cohere",
+                "model": "command-a-03-2025",
+                "environment_variable": "COHERE_API_KEY",
+            },
+            "DeepSeek": {
+                "key": "deepseek",
+                "model": "deepseek-v4-flash",
+                "environment_variable": "DEEPSEEK_API_KEY",
             },
         }
 
@@ -370,20 +394,23 @@ def create_caption_agent() -> CaptionAgent:
 
     api_key = None
 
-    if provider_name == "openai":
-        api_key = os.getenv(
-            "OPENAI_API_KEY"
-        )
+    environment_variables = {
+        "openai": "OPENAI_API_KEY",
+        "anthropic": "ANTHROPIC_API_KEY",
+        "gemini": "GEMINI_API_KEY",
+        "mistral": "MISTRAL_API_KEY",
+        "groq": "GROQ_API_KEY",
+        "cohere": "COHERE_API_KEY",
+        "deepseek": "DEEPSEEK_API_KEY",
+    }
 
-    elif provider_name == "anthropic":
-        api_key = os.getenv(
-            "ANTHROPIC_API_KEY"
-        )
+    environment_variable = environment_variables.get(
+        provider_name
+    )
 
-    elif provider_name == "gemini":
-        api_key = os.getenv(
-            "GEMINI_API_KEY"
-        )
+    if environment_variable:
+        api_key = os.getenv(environment_variable)
+
 
     # --------------------------------------------------------
     # Provider Factory
@@ -742,9 +769,8 @@ def render_caption_generator() -> None:
 
     st.write(
         "The video will be transcribed internally, "
-        "translated with the configured local Ollama "
-        "model, and converted into SRT and VTT "
-        "caption files."
+        "translated with the configured AI provider, "
+        "and converted into SRT and VTT caption files."
     )
 
     if st.button(
@@ -1134,6 +1160,22 @@ def render_settings() -> None:
         "Gemini": {
             "key": "gemini",
             "model": "gemini-3.6-flash",
+        },
+        "Mistral": {
+            "key": "mistral",
+            "model": "mistral-medium-latest",
+        },
+        "Groq": {
+            "key": "groq",
+            "model": "llama-3.1-8b-instant",
+        },
+        "Cohere": {
+            "key": "cohere",
+            "model": "command-a-03-2025",
+        },
+        "DeepSeek": {
+            "key": "deepseek",
+            "model": "deepseek-v4-flash",
         },
     }
 

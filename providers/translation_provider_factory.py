@@ -13,6 +13,18 @@ from providers.anthropic_translation_provider import (
 from providers.gemini_translation_provider import (
     GeminiTranslationProvider,
 )
+from providers.mistral_translation_provider import (
+    MistralTranslationProvider,
+)
+from providers.groq_translation_provider import (
+    GroqTranslationProvider,
+)
+from providers.cohere_translation_provider import (
+    CohereTranslationProvider,
+)
+from providers.deepseek_translation_provider import (
+    DeepSeekTranslationProvider,
+)
 
 
 class TranslationProviderFactory:
@@ -23,6 +35,10 @@ class TranslationProviderFactory:
         "openai",
         "anthropic",
         "gemini",
+        "mistral",
+        "groq",
+        "cohere",
+        "deepseek",
     )
 
     @classmethod
@@ -56,6 +72,26 @@ class TranslationProviderFactory:
 
         if normalized_provider == "gemini":
             return GeminiTranslationProvider(
+                **kwargs,
+            )
+
+        if normalized_provider == "mistral":
+            return MistralTranslationProvider(
+                **kwargs,
+            )
+
+        if normalized_provider == "groq":
+            return GroqTranslationProvider(
+                **kwargs,
+            )
+
+        if normalized_provider == "cohere":
+            return CohereTranslationProvider(
+                **kwargs,
+            )
+
+        if normalized_provider == "deepseek":
+            return DeepSeekTranslationProvider(
                 **kwargs,
             )
 

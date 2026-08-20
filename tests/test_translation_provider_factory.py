@@ -8,6 +8,19 @@ from providers.translation_provider_factory import (
     TranslationProviderFactory,
 )
 
+from providers.mistral_translation_provider import (
+    MistralTranslationProvider,
+)
+from providers.groq_translation_provider import (
+    GroqTranslationProvider,
+)
+from providers.cohere_translation_provider import (
+    CohereTranslationProvider,
+)
+from providers.deepseek_translation_provider import (
+    DeepSeekTranslationProvider,
+)
+
 
 def test_supported_providers() -> None:
     """Verify all supported providers are registered."""
@@ -21,6 +34,69 @@ def test_supported_providers() -> None:
         )
     )
 
+def test_supported_providers() -> None:
+    """Verify all supported translation providers."""
+    assert TranslationProviderFactory.SUPPORTED_PROVIDERS == (
+        "ollama",
+        "openai",
+        "anthropic",
+        "gemini",
+        "mistral",
+        "groq",
+        "cohere",
+        "deepseek",
+    )
+
+def test_create_mistral_provider() -> None:
+    """Create a Mistral provider."""
+    provider = TranslationProviderFactory.create(
+        "mistral",
+        api_key="test-key",
+    )
+
+    assert isinstance(
+        provider,
+        MistralTranslationProvider,
+    )
+
+
+def test_create_groq_provider() -> None:
+    """Create a Groq provider."""
+    provider = TranslationProviderFactory.create(
+        "groq",
+        api_key="test-key",
+    )
+
+    assert isinstance(
+        provider,
+        GroqTranslationProvider,
+    )
+
+
+def test_create_cohere_provider() -> None:
+    """Create a Cohere provider."""
+    provider = TranslationProviderFactory.create(
+        "cohere",
+        api_key="test-key",
+    )
+
+    assert isinstance(
+        provider,
+        CohereTranslationProvider,
+    )
+
+
+def test_create_deepseek_provider() -> None:
+    """Create a DeepSeek provider."""
+    provider = TranslationProviderFactory.create(
+        "deepseek",
+        api_key="test-key",
+    )
+
+    assert isinstance(
+        provider,
+        DeepSeekTranslationProvider,
+    )
 
 @patch(
     "providers.translation_provider_factory."

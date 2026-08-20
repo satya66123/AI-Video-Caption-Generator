@@ -5,8 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from pages.settings_agent import (
     TRANSLATION_PROVIDERS,
-    _get_api_key_status,
-    main,
+    main, _get_api_key_status,
 )
 
 
@@ -45,46 +44,152 @@ def test_translation_providers_configuration() -> None:
         "OpenAI",
         "Anthropic",
         "Gemini",
+        "Mistral",
+        "Groq",
+        "Cohere",
+        "DeepSeek",
     ]
 
-    assert (
-        TRANSLATION_PROVIDERS["Ollama"]["key"]
-        == "ollama"
-    )
+    assert TRANSLATION_PROVIDERS["Ollama"]["key"] == "ollama"
+    assert TRANSLATION_PROVIDERS["Ollama"]["model"] == "qwen2.5:1.5b"
 
-    assert (
-        TRANSLATION_PROVIDERS["Ollama"]["model"]
-        == "qwen2.5:1.5b"
-    )
+    assert TRANSLATION_PROVIDERS["OpenAI"]["key"] == "openai"
+    assert TRANSLATION_PROVIDERS["OpenAI"]["model"] == "gpt-5-mini"
 
-    assert (
-        TRANSLATION_PROVIDERS["OpenAI"]["key"]
-        == "openai"
-    )
-
-    assert (
-        TRANSLATION_PROVIDERS["OpenAI"]["model"]
-        == "gpt-5-mini"
-    )
-
-    assert (
-        TRANSLATION_PROVIDERS["Anthropic"]["key"]
-        == "anthropic"
-    )
-
+    assert TRANSLATION_PROVIDERS["Anthropic"]["key"] == "anthropic"
     assert (
         TRANSLATION_PROVIDERS["Anthropic"]["model"]
         == "claude-sonnet-4-5"
     )
 
-    assert (
-        TRANSLATION_PROVIDERS["Gemini"]["key"]
-        == "gemini"
-    )
-
+    assert TRANSLATION_PROVIDERS["Gemini"]["key"] == "gemini"
     assert (
         TRANSLATION_PROVIDERS["Gemini"]["model"]
         == "gemini-3.6-flash"
+    )
+
+    assert TRANSLATION_PROVIDERS["Mistral"]["key"] == "mistral"
+    assert (
+        TRANSLATION_PROVIDERS["Mistral"]["model"]
+        == "mistral-medium-latest"
+    )
+
+    assert TRANSLATION_PROVIDERS["Groq"]["key"] == "groq"
+    assert (
+        TRANSLATION_PROVIDERS["Groq"]["model"]
+        == "llama-3.1-8b-instant"
+    )
+
+    assert TRANSLATION_PROVIDERS["Cohere"]["key"] == "cohere"
+    assert (
+        TRANSLATION_PROVIDERS["Cohere"]["model"]
+        == "command-a-03-2025"
+    )
+
+    assert TRANSLATION_PROVIDERS["DeepSeek"]["key"] == "deepseek"
+    assert (
+        TRANSLATION_PROVIDERS["DeepSeek"]["model"]
+        == "deepseek-v4-flash"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"MISTRAL_API_KEY": "test-mistral-key"},
+)
+def test_get_api_key_status_mistral_configured() -> None:
+    """Verify configured Mistral API key."""
+    assert (
+        _get_api_key_status("mistral")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_mistral_missing() -> None:
+    """Verify missing Mistral API key."""
+    assert (
+        _get_api_key_status("mistral")
+        == "🔴 API key missing"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"GROQ_API_KEY": "test-groq-key"},
+)
+def test_get_api_key_status_groq_configured() -> None:
+    """Verify configured Groq API key."""
+    assert (
+        _get_api_key_status("groq")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_groq_missing() -> None:
+    """Verify missing Groq API key."""
+    assert (
+        _get_api_key_status("groq")
+        == "🔴 API key missing"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"COHERE_API_KEY": "test-cohere-key"},
+)
+def test_get_api_key_status_cohere_configured() -> None:
+    """Verify configured Cohere API key."""
+    assert (
+        _get_api_key_status("cohere")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_cohere_missing() -> None:
+    """Verify missing Cohere API key."""
+    assert (
+        _get_api_key_status("cohere")
+        == "🔴 API key missing"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {"DEEPSEEK_API_KEY": "test-deepseek-key"},
+)
+def test_get_api_key_status_deepseek_configured() -> None:
+    """Verify configured DeepSeek API key."""
+    assert (
+        _get_api_key_status("deepseek")
+        == "🟢 API key configured"
+    )
+
+
+@patch.dict(
+    os.environ,
+    {},
+    clear=True,
+)
+def test_get_api_key_status_deepseek_missing() -> None:
+    """Verify missing DeepSeek API key."""
+    assert (
+        _get_api_key_status("deepseek")
+        == "🔴 API key missing"
     )
 
 
@@ -298,6 +403,10 @@ def test_settings_translation_provider() -> None:
             "OpenAI",
             "Anthropic",
             "Gemini",
+            "Mistral",
+            "Groq",
+            "Cohere",
+            "DeepSeek",
         ]
 
         assert (
@@ -391,8 +500,14 @@ def test_settings_renders_available_providers() -> None:
             "🌐 Available AI Providers"
         )
 
-        mock_st.columns.assert_called_once_with(
-            4
+        assert mock_st.columns.call_count == 2
+
+        assert (
+                mock_st.columns.call_args_list
+                == [
+                    ((4,), {}),
+                    ((4,), {}),
+                ]
         )
 
 

@@ -35,6 +35,10 @@ anthropic==0.117.0
 # Google Gemini provider
 google-genai==2.13.0
 
+mistralai==2.8.0
+groq==0.34.0
+cohere==5.20.4
+
 # ------------------------------------------------------------
 # Environment Configuration
 # ------------------------------------------------------------

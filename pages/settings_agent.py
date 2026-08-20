@@ -31,6 +31,26 @@ TRANSLATION_PROVIDERS = {
         "model": "gemini-3.6-flash",
         "environment_variable": "GEMINI_API_KEY",
     },
+    "Mistral": {
+        "key": "mistral",
+        "model": "mistral-medium-latest",
+        "environment_variable": "MISTRAL_API_KEY",
+    },
+    "Groq": {
+        "key": "groq",
+        "model": "llama-3.1-8b-instant",
+        "environment_variable": "GROQ_API_KEY",
+    },
+    "Cohere": {
+        "key": "cohere",
+        "model": "command-a-03-2025",
+        "environment_variable": "COHERE_API_KEY",
+    },
+    "DeepSeek": {
+        "key": "deepseek",
+        "model": "deepseek-v4-flash",
+        "environment_variable": "DEEPSEEK_API_KEY",
+    },
 }
 
 
@@ -204,29 +224,36 @@ def main() -> None:
 
     st.subheader("🌐 Available AI Providers")
 
-    provider_columns = st.columns(4)
+    provider_items = list(
+        TRANSLATION_PROVIDERS.items()
+    )
 
-    for column, (
-        provider_name,
-        config,
-    ) in zip(
-        provider_columns,
-        TRANSLATION_PROVIDERS.items(),
-    ):
-        with column:
-            st.markdown(
-                f"### {provider_name}"
-            )
+    for start in range(0, len(provider_items), 4):
+        row_items = provider_items[start:start + 4]
 
-            st.caption(
-                f"`{config['model']}`"
-            )
+        provider_columns = st.columns(4)
 
-            provider_status = _get_api_key_status(
-                config["key"]
-            )
+        for column, (
+                provider_name,
+                config,
+        ) in zip(
+            provider_columns,
+            row_items,
+        ):
+            with column:
+                st.markdown(
+                    f"### {provider_name}"
+                )
 
-            st.write(provider_status)
+                st.caption(
+                    f"`{config['model']}`"
+                )
+
+                provider_status = _get_api_key_status(
+                    config["key"]
+                )
+
+                st.write(provider_status)
 
     st.divider()
 
@@ -262,6 +289,9 @@ def main() -> None:
             f"({code})"
         ),
     )
+
+    st.session_state["translation_provider"] = provider_key
+    st.session_state["translation_model"] = translation_model
 
     st.session_state[
         "default_caption_language"
