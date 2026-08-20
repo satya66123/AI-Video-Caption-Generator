@@ -1,7 +1,7 @@
 # 🚀 AI Video Caption Generator — Release Notes
 
 [![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
-[![Tests](https://img.shields.io/badge/Tests-177%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-217%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
@@ -9,6 +9,10 @@
 [![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991.svg)](https://openai.com/)
 [![Anthropic](https://img.shields.io/badge/AI-Anthropic-orange.svg)](https://www.anthropic.com/)
 [![Gemini](https://img.shields.io/badge/AI-Gemini-4285F4.svg)](https://ai.google.dev/)
+[![Mistral](https://img.shields.io/badge/AI-Mistral-orange.svg)](https://mistral.ai/)
+[![Groq](https://img.shields.io/badge/AI-Groq-black.svg)](https://groq.com/)
+[![Cohere](https://img.shields.io/badge/AI-Cohere-purple.svg)](https://cohere.com/)
+[![DeepSeek](https://img.shields.io/badge/AI-DeepSeek-blue.svg)](https://www.deepseek.com/)
 [![Whisper](https://img.shields.io/badge/Speech-Whisper-blueviolet.svg)](https://github.com/openai/whisper)
 [![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-green.svg)](https://ffmpeg.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -18,7 +22,8 @@
 | Version | Status | Description |
 |---|---|---|
 | **v1.0.0** | ✅ Stable | Core video caption generation release |
-| **v1.1.0** | ✅ Stable / Current | Multi-provider AI translation release |
+| **v1.1.0** | ✅ Stable | Multi-provider AI translation release |
+| **v1.3.0** | ✅ Stable / Current | Expanded 8-provider AI translation release |
 
 ---
 
@@ -295,6 +300,203 @@ The original video is preserved separately from the captioned output.
 
 ---
 
+# 🚀 Version 1.3.0 — Expanded Multi-Provider AI Translation
+
+**Release Status:** ✅ Stable  
+**Release Date:** August 2026  
+**Author:** Nekkanti Satya Srinath  
+**License:** MIT
+
+## 🎉 Release Overview
+
+AI Video Caption Generator v1.3.0 expands the v1.1.0 multi-provider architecture from four providers to **eight supported AI translation providers**.
+
+The complete v1.0.0 caption workflow and v1.1.0 provider architecture remain preserved.
+
+```text
+v1.0.0 → Core Caption Generation
+v1.1.0 → 4 AI Translation Providers
+v1.3.0 → 8 AI Translation Providers
+```
+
+## ✨ v1.3.0 Major Features
+
+### 🤖 Expanded Multi-Provider Translation
+
+| Provider | Default Model | Type |
+|---|---|---|
+| 🦙 Ollama | `qwen2.5:1.5b` | Local |
+| 🟢 OpenAI | `gpt-5-mini` | API |
+| 🟣 Anthropic | `claude-sonnet-4-5` | API |
+| 🔵 Gemini | `gemini-3.6-flash` | API |
+| 🟠 Mistral | `mistral-medium-latest` | API |
+| ⚡ Groq | `llama-3.1-8b-instant` | API |
+| 🟪 Cohere | `command-a-03-2025` | API |
+| 🔷 DeepSeek | `deepseek-v4-flash` | API |
+
+### 🆕 New v1.3.0 Providers
+
+- 🟠 Mistral translation provider
+- ⚡ Groq translation provider
+- 🟪 Cohere translation provider
+- 🔷 DeepSeek translation provider
+
+### 🔌 Translation Provider Factory
+
+The provider factory now supports all eight providers:
+
+```text
+Translation Provider Factory
+        ↓
+┌─────────┬─────────┬───────────┬────────┐
+│ Ollama  │ OpenAI  │ Anthropic │ Gemini │
+├─────────┼─────────┼───────────┼────────┤
+│ Mistral │  Groq  │  Cohere   │DeepSeek│
+└─────────┴─────────┴───────────┴────────┘
+```
+
+### 🧭 Sidebar Provider Selection
+
+The sidebar supports selecting all eight providers and stores the selected provider and model in Streamlit session state.
+
+```text
+AI Provider
+     ↓
+Provider Selection
+     ↓
+Default Model
+     ↓
+Streamlit Session State
+     ↓
+Translation Provider Factory
+     ↓
+Translation
+```
+
+### ⚙️ Settings Updates
+
+The Settings page now displays all eight providers, their default models, and API-key configuration status.
+
+### 🔐 Environment API Keys
+
+New v1.3.0 cloud-provider environment variables:
+
+```env
+MISTRAL_API_KEY=
+MISTRAL_TRANSLATION_MODEL=mistral-medium-latest
+
+GROQ_API_KEY=
+GROQ_TRANSLATION_MODEL=llama-3.1-8b-instant
+
+COHERE_API_KEY=
+COHERE_TRANSLATION_MODEL=command-a-03-2025
+
+DEEPSEEK_API_KEY=
+DEEPSEEK_TRANSLATION_MODEL=deepseek-v4-flash
+```
+
+API keys are read from the environment and are never displayed in the UI.
+
+### 🧪 v1.3.0 Testing
+
+The complete project test suite passed successfully:
+
+```text
+217 passed
+0 failed
+100% pass rate
+```
+
+New provider coverage includes:
+
+```text
+Mistral       → 7 tests passed
+Groq          → 7 tests passed
+Cohere        → 7 tests passed
+DeepSeek      → 7 tests passed
+Provider Factory → 15 tests passed
+Settings Agent  → 34 tests passed
+Full Suite      → 217 tests passed
+```
+
+### 🔄 v1.3.0 GitHub Actions
+
+The complete test suite is verified through the project's GitHub Actions workflow.
+
+```text
+Checkout Repository
+        ↓
+Python 3.11
+        ↓
+Install Dependencies
+        ↓
+Run PyTest
+        ↓
+217 Tests
+        ↓
+PASS ✅
+```
+
+### 🎯 v1.3.0 End-to-End Workflow
+
+```text
+🎬 Upload Video
+      ↓
+💾 Save Original Video
+      ↓
+📝 Whisper Transcription
+      ↓
+🌐 Language Detection
+      ↓
+💬 Caption Language Selection
+      ↓
+🤖 Select AI Provider + Model
+      ↓
+🔀 Translation Provider Factory
+      ↓
+┌─────────────────────────────────────┐
+│ Ollama / OpenAI / Anthropic / Gemini│
+│ Mistral / Groq / Cohere / DeepSeek  │
+└─────────────────────────────────────┘
+      ↓
+📄 Generate SRT
+      ↓
+📄 Generate VTT
+      ↓
+🔥 FFmpeg Caption Burn
+      ↓
+🎥 Captioned Video
+      ↓
+⬇️ Preview / Download
+```
+
+## 📦 v1.3.0 Release Contents
+
+```text
+providers/
+├── translation_provider.py
+├── ollama_translation_provider.py
+├── openai_translation_provider.py
+├── anthropic_translation_provider.py
+├── gemini_translation_provider.py
+├── mistral_translation_provider.py
+├── groq_translation_provider.py
+├── cohere_translation_provider.py
+├── deepseek_translation_provider.py
+└── translation_provider_factory.py
+```
+
+Updated:
+
+```text
+pages/settings_agent.py
+tests/test_settings_agent.py
+tests/test_translation_provider_factory.py
+app.py
+```
+
+---
+
 # 🚀 Version 1.1.0 — Multi-Provider AI Translation
 
 **Release Status:** ✅ Stable / Current  
@@ -410,7 +612,7 @@ The complete updated test suite was executed successfully.
 
 ### v1.1.0 Test Badge
 
-[![Tests](https://img.shields.io/badge/Tests-177%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-217%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 
 ### Test Coverage Areas
 
@@ -666,30 +868,34 @@ tests/test_translation_provider_factory.py
 
 # 📊 Release Comparison
 
-| Capability | v1.0.0 | v1.1.0 |
-|---|---:|---:|
-| Video upload | ✅ | ✅ |
-| Original video preservation | ✅ | ✅ |
-| Whisper transcription | ✅ | ✅ |
-| Language detection | ✅ | ✅ |
-| SRT generation | ✅ | ✅ |
-| VTT generation | ✅ | ✅ |
-| FFmpeg caption burning | ✅ | ✅ |
-| Captioned video output | ✅ | ✅ |
-| Dashboard | ✅ | ✅ |
-| Settings | ✅ | ✅ |
-| Help | ✅ | ✅ |
-| About | ✅ | ✅ |
-| Ollama translation | ✅ | ✅ |
-| OpenAI translation | ❌ | ✅ |
-| Anthropic translation | ❌ | ✅ |
-| Gemini translation | ❌ | ✅ |
-| Sidebar provider selection | ❌ | ✅ |
-| Translation Provider Factory | ❌ | ✅ |
-| Environment API-key handling | ❌ | ✅ |
-| Automated tests | 153 | 177 |
-| GitHub Actions | ✅ | ✅ |
-| Manual E2E verification | ✅ | ✅ |
+| Capability | v1.0.0 | v1.1.0 | v1.3.0 |
+|---|---:|---:|---:|
+| Video upload | ✅ | ✅ | ✅ |
+| Original video preservation | ✅ | ✅ | ✅ |
+| Whisper transcription | ✅ | ✅ | ✅ |
+| Language detection | ✅ | ✅ | ✅ |
+| SRT generation | ✅ | ✅ | ✅ |
+| VTT generation | ✅ | ✅ | ✅ |
+| FFmpeg caption burning | ✅ | ✅ | ✅ |
+| Captioned video output | ✅ | ✅ | ✅ |
+| Dashboard | ✅ | ✅ | ✅ |
+| Settings | ✅ | ✅ | ✅ |
+| Help | ✅ | ✅ | ✅ |
+| About | ✅ | ✅ | ✅ |
+| Ollama translation | ✅ | ✅ | ✅ |
+| OpenAI translation | ❌ | ✅ | ✅ |
+| Anthropic translation | ❌ | ✅ | ✅ |
+| Gemini translation | ❌ | ✅ | ✅ |
+| Mistral translation | ❌ | ❌ | ✅ |
+| Groq translation | ❌ | ❌ | ✅ |
+| Cohere translation | ❌ | ❌ | ✅ |
+| DeepSeek translation | ❌ | ❌ | ✅ |
+| Sidebar provider selection | ❌ | ✅ | ✅ |
+| Translation Provider Factory | ❌ | ✅ | ✅ |
+| Environment API-key handling | ❌ | ✅ | ✅ |
+| Automated tests | 153 | 177 | **217** |
+| GitHub Actions | ✅ | ✅ | ✅ |
+| Manual provider verification | Core workflow | 4 / 4 | New providers tested |
 
 ---
 
@@ -737,7 +943,7 @@ The stable releases validate and handle:
 
 [![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.1.0)
 [![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
-[![Tests](https://img.shields.io/badge/Tests-177%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-217%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 
 **Multi-Provider Release: Stable ✅**
 
@@ -755,6 +961,33 @@ The stable releases validate and handle:
 - ✅ 177 automated tests passing
 - ✅ GitHub Actions passing
 - ✅ Manual end-to-end provider testing complete
+
+---
+
+## v1.3.0
+
+[![Version](https://img.shields.io/badge/Version-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
+[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Tests](https://img.shields.io/badge/Tests-217%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+
+**Expanded Multi-Provider Release: Stable ✅**
+
+- ✅ Core v1.0.0 workflow preserved
+- ✅ v1.1.0 provider architecture preserved
+- ✅ Ollama verified
+- ✅ OpenAI provider preserved
+- ✅ Anthropic provider preserved
+- ✅ Gemini provider preserved
+- ✅ Mistral provider added
+- ✅ Groq provider added
+- ✅ Cohere provider added
+- ✅ DeepSeek provider added
+- ✅ Sidebar provider/model selection updated
+- ✅ Translation Provider Factory updated
+- ✅ Settings page updated for 8 providers
+- ✅ Environment API-key handling updated
+- ✅ **217 automated tests passing**
+- ✅ GitHub Actions passing
 
 ---
 
@@ -829,11 +1062,44 @@ Captioned Video
 
 ---
 
-## 🔗 Project Links
+### v1.3.0
+
+[![Release](https://img.shields.io/badge/Release-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
+[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Tests](https://img.shields.io/badge/217%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![CI](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
+
+**Expanded 8-Provider Release: Stable ✅**
+
+```text
+Video
+  ↓
+Transcript
+  ↓
+Language Detection
+  ↓
+Provider Selection
+  ↓
+Ollama / OpenAI / Anthropic / Gemini
+Mistral / Groq / Cohere / DeepSeek
+  ↓
+SRT / VTT
+  ↓
+FFmpeg
+  ↓
+Captioned Video
+```
+
+**217 tests passed. 8-provider architecture implemented. GitHub Actions passing.**
+
+---
+
+# 🔗 Project Links
 
 - Repository: https://github.com/satya66123/AI-Video-Caption-Generator
 - v1.0.0 Release: https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0
 - v1.1.0 Release: https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.1.0
+- v1.3.0 Release: https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0
 - GitHub Actions: https://github.com/satya66123/AI-Video-Caption-Generator/actions
 
 ---

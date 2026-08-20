@@ -2,18 +2,22 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
-[![PyTest](https://img.shields.io/badge/tests-177%20passed-brightgreen.svg)](https://pytest.org/)
+[![PyTest](https://img.shields.io/badge/tests-217%20passed-brightgreen.svg)](https://pytest.org/)
 [![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Ollama](https://img.shields.io/badge/AI-Ollama-black.svg)](https://ollama.com/)
 [![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991.svg)](https://openai.com/)
 [![Anthropic](https://img.shields.io/badge/AI-Anthropic-orange.svg)](https://www.anthropic.com/)
 [![Gemini](https://img.shields.io/badge/AI-Gemini-4285F4.svg)](https://ai.google.dev/)
+[![Mistral](https://img.shields.io/badge/AI-Mistral-orange.svg)](https://mistral.ai/)
+[![Groq](https://img.shields.io/badge/AI-Groq-black.svg)](https://groq.com/)
+[![Cohere](https://img.shields.io/badge/AI-Cohere-purple.svg)](https://cohere.com/)
+[![DeepSeek](https://img.shields.io/badge/AI-DeepSeek-blue.svg)](https://www.deepseek.com/)
 [![Whisper](https://img.shields.io/badge/Speech-Whisper-blueviolet.svg)](https://github.com/openai/whisper)
 [![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-green.svg)](https://ffmpeg.org/)
 [![GitHub](https://img.shields.io/badge/GitHub-Nekkanti%20Satya%20Srinath-black.svg)](https://github.com/satya66123)
 
-An AI-powered video caption generation application built with Python and Streamlit. It automatically processes uploaded videos, detects spoken language, generates timestamped captions, translates captions into supported languages using a local Ollama model, exports SRT/VTT files, and permanently burns captions into the final video with FFmpeg.
+An AI-powered video caption generation application built with Python and Streamlit. It automatically processes uploaded videos, detects spoken language, generates timestamped captions, translates captions into supported languages using a selectable AI provider, exports SRT/VTT files, and permanently burns captions into the final video with FFmpeg.
 
 ---
 
@@ -25,6 +29,115 @@ This README maintains both stable releases in the same file.
 |---|---|---|
 | **v1.0.0** | ✅ Stable | Core local-first video caption generation |
 | **v1.1.0** | ✅ Stable | Multi-provider AI translation support |
+| **v1.3.0** | ✅ Stable | Expanded 8-provider AI translation support |
+
+## 🚀 v1.3.0 — Expanded Multi-Provider AI Translation
+
+**Current stable release**
+
+v1.3.0 expands the v1.1.0 multi-provider architecture from four AI providers to **eight supported translation providers**, while preserving the complete v1.0.0 and v1.1.0 caption-generation workflow.
+
+[![Version](https://img.shields.io/badge/Version-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
+[![Tests](https://img.shields.io/badge/217%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+
+### v1.3.0 Providers
+
+| Provider | Default Model | Mode |
+|---|---|---|
+| 🦙 Ollama | `qwen2.5:1.5b` | Local |
+| 🟢 OpenAI | `gpt-5-mini` | API |
+| 🟣 Anthropic | `claude-sonnet-4-5` | API |
+| 🔵 Gemini | `gemini-3.6-flash` | API |
+| 🟠 Mistral | `mistral-medium-latest` | API |
+| ⚡ Groq | `llama-3.1-8b-instant` | API |
+| 🟪 Cohere | `command-a-03-2025` | API |
+| 🔷 DeepSeek | `deepseek-v4-flash` | API |
+
+### v1.3.0 Highlights
+
+- 🌐 Expanded AI translation provider support from 4 to 8 providers
+- 🟠 Mistral translation provider
+- ⚡ Groq translation provider
+- 🟪 Cohere translation provider
+- 🔷 DeepSeek translation provider
+- 🔀 Translation Provider Factory updated for all 8 providers
+- 🧭 Sidebar provider/model selection supports all 8 providers
+- ⚙️ Settings page supports all 8 providers
+- 🔐 Environment-based API-key configuration for cloud providers
+- 🔒 API keys remain hidden from the UI
+- 🧪 Dedicated tests for each new provider
+- 🧪 Expanded Settings and Factory test coverage
+- ✅ **217 automated tests passing**
+- 🔄 GitHub Actions CI preserved
+- 🎥 SRT/VTT generation preserved
+- 🔥 FFmpeg caption burning preserved
+- 💾 Original uploaded video preservation preserved
+
+### v1.3.0 Translation Flow
+
+```text
+Upload Video
+      ↓
+Save Original Video
+      ↓
+Whisper Transcription
+      ↓
+Language Detection
+      ↓
+Select Caption Language
+      ↓
+Select AI Provider + Model
+      ↓
+Translation Provider Factory
+      ↓
+┌──────────────────────────────────────────────┐
+│ Ollama / OpenAI / Anthropic / Gemini         │
+│ Mistral / Groq / Cohere / DeepSeek           │
+└──────────────────────────────────────────────┘
+      ↓
+Generate SRT + VTT
+      ↓
+FFmpeg Caption Burn
+      ↓
+Final Captioned Video
+```
+
+### v1.3.0 Verification
+
+```text
+217 passed
+0 failed
+100% pass rate
+
+Mistral      → Provider tests ✅
+Groq         → Provider tests ✅
+Cohere       → Provider tests ✅
+DeepSeek     → Provider tests ✅
+Factory      → Integration tests ✅
+Settings     → Provider configuration tests ✅
+Full suite   → 217 tests passed ✅
+```
+
+### v1.3.0 Environment Configuration
+
+```env
+MISTRAL_API_KEY=
+MISTRAL_TRANSLATION_MODEL=mistral-medium-latest
+
+GROQ_API_KEY=
+GROQ_TRANSLATION_MODEL=llama-3.1-8b-instant
+
+COHERE_API_KEY=
+COHERE_TRANSLATION_MODEL=command-a-03-2025
+
+DEEPSEEK_API_KEY=
+DEEPSEEK_TRANSLATION_MODEL=deepseek-v4-flash
+```
+
+Keep real API keys in the local `.env` file and never commit them to the repository.
+
+---
 
 ## 🚀 v1.1.0 — Multi-Provider AI Translation
 
@@ -94,7 +207,7 @@ Final Captioned Video
 ### v1.1.0 Verification
 
 ```text
-177 passed
+217 passed
 0 failed
 100% pass rate
 
@@ -143,6 +256,10 @@ Final Captioned Video
 - 🟢 OpenAI translation support (v1.1.0)
 - 🟣 Anthropic translation support (v1.1.0)
 - 🔵 Gemini translation support (v1.1.0)
+- 🟠 Mistral translation support (v1.3.0)
+- ⚡ Groq translation support (v1.3.0)
+- 🟪 Cohere translation support (v1.3.0)
+- 🔷 DeepSeek translation support (v1.3.0)
 - 🔀 Sidebar AI provider/model selection (v1.1.0)
 - 📄 SRT caption generation
 - 📄 VTT caption generation
@@ -185,8 +302,9 @@ Final Captioned Video
            ↓
 ┌──────────────────────┐
 │ Select AI Provider   │
-│ Ollama / OpenAI /    │
-│ Anthropic / Gemini   │
+│ Ollama / OpenAI / Anthropic │
+│ Gemini / Mistral / Groq     │
+│ Cohere / DeepSeek           │
 └──────────┬───────────┘
            ↓
      ┌─────┴─────┐
@@ -251,6 +369,10 @@ Both files contain timestamped caption segments.
 | OpenAI | AI translation provider |
 | Anthropic | AI translation provider |
 | Gemini | AI translation provider |
+| Mistral | AI translation provider |
+| Groq | AI translation provider |
+| Cohere | AI translation provider |
+| DeepSeek | AI translation provider |
 | TranslateGemma / Qwen | Local translation model support |
 | FFmpeg | Video processing and caption burning |
 | PyTest | Automated testing |
@@ -335,6 +457,10 @@ AI-Video-Caption-Generator/
 │   ├── openai_translation_provider.py
 │   ├── anthropic_translation_provider.py
 │   ├── gemini_translation_provider.py
+│   ├── mistral_translation_provider.py
+│   ├── groq_translation_provider.py
+│   ├── cohere_translation_provider.py
+│   ├── deepseek_translation_provider.py
 │   └── translation_provider_factory.py
 │
 ├── services/
@@ -474,6 +600,7 @@ Configure:
 - AI translation provider and default model
 - Whisper model
 - Default caption language
+- 8 supported AI providers: Ollama, OpenAI, Anthropic, Gemini, Mistral, Groq, Cohere, DeepSeek
 
 ### ❓ Help
 
@@ -520,7 +647,7 @@ pytest tests/test_dashboard_agent.py -v
 ### Current Test Status
 
 ```text
-177 passed
+217 passed
 0 failed
 ```
 
@@ -832,7 +959,9 @@ The implemented and manually verified workflow produces:
 **Complete ✅**
 
 ```text
-177 passed
+217 passed
+0 failed
+100% pass rate
 ```
 
 ### GitHub CI
@@ -980,14 +1109,14 @@ Download Final Video
 
 ---
 
-## **177 Tests Passed • 0 Failed • 100% Pass Rate • v1.0.0**
+## **217 Tests Passed • 0 Failed • 100% Pass Rate • v1.3.0**
 
 ## 🚀 [GitHub Repository](https://github.com/satya66123/AI-Video-Caption-Generator)  
-## 📦 [Release Notes — v1.0.0](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
+## 📦 [Release Notes — v1.3.0](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
 
 **Status: Core release complete ✅**
 
-**Tests: 177 passed ✅**
+**Tests: 217 passed ✅**
 
 **GitHub Actions: Passing ✅**
 ---
@@ -1024,13 +1153,18 @@ v1.0.0 → Core Caption Generator
 
 v1.1.0 → Multi-Provider AI Translation
          Stable ✅
+         
+v1.3.0 → Multi-Provider AI Translation         
+         Stable ✅
 
-Automated Tests: 177 passed
+Automated Tests: 217 passed
 Manual Provider Tests: 4/4 passed
 GitHub Actions: Passing
-Current Stable: v1.1.0
+Current Stable: v1.3.0
 ```
 
-**v1.0.0 remains documented as the original stable core release.  
-v1.1.0 is the current stable release with multi-provider AI translation support.**
+**v1.0.0 remains documented as the original stable core release.**
 
+**v1.1.0 is the current stable release with multi-provider AI translation support.**
+
+**v1.3.0 remains documented as the original stable core release.**
