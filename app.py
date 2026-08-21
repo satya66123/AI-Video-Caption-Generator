@@ -13,7 +13,7 @@ from services.video_caption_burn_service import (
     VideoCaptionBurnService,
 )
 from services.transcript_service import TranscriptService
-
+from datetime import datetime
 
 
 import os
@@ -30,6 +30,8 @@ load_dotenv()
 UPLOAD_DIR = Path("uploads")
 CAPTION_DIR = Path("captions")
 OUTPUT_DIR = Path("outputs")
+TRANSCRIPT_DIR = Path("transcripts")
+
 
 
 # ============================================================
@@ -67,6 +69,69 @@ CAPTION_LANGUAGES = {
 # ============================================================
 # Sidebar Navigation
 # ============================================================
+
+def save_generated_transcript(
+    video_path: Path,
+    segments: list,
+) -> Path | None:
+    """Save generated transcript with Whisper timestamps."""
+
+    if not segments:
+        return None
+
+    TRANSCRIPT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    generated_at = datetime.now()
+
+    filename_timestamp = generated_at.strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    transcript_path = (
+        TRANSCRIPT_DIR
+        / f"{video_path.stem}_{filename_timestamp}.txt"
+    )
+
+    lines = [
+        f"Transcript: {video_path.name}",
+        f"Generated: {generated_at.isoformat(timespec='seconds')}",
+        "",
+    ]
+
+    for index, segment in enumerate(
+        segments,
+        start=1,
+    ):
+        start = float(
+            getattr(segment, "start", 0.0)
+        )
+
+        end = float(
+            getattr(segment, "end", 0.0)
+        )
+
+        transcript_text = str(
+            getattr(segment, "text", "")
+        ).strip()
+
+        if not transcript_text:
+            continue
+
+        lines.append(
+            f"{index:04d} | "
+            f"[{start:08.2f} --> {end:08.2f}] "
+            f"{transcript_text}"
+        )
+
+    transcript_path.write_text(
+        "\n".join(lines) + "\n",
+        encoding="utf-8",
+    )
+
+    return transcript_path
 
 def render_sidebar() -> str:
     """Render the application sidebar navigation."""
@@ -842,9 +907,28 @@ def render_caption_generator() -> None:
                     "caption_result"
                 ] = result
 
+                transcript_path = save_generated_transcript(
+                    video_path=video_path,
+                    segments=result.get(
+                        "segments",
+                        [],
+                    ),
+                )
+
+                if transcript_path:
+                    st.session_state[
+                        "transcript_path"
+                    ] = str(transcript_path)
+
                 st.success(
                     "Captions generated successfully!"
                 )
+
+                if transcript_path:
+                    st.info(
+                        f"Transcript saved: "
+                        f"{transcript_path.name}"
+                    )
 
             except Exception as exc:
 
@@ -945,6 +1029,40 @@ def render_caption_generator() -> None:
             st.caption(
                 f"Showing first 10 of "
                 f"{len(segments)} captions."
+            )
+
+    # ========================================================
+    # 7. Saved Transcript
+    # ========================================================
+
+    transcript_path_value = st.session_state.get(
+        "transcript_path"
+    )
+
+    if transcript_path_value:
+        transcript_path = Path(
+            transcript_path_value
+        )
+
+        if transcript_path.is_file():
+            st.subheader(
+                "📝 Generated Transcript"
+            )
+
+            st.write(
+                f"**Transcript:** "
+                f"`{transcript_path.name}`"
+            )
+
+            st.download_button(
+                label="⬇️ Download Transcript",
+                data=transcript_path.read_bytes(),
+                file_name=transcript_path.name,
+                mime="text/plain",
+                key=(
+                    f"download_transcript_"
+                    f"{transcript_path}"
+                ),
             )
 
     # ========================================================
