@@ -124,49 +124,89 @@ def render_sidebar() -> str:
         translation_providers = {
             "Ollama": {
                 "key": "ollama",
-                "model": "qwen2.5:1.5b",
+                "models": [
+                    "qwen2.5:1.5b",
+                    "gemma2:2b",
+                    "gemma3:4b",
+                    "mistral:latest",
+                    "phi3:latest",
+                    "qwen3:latest",
+                    "llama3.1:latest",
+                    "llama3:8b",
+                    "deepseek-coder:latest",
+                ],
                 "environment_variable": None,
             },
             "OpenAI": {
                 "key": "openai",
-                "model": "gpt-5-mini",
+                "models": [
+                    "gpt-5-mini",
+                    "gpt-4o",
+                    "gpt-4o-mini",
+                ],
                 "environment_variable": "OPENAI_API_KEY",
             },
             "Anthropic": {
                 "key": "anthropic",
-                "model": "claude-sonnet-4-5",
+                "models": [
+                    "claude-sonnet-4-5",
+                    "claude-haiku-4-5",
+                    "claude-opus-4-1",
+                ],
                 "environment_variable": "ANTHROPIC_API_KEY",
             },
             "Gemini": {
                 "key": "gemini",
-                "model": "gemini-3.6-flash",
+                "models": [
+                    "gemini-3.6-flash",
+                    "gemini-2.5-flash",
+                    "gemini-2.5-pro",
+                ],
                 "environment_variable": "GEMINI_API_KEY",
             },
             "Mistral": {
                 "key": "mistral",
-                "model": "mistral-medium-latest",
+                "models": [
+                    "mistral-medium-latest",
+                    "mistral-large-latest",
+                    "mistral-small-latest",
+                ],
                 "environment_variable": "MISTRAL_API_KEY",
             },
             "Groq": {
                 "key": "groq",
-                "model": "llama-3.1-8b-instant",
+                "models": [
+                    "llama-3.3-70b-versatile",
+                    "llama-3.1-8b-instant",
+                    "mixtral-8x7b-32768",
+                ],
                 "environment_variable": "GROQ_API_KEY",
             },
             "Cohere": {
                 "key": "cohere",
-                "model": "command-a-03-2025",
+                "models": [
+                    "command-a-03-2025",
+                    "command-r-plus",
+                    "command-r",
+                ],
                 "environment_variable": "COHERE_API_KEY",
             },
             "DeepSeek": {
                 "key": "deepseek",
-                "model": "deepseek-v4-flash",
+                "models": [
+                    "deepseek-chat",
+                    "deepseek-reasoner",
+                    "deepseek-v4-flash",
+                ],
                 "environment_variable": "DEEPSEEK_API_KEY",
             },
         }
 
-        provider_names = list(
-            translation_providers.keys()
-        )
+        # ----------------------------------------------------
+        # Provider Selection
+        # ----------------------------------------------------
+
+        provider_names = list(translation_providers.keys())
 
         current_provider = st.session_state.get(
             "translation_provider",
@@ -178,53 +218,56 @@ def render_sidebar() -> str:
             for config in translation_providers.values()
         ]
 
-        if current_provider in provider_keys:
-            provider_index = provider_keys.index(
-                current_provider
-            )
-        else:
-            provider_index = 0
+        provider_index = (
+            provider_keys.index(current_provider)
+            if current_provider in provider_keys
+            else 0
+        )
 
         selected_provider = st.selectbox(
             "Provider",
-            provider_names,
+            options=provider_names,
             index=provider_index,
             key="sidebar_provider",
-            help=(
-                "Select the AI provider used "
-                "for caption translation."
-            ),
+            help="Select the AI provider used for caption translation.",
         )
 
-        provider_config = translation_providers[
-            selected_provider
-        ]
+        # ----------------------------------------------------
+        # Selected Provider Configuration
+        # ----------------------------------------------------
+
+        provider_config = translation_providers[selected_provider]
 
         provider_key = provider_config["key"]
-        translation_model = provider_config["model"]
+        available_models = provider_config["models"]
 
         # ----------------------------------------------------
-        # Save Provider + Model to Session
+        # Model Selection
         # ----------------------------------------------------
 
-        st.session_state[
-            "translation_provider"
-        ] = provider_key
-
-        st.session_state[
+        current_model = st.session_state.get(
             "translation_model"
-        ] = translation_model
-
-        # ----------------------------------------------------
-        # Show Selected Model
-        # ----------------------------------------------------
-
-        st.text_input(
-            "Model",
-            value=translation_model,
-            disabled=True,
-            key="sidebar_model_display",
         )
+
+        if current_model not in available_models:
+            current_model = available_models[0]
+
+        translation_model = st.selectbox(
+            "Model",
+            options=available_models,
+            index=available_models.index(current_model),
+            key=f"sidebar_model_{provider_key}",
+            help=f"Select the model for {selected_provider}.",
+        )
+
+        # ----------------------------------------------------
+        # Save Selection
+        # ----------------------------------------------------
+
+        st.session_state["translation_provider"] = provider_key
+        st.session_state["translation_model"] = translation_model
+
+
 
         # ----------------------------------------------------
         # Provider Status
