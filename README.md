@@ -1577,7 +1577,7 @@ Download Final Video
 # 🚀 v1.1.0 Release
 
 v1.1.0 introduced multi-provider AI translation.
-![AI Video Caption Generator v1.1.0](docs/screenshots/AI-Video-Caption-Generator-pic.png)
+![AI Video Caption Generator v1.1.0](docs/screenshots/AI-Video-Caption-Generator-v1.1.0-pic.png)
 [![Tests](https://img.shields.io/badge/177%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
 [![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.1.0)
@@ -1600,7 +1600,7 @@ Each provider used one configured/default translation model.
 
 v1.3.0 introduces:
 
-![AI Video Caption Generator v1.3.0](docs/screenshots/AI-Video-Caption-Generator-pic.png)
+![AI Video Caption Generator v1.3.0](docs/screenshots/AI-Video-Caption-Generator-v1.3.0-pic.png)
 [![Tests](https://img.shields.io/badge/217%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
 [![Version](https://img.shields.io/badge/Version-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
