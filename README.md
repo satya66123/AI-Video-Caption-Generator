@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
-[![PyTest](https://img.shields.io/badge/tests-217%20passed-brightgreen.svg)](https://pytest.org/)
+[![PyTest](https://img.shields.io/badge/tests-231%20passed-brightgreen.svg)](https://pytest.org/)
 [![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Ollama](https://img.shields.io/badge/AI-Ollama-black.svg)](https://ollama.com/)
@@ -25,13 +25,15 @@ The application processes uploaded videos, detects spoken language, generates ti
 
 # 📌 Stable Releases
 
-The project has evolved through three major stable releases.
+The project has evolved through five major stable releases.
 
-| Version    | Status   | Main Scope                                  |
-| ---------- | -------- | ------------------------------------------- |
-| **v1.0.0** | ✅ Stable | Ollama-based core caption generation        |
-| **v1.1.0** | ✅ Stable | Multi-provider AI translation               |
-| **v1.3.0** | ✅ Stable | Multi-provider + multi-model AI translation |
+| Version    | Status   | Main Scope                                           |
+| ---------- | -------- | ---------------------------------------------------- |
+| **v1.0.0** | ✅ Stable | Ollama-based core caption generation                 |
+| **v1.1.0** | ✅ Stable | Multi-provider AI translation                        |
+| **v1.2.0** | ✅ Stable | Timestamped transcript saving                        |
+| **v1.3.0** | ✅ Stable | Multi-provider + multi-model AI translation          |
+| **v1.4.0** | ✅ Stable | Custom application theme selection                   |
 
 ## Release Evolution
 
@@ -54,6 +56,19 @@ Multi-Provider Translation
 ```
 
 ```text
+v1.2.0
+Multiple AI Providers
+      ↓
+One Default Model per Provider
+      ↓
+Timestamped Transcript Saving
+      ↓
+Transcript Download
+```
+
+---
+
+```text
 v1.3.0
 Multiple AI Providers
       ↓
@@ -63,6 +78,87 @@ Provider + Model Selection
       ↓
 Multi-Model Translation
 ```
+
+---
+
+```text
+v1.4.0
+Multiple AI Providers
+      ↓
+Multiple Models per Provider
+      ↓
+Provider + Model Selection
+      ↓
+Custom Theme Selection
+```
+
+---
+
+# 🚀 v1.4.0 — Custom Theme Selection
+
+**Current stable release**
+
+v1.4.0 adds **custom application theme selection** directly to the sidebar while preserving the multi-provider, multi-model, transcript, caption, and video-processing features from previous releases.
+
+## v1.4.0 Highlights
+
+* 🎨 **Custom theme selection from the sidebar**
+* 🌙 Dark theme
+* 🌌 Midnight Blue theme
+* 💜 Cosmic Purple theme
+* 🌊 Ocean theme
+* 🌿 Emerald theme
+* ❌ Light theme removed
+* 🧠 Multi-model provider selection preserved
+* 🤖 Multi-provider AI translation preserved
+* 📝 Timestamped transcript saving preserved
+* ⬇️ Transcript download preserved
+* 🎥 SRT/VTT generation preserved
+* 🔥 FFmpeg caption burning preserved
+* 💾 Original uploaded video preservation preserved
+* 🧪 **231 automated tests passing**
+* 🔄 GitHub Actions CI preserved
+
+## v1.4.0 Theme Selection
+
+Themes are available from the application sidebar:
+
+```text
+🎨 Theme
+
+🌙 Dark
+🌌 Midnight Blue
+💜 Cosmic Purple
+🌊 Ocean
+🌿 Emerald
+```
+
+The selected theme is stored in the Streamlit session and applied to the application UI.
+
+## v1.4.0 Theme Flow
+
+```text
+Open Application
+      ↓
+Open Sidebar
+      ↓
+Select Theme
+      ↓
+Apply Theme
+      ↓
+Continue Video Caption Workflow
+```
+
+## v1.4.0 Verification
+
+```text
+231 passed
+0 failed
+100% pass rate
+21.39 seconds
+```
+
+The v1.4.0 test suite includes the existing project coverage plus the new theme-related tests.
 
 ---
 
@@ -216,7 +312,7 @@ Final Captioned Video
 ## v1.3.0 Verification
 
 ```text
-217 passed
+231 passed
 0 failed
 100% pass rate
 ```
@@ -435,6 +531,8 @@ Final Captioned Video
 * OpenAI Whisper transcription
 * Timestamped transcript segments
 * Spoken-language detection
+* Timestamped transcript file saving
+* Transcript download
 * Internal transcript processing
 
 ## 🌐 Caption Languages
@@ -480,6 +578,20 @@ Select Model
 Run Translation
 ```
 
+## 🎨 Theme Selection
+
+v1.4.0 adds selectable application themes from the sidebar.
+
+Available themes:
+
+* 🌙 Dark
+* 🌌 Midnight Blue
+* 💜 Cosmic Purple
+* 🌊 Ocean
+* 🌿 Emerald
+
+The selected theme is stored for the current Streamlit session.
+
 ## 📄 Caption Formats
 
 * SRT
@@ -503,6 +615,7 @@ FFmpeg permanently burns the generated captions into the final video.
 * AI model selection
 * Default caption language
 * Provider configuration/status
+* Application theme selection
 
 ## 🧪 Testing
 
@@ -893,7 +1006,16 @@ The application will open in your browser.
 
 # 🖥️ Application Navigation
 
-The application provides a sidebar navigation:
+The application provides a sidebar navigation and configuration controls:
+
+```text
+🎨 Theme
+🤖 AI Provider
+🧠 AI Model
+🌐 Caption Language
+```
+
+Navigation:
 
 ```text
 🏠 Dashboard
@@ -957,6 +1079,7 @@ The Settings page provides configuration for:
 * Default caption language
 * Provider configuration
 * API-key status
+* Application theme
 
 ## Provider → Model Selection
 
@@ -1047,9 +1170,10 @@ pytest tests/test_dashboard_agent.py -v
 ## Current Test Status
 
 ```text
-217 passed
+231 passed
 0 failed
 100% pass rate
+21.39 seconds
 ```
 
 The test suite covers the application components, including:
@@ -1087,29 +1211,32 @@ Every configured push and pull request is automatically tested.
 
 # 📊 Release Comparison
 
-| Capability                         | v1.0.0 | v1.1.0 | v1.3.0 |
-| ---------------------------------- | :----: | :----: | :----: |
-| Video upload                       |    ✅   |    ✅   |    ✅   |
-| Original video preservation        |    ✅   |    ✅   |    ✅   |
-| Whisper transcription              |    ✅   |    ✅   |    ✅   |
-| Language detection                 |    ✅   |    ✅   |    ✅   |
-| SRT generation                     |    ✅   |    ✅   |    ✅   |
-| VTT generation                     |    ✅   |    ✅   |    ✅   |
-| FFmpeg caption burning             |    ✅   |    ✅   |    ✅   |
-| Captioned video output             |    ✅   |    ✅   |    ✅   |
-| Dashboard                          |    ✅   |    ✅   |    ✅   |
-| Settings / Help / About            |    ✅   |    ✅   |    ✅   |
-| Ollama translation                 |    ✅   |    ✅   |    ✅   |
-| Multiple AI providers              |    ❌   |    ✅   |    ✅   |
-| Multiple models per provider       |    ❌   |    ❌   |    ✅   |
-| Provider selection                 |    ❌   |    ✅   |    ✅   |
-| Model selection                    |    ❌   |    ❌   |    ✅   |
-| Dynamic Provider → Model selection |    ❌   |    ❌   |    ✅   |
-| Translation Provider Factory       |    ❌   |    ✅   |    ✅   |
-| Environment API-key handling       |    ❌   |    ✅   |    ✅   |
-| Automated tests                    |   153  |   177  |   217  |
-| GitHub Actions                     |    ✅   |    ✅   |    ✅   |
-| Manual E2E verification            |    ✅   |    ✅   |    ✅   |
+| Capability                         | v1.0.0 | v1.1.0 | v1.2.0 | v1.3.0 | v1.4.0 |
+| ---------------------------------- | :----: | :----: | :----: | :----: | :----: |
+| Video upload                       |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Original video preservation        |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Whisper transcription              |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Language detection                 |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Timestamped transcript saving      |    ❌   |    ❌   |    ✅   |    ✅   |    ✅   |
+| Transcript download                |    ❌   |    ❌   |    ✅   |    ✅   |    ✅   |
+| SRT generation                     |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| VTT generation                     |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| FFmpeg caption burning             |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Captioned video output             |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Dashboard                          |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Settings / Help / About            |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Ollama translation                 |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Multiple AI providers              |    ❌   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Multiple models per provider       |    ❌   |    ❌   |    ❌   |    ✅   |    ✅   |
+| Provider selection                 |    ❌   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Model selection                    |    ❌   |    ❌   |    ❌   |    ✅   |    ✅   |
+| Dynamic Provider → Model selection |    ❌   |    ❌   |    ❌   |    ✅   |    ✅   |
+| Translation Provider Factory       |    ❌   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Environment API-key handling       |    ❌   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Theme selection                    |    ❌   |    ❌   |    ❌   |    ❌   |    ✅   |
+| Automated tests                    |   153  |   177  |    —   |   217  |   231  |
+| GitHub Actions                     |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
+| Manual E2E verification            |    ✅   |    ✅   |    ✅   |    ✅   |    ✅   |
 
 ---
 
@@ -1252,6 +1379,9 @@ The application uses local directories:
 ```text
 uploads/
     original video files
+
+transcripts/
+    timestamped transcript files
 
 captions/
     *.srt
@@ -1409,10 +1539,21 @@ Users can:
 **Complete ✅**
 
 ```text
-217 passed
+231 passed
 0 failed
 100% pass rate
+21.39 seconds
 ```
+
+## Theme Selection
+
+**Complete in v1.4.0 ✅**
+
+Users can:
+
+* Select an application theme from the sidebar
+* Use Dark, Midnight Blue, Cosmic Purple, Ocean, or Emerald themes
+* Apply the selected theme during the current Streamlit session
 
 ## GitHub CI
 
@@ -1518,7 +1659,7 @@ Please review the individual licenses and terms of the third-party technologies 
 
 **AI Video Caption Generator** is an AI-powered application that transforms videos into multilingual captioned videos.
 
-The project evolved through three major stable releases:
+The project evolved through five major stable releases:
 
 ```text
 v1.0.0
@@ -1529,9 +1670,15 @@ v1.1.0
 Multi-Provider AI
 One Default Model per Provider
         ↓
+v1.2.0
+Multi-Provider + Timestamped Transcript Saving
+        ↓
 v1.3.0
 Multi-Provider + Multi-Model AI
 Provider + Model Selection
+        ↓
+v1.4.0
+Custom Application Theme Selection
 ```
 
 ## Complete Workflow
@@ -1596,6 +1743,44 @@ Each provider used one configured/default translation model.
 
 ---
 
+# 🚀 v1.2.0 Release
+
+v1.2.0 introduced persistent timestamped transcript saving while retaining the multi-provider architecture with one configured/default model per provider.
+![AI Video Caption Generator v1.2.0](docs/screenshots/AI-Video-Caption-Generator-v1.2.0-pic.png)
+[![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Version](https://img.shields.io/badge/Version-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
+
+### v1.2.0 Features
+
+* 🤖 Multi-provider AI translation
+* 🎯 One default model per provider
+* 📝 Timestamped transcript saving
+* ⬇️ Transcript download
+* ⏱️ Whisper timestamp preservation
+* 📄 SRT/VTT generation
+* 🔥 FFmpeg caption burning
+* 💾 Original video preservation
+
+```text
+Provider
+   ↓
+One Default Model
+   ↓
+Whisper Transcript
+   ↓
+Timestamped Transcript Save
+   ↓
+Translation
+   ↓
+SRT / VTT
+   ↓
+FFmpeg
+   ↓
+Captioned Video
+```
+
+---
+
 # 🚀 v1.3.0 Release
 
 v1.3.0 introduces:
@@ -1627,6 +1812,40 @@ This is the major evolution from the v1.1.0 architecture.
 
 ---
 
+# 🚀 v1.4.0 Release
+
+v1.4.0 introduces customizable application themes in the sidebar.
+
+![AI Video Caption Generator v1.4.0](docs/screenshots/AI-Video-Caption-Generator-v1.4.0-pic.png)
+[![Version](https://img.shields.io/badge/Version-v1.4.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.0)
+[![Tests](https://img.shields.io/badge/231%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+
+### v1.4.0 Features
+
+* 🎨 Theme selection from the sidebar
+* 🌙 Dark
+* 🌌 Midnight Blue
+* 💜 Cosmic Purple
+* 🌊 Ocean
+* 🌿 Emerald
+* ❌ Light theme removed
+* 🧠 Dynamic model selection preserved
+* 🤖 Multi-provider AI preserved
+* 📝 Timestamped transcript saving preserved
+* ⬇️ Transcript download preserved
+
+### v1.4.0 Verification
+
+```text
+231 passed
+0 failed
+100% pass rate
+21.39 seconds
+```
+
+---
+
 # 🏆 Stable Release Summary
 
 ```text
@@ -1648,32 +1867,38 @@ v1.3.0 → Multi-Provider + Multi-Model AI
 
 ────────────────────────────────────────
 
-Automated Tests: 217 passed
+Automated Tests: 231 passed
 Failed Tests: 0
 Pass Rate: 100%
 GitHub Actions: Passing
 
-Current Stable Release: v1.3.0 🚀
+Current Stable Release: v1.4.0 🚀
 ```
 
 **v1.0.0** remains documented as the original Ollama-based core release.
 
 **v1.1.0** introduced multi-provider AI translation with one default model per provider.
 
+**v1.2.0** introduced timestamped transcript saving.
+
 **v1.3.0** adds multi-model support, allowing users to select both the AI provider and the model used for translation.
+
+**v1.4.0** adds custom application theme selection from the sidebar.
 
 ## Current Stable Release
 
-# 🚀 v1.3.0
+# 🚀 v1.4.0
 
-**Multi-Provider + Multi-Model AI Translation**
+**Custom Theme Selection + Multi-Provider + Multi-Model AI Translation**
 
 **Status: Stable ✅**
 
-**Tests: 217 passed ✅**
+**Tests: 231 passed ✅**
 
 **GitHub Actions: Passing ✅**
 
 ---
 
 ⭐ If you find this project useful, consider starring the repository and sharing it with other developers.
+
+````

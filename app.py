@@ -65,6 +65,77 @@ CAPTION_LANGUAGES = {
     "Punjabi": "pa",
 }
 
+THEMES = {
+    "🌙 Dark": {
+        "background": "#0e1117",
+        "sidebar": "#161b22",
+        "text": "#f5f7fa",
+        "accent": "#58a6ff",
+    },
+    "🌌 Midnight Blue": {
+        "background": "#07111f",
+        "sidebar": "#081525",
+        "text": "#f5f7fa",
+        "accent": "#38bdf8",
+    },
+    "💜 Cosmic Purple": {
+        "background": "#10091f",
+        "sidebar": "#120a24",
+        "text": "#faf7ff",
+        "accent": "#d946ef",
+    },
+    "🌊 Ocean": {
+        "background": "#061a1f",
+        "sidebar": "#071e25",
+        "text": "#effcff",
+        "accent": "#22d3ee",
+    },
+    "🌿 Emerald": {
+        "background": "#07170f",
+        "sidebar": "#081b12",
+        "text": "#f2fff6",
+        "accent": "#34d399",
+    },
+}
+
+def apply_theme(theme_name):
+    theme = THEMES[theme_name]
+
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-color: {theme["background"]};
+            color: {theme["text"]};
+        }}
+        
+        .stAppHeader  {{
+            background-color: {theme["background"]};
+            color: {theme["text"]};
+        }}
+
+
+        [data-testid="stSidebar"] {{
+            background-color: {theme["sidebar"]};
+        }}
+
+        [data-testid="stSidebar"] * {{
+            color: {theme["text"]};
+        }}
+
+        .stButton > button {{
+            border-color: {theme["accent"]};
+        }}
+
+        a {{
+            color: {theme["accent"]};
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 
 # ============================================================
 # Sidebar Navigation
@@ -162,6 +233,32 @@ def render_sidebar() -> str:
         # ----------------------------------------------------
         # Navigation
         # ----------------------------------------------------
+
+        st.markdown("### 🎨 Theme")
+
+        theme_names = list(THEMES.keys())
+
+        current_theme = st.session_state.get(
+            "app_theme",
+            theme_names[0],
+        )
+
+        selected_theme = st.selectbox(
+            "Theme",
+            theme_names,
+            index=(
+                theme_names.index(current_theme)
+                if current_theme in theme_names
+                else 0
+            ),
+            key="sidebar_theme",
+        )
+
+        st.session_state["app_theme"] = selected_theme
+
+        apply_theme(selected_theme)
+
+        st.divider()
 
         st.markdown("### 🧭 Navigation")
 
