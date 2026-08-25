@@ -30,8 +30,6 @@ CAPTION_DIR = Path("captions")
 OUTPUT_DIR = Path("outputs")
 TRANSCRIPT_DIR = Path("transcripts")
 
-
-
 # ============================================================
 # Page Configuration
 # ============================================================
@@ -42,7 +40,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
 
 # ============================================================
 # Application Constants
@@ -107,86 +104,82 @@ THEMES = {
     # LIGHT THEMES — NEW
     # ========================================================
 
-# ========================================================
-# LIGHT THEMES
-# ========================================================
+    # ========================================================
+    # LIGHT THEMES
+    # ========================================================
 
-"☀️ Light": {
-    "background": "#ffffff",
-    "sidebar": "#f8fafc",
-    "text": "#000000",
-    "accent": "#2563eb",
-},
+    "☀️ Light": {
+        "background": "#ffffff",
+        "sidebar": "#f8fafc",
+        "text": "#000000",
+        "accent": "#2563eb",
+    },
 
-"🌤️ Sky Light": {
-    "background": "#f0f9ff",
-    "sidebar": "#e0f2fe",
-    "text": "#000000",
-    "accent": "#0284c7",
-},
+    "🌤️ Sky Light": {
+        "background": "#f0f9ff",
+        "sidebar": "#e0f2fe",
+        "text": "#000000",
+        "accent": "#0284c7",
+    },
 
-"💜 Lavender Light": {
-    "background": "#faf5ff",
-    "sidebar": "#f3e8ff",
-    "text": "#000000",
-    "accent": "#9333ea",
-},
+    "💜 Lavender Light": {
+        "background": "#faf5ff",
+        "sidebar": "#f3e8ff",
+        "text": "#000000",
+        "accent": "#9333ea",
+    },
 
-"🌿 Mint Light": {
-    "background": "#f0fdf4",
-    "sidebar": "#dcfce7",
-    "text": "#000000",
-    "accent": "#16a34a",
-},
+    "🌿 Mint Light": {
+        "background": "#f0fdf4",
+        "sidebar": "#dcfce7",
+        "text": "#000000",
+        "accent": "#16a34a",
+    },
 
-"🌊 Aqua Light": {
-    "background": "#ecfeff",
-    "sidebar": "#cffafe",
-    "text": "#000000",
-    "accent": "#0891b2",
-},
+    "🌊 Aqua Light": {
+        "background": "#ecfeff",
+        "sidebar": "#cffafe",
+        "text": "#000000",
+        "accent": "#0891b2",
+    },
 
-"🌸 Rose Light": {
-    "background": "#fff1f2",
-    "sidebar": "#ffe4e6",
-    "text": "#000000",
-    "accent": "#e11d48",
-},
+    "🌸 Rose Light": {
+        "background": "#fff1f2",
+        "sidebar": "#ffe4e6",
+        "text": "#000000",
+        "accent": "#e11d48",
+    },
 
-"🍑 Peach Light": {
-    "background": "#fff7ed",
-    "sidebar": "#ffedd5",
-    "text": "#000000",
-    "accent": "#ea580c",
-},
+    "🍑 Peach Light": {
+        "background": "#fff7ed",
+        "sidebar": "#ffedd5",
+        "text": "#000000",
+        "accent": "#ea580c",
+    },
 
-"🌼 Amber Light": {
-    "background": "#fffbeb",
-    "sidebar": "#fef3c7",
-    "text": "#000000",
-    "accent": "#d97706",
-},
+    "🌼 Amber Light": {
+        "background": "#fffbeb",
+        "sidebar": "#fef3c7",
+        "text": "#000000",
+        "accent": "#d97706",
+    },
 
-"🩵 Ice Light": {
-    "background": "#f8fafc",
-    "sidebar": "#e2e8f0",
-    "text": "#000000",
-    "accent": "#475569",
-},
+    "🩵 Ice Light": {
+        "background": "#f8fafc",
+        "sidebar": "#e2e8f0",
+        "text": "#000000",
+        "accent": "#475569",
+    },
 
-"🌱 Sage Light": {
-    "background": "#f6fdf8",
-    "sidebar": "#e7f5ea",
-    "text": "#000000",
-    "accent": "#4d8b5b",
-},
-
-
-
-
-
+    "🌱 Sage Light": {
+        "background": "#f6fdf8",
+        "sidebar": "#e7f5ea",
+        "text": "#000000",
+        "accent": "#4d8b5b",
+    },
 
 }
+
 
 def apply_theme(theme_name: str) -> None:
     """Apply the selected application theme."""
@@ -482,14 +475,13 @@ def apply_theme(theme_name: str) -> None:
     )
 
 
-
 # ============================================================
 # Sidebar Navigation
 # ============================================================
 
 def save_generated_transcript(
-    video_path: Path,
-    segments: list,
+        video_path: Path,
+        segments: list,
 ) -> Path | None:
     """Save generated transcript with Whisper timestamps."""
 
@@ -508,8 +500,8 @@ def save_generated_transcript(
     )
 
     transcript_path = (
-        TRANSCRIPT_DIR
-        / f"{video_path.stem}_{filename_timestamp}.txt"
+            TRANSCRIPT_DIR
+            / f"{video_path.stem}_{filename_timestamp}.txt"
     )
 
     lines = [
@@ -519,8 +511,8 @@ def save_generated_transcript(
     ]
 
     for index, segment in enumerate(
-        segments,
-        start=1,
+            segments,
+            start=1,
     ):
         start = float(
             getattr(segment, "start", 0.0)
@@ -549,6 +541,7 @@ def save_generated_transcript(
     )
 
     return transcript_path
+
 
 def render_sidebar() -> str:
     """Render the application sidebar navigation."""
@@ -775,8 +768,6 @@ def render_sidebar() -> str:
         st.session_state["translation_provider"] = provider_key
         st.session_state["translation_model"] = translation_model
 
-
-
         # ----------------------------------------------------
         # Provider Status
         # ----------------------------------------------------
@@ -962,7 +953,6 @@ def create_caption_agent() -> CaptionAgent:
     if environment_variable:
         api_key = os.getenv(environment_variable)
 
-
     # --------------------------------------------------------
     # Provider Factory
     # --------------------------------------------------------
@@ -1091,7 +1081,6 @@ def render_dashboard() -> None:
         return
 
     for file_info in recent_files:
-
         st.write(
             f"**{file_info['name']}**"
         )
@@ -1141,7 +1130,6 @@ def render_caption_generator() -> None:
     )
 
     if uploaded_file is None:
-
         st.info(
             "Upload a video to begin the caption workflow."
         )
@@ -1155,10 +1143,9 @@ def render_caption_generator() -> None:
     st.video(uploaded_file)
 
     if st.button(
-        "📥 Save Video",
-        type="primary",
+            "📥 Save Video",
+            type="primary",
     ):
-
         video_path = save_uploaded_video(
             uploaded_file
         )
@@ -1221,11 +1208,11 @@ def render_caption_generator() -> None:
     )
 
     if st.button(
-        "🔍 Detect Video Language"
+            "🔍 Detect Video Language"
     ):
 
         with st.spinner(
-            "Detecting spoken language..."
+                "Detecting spoken language..."
         ):
 
             try:
@@ -1251,7 +1238,6 @@ def render_caption_generator() -> None:
     )
 
     if detected_language:
-
         language_name = (
             detected_language.get(
                 "language_name",
@@ -1325,12 +1311,12 @@ def render_caption_generator() -> None:
     )
 
     if st.button(
-        "✨ Generate Captions",
-        type="primary",
+            "✨ Generate Captions",
+            type="primary",
     ):
 
         with st.spinner(
-            "Generating captions..."
+                "Generating captions..."
         ):
 
             try:
@@ -1417,7 +1403,6 @@ def render_caption_generator() -> None:
         )
 
         if srt_path.is_file():
-
             st.download_button(
                 label="⬇️ Download SRT",
                 data=srt_path.read_bytes(),
@@ -1432,7 +1417,6 @@ def render_caption_generator() -> None:
         )
 
         if vtt_path.is_file():
-
             st.download_button(
                 label="⬇️ Download VTT",
                 data=vtt_path.read_bytes(),
@@ -1456,10 +1440,9 @@ def render_caption_generator() -> None:
     if segments:
 
         for index, segment in enumerate(
-            segments[:10],
-            start=1,
+                segments[:10],
+                start=1,
         ):
-
             st.write(
                 f"**{index}.** "
                 f"`{segment.start:.2f}s → "
@@ -1468,7 +1451,6 @@ def render_caption_generator() -> None:
             )
 
         if len(segments) > 10:
-
             st.caption(
                 f"Showing first 10 of "
                 f"{len(segments)} captions."
@@ -1519,12 +1501,12 @@ def render_caption_generator() -> None:
     )
 
     if st.button(
-        "🔥 Burn Captions Into Video",
-        type="primary",
+            "🔥 Burn Captions Into Video",
+            type="primary",
     ):
 
         with st.spinner(
-            "Burning captions into video..."
+                "Burning captions into video..."
         ):
 
             try:
@@ -1575,7 +1557,6 @@ def render_caption_generator() -> None:
         )
 
         if captioned_video_path.is_file():
-
             st.divider()
 
             st.subheader(
@@ -1625,7 +1606,6 @@ def render_captions() -> None:
     st.divider()
 
     if not CAPTION_DIR.exists():
-
         st.info(
             "No caption files have been generated yet."
         )
@@ -1637,15 +1617,14 @@ def render_captions() -> None:
             path
             for path in CAPTION_DIR.iterdir()
             if path.is_file()
-            and path.suffix.lower()
-            in {".srt", ".vtt"}
+               and path.suffix.lower()
+               in {".srt", ".vtt"}
         ],
         key=lambda path: path.stat().st_mtime,
         reverse=True,
     )
 
     if not caption_files:
-
         st.info(
             "No caption files have been generated yet."
         )
@@ -1653,11 +1632,9 @@ def render_captions() -> None:
         return
 
     for caption_file in caption_files:
-
         with st.expander(
-            f"📄 {caption_file.name}"
+                f"📄 {caption_file.name}"
         ):
-
             st.write(
                 f"**Path:** `{caption_file}`"
             )
@@ -1674,7 +1651,7 @@ def render_captions() -> None:
             mime = (
                 "application/x-subrip"
                 if caption_file.suffix.lower()
-                == ".srt"
+                   == ".srt"
                 else "text/vtt"
             )
 
@@ -1909,8 +1886,8 @@ def render_settings() -> None:
     columns = st.columns(4)
 
     for column, (
-        provider_name,
-        config,
+            provider_name,
+            config,
     ) in zip(
         columns,
         translation_providers.items(),
@@ -2037,8 +2014,8 @@ def render_help() -> None:
     ]
 
     for index, step in enumerate(
-        steps,
-        start=1,
+            steps,
+            start=1,
     ):
         st.write(
             f"**{index}.** {step}"
@@ -2097,9 +2074,8 @@ def render_help() -> None:
     )
 
     with st.expander(
-        "Ollama connection error"
+            "Ollama connection error"
     ):
-
         st.code(
             "ollama --version\n"
             "ollama list\n"
@@ -2108,9 +2084,8 @@ def render_help() -> None:
         )
 
     with st.expander(
-        "FFmpeg connection error"
+            "FFmpeg connection error"
     ):
-
         st.code(
             "ffmpeg -version",
             language="powershell",
@@ -2178,7 +2153,6 @@ def render_about() -> None:
     ]
 
     for technology in technologies:
-
         st.write(
             f"• {technology}"
         )
