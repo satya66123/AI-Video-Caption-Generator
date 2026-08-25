@@ -435,6 +435,42 @@ def apply_theme(theme_name: str) -> None:
         [data-testid="stMetricValue"] div {{
             color: {theme["text"]} !important;
         }}
+        
+        # ====================================================
+# RECENT FILES
+# ====================================================
+
+.recent-file {{
+    background-color: {theme["sidebar"]} !important;
+    border: 1px solid {theme["accent"]} !important;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+}}
+
+.recent-file-name {{
+    color: {theme["text"]} !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}}
+
+.recent-file-info {{
+    color: {theme["text"]} !important;
+    opacity: 0.85 !important;
+    font-size: 13px !important;
+}}
+
+.recent-file-type {{
+    color: {theme["accent"]} !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+}}
+
+.recent-file-path {{
+    color: {theme["text"]} !important;
+    opacity: 0.85 !important;
+    font-size: 13px !important;
+}}
 
         [data-testid="stMetricValue"] p {{
             color: {theme["text"]} !important;
