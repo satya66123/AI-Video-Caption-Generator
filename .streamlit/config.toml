@@ -3,3 +3,7 @@ maxUploadSize = 1024
 
 [client]
 showSidebarNavigation = false
+
+[tool.black]
+line-length = 79
+target-version = ["py311"]
