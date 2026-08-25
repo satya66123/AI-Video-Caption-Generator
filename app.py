@@ -14,8 +14,6 @@ from services.video_caption_burn_service import (
 )
 from services.transcript_service import TranscriptService
 from datetime import datetime
-
-
 import os
 from pathlib import Path
 
@@ -66,70 +64,382 @@ CAPTION_LANGUAGES = {
 }
 
 THEMES = {
+    # ========================================================
+    # DARK THEMES — EXISTING
+    # ========================================================
+
     "🌙 Dark": {
         "background": "#0e1117",
         "sidebar": "#161b22",
         "text": "#f5f7fa",
         "accent": "#58a6ff",
     },
+
     "🌌 Midnight Blue": {
         "background": "#07111f",
         "sidebar": "#081525",
         "text": "#f5f7fa",
         "accent": "#38bdf8",
     },
+
     "💜 Cosmic Purple": {
         "background": "#10091f",
         "sidebar": "#120a24",
         "text": "#faf7ff",
         "accent": "#d946ef",
     },
+
     "🌊 Ocean": {
         "background": "#061a1f",
         "sidebar": "#071e25",
         "text": "#effcff",
         "accent": "#22d3ee",
     },
+
     "🌿 Emerald": {
         "background": "#07170f",
         "sidebar": "#081b12",
         "text": "#f2fff6",
         "accent": "#34d399",
     },
+
+    # ========================================================
+    # LIGHT THEMES — NEW
+    # ========================================================
+
+# ========================================================
+# LIGHT THEMES
+# ========================================================
+
+"☀️ Light": {
+    "background": "#ffffff",
+    "sidebar": "#f8fafc",
+    "text": "#000000",
+    "accent": "#2563eb",
+},
+
+"🌤️ Sky Light": {
+    "background": "#f0f9ff",
+    "sidebar": "#e0f2fe",
+    "text": "#000000",
+    "accent": "#0284c7",
+},
+
+"💜 Lavender Light": {
+    "background": "#faf5ff",
+    "sidebar": "#f3e8ff",
+    "text": "#000000",
+    "accent": "#9333ea",
+},
+
+"🌿 Mint Light": {
+    "background": "#f0fdf4",
+    "sidebar": "#dcfce7",
+    "text": "#000000",
+    "accent": "#16a34a",
+},
+
+"🌊 Aqua Light": {
+    "background": "#ecfeff",
+    "sidebar": "#cffafe",
+    "text": "#000000",
+    "accent": "#0891b2",
+},
+
+"🌸 Rose Light": {
+    "background": "#fff1f2",
+    "sidebar": "#ffe4e6",
+    "text": "#000000",
+    "accent": "#e11d48",
+},
+
+"🍑 Peach Light": {
+    "background": "#fff7ed",
+    "sidebar": "#ffedd5",
+    "text": "#000000",
+    "accent": "#ea580c",
+},
+
+"🌼 Amber Light": {
+    "background": "#fffbeb",
+    "sidebar": "#fef3c7",
+    "text": "#000000",
+    "accent": "#d97706",
+},
+
+"🩵 Ice Light": {
+    "background": "#f8fafc",
+    "sidebar": "#e2e8f0",
+    "text": "#000000",
+    "accent": "#475569",
+},
+
+"🌱 Sage Light": {
+    "background": "#f6fdf8",
+    "sidebar": "#e7f5ea",
+    "text": "#000000",
+    "accent": "#4d8b5b",
+},
+
+
+
+
+
+
 }
 
-def apply_theme(theme_name):
+def apply_theme(theme_name: str) -> None:
+    """Apply the selected application theme."""
+
     theme = THEMES[theme_name]
+
+    # Light themes have black application text.
+    light_theme = theme_name in {
+        "☀️ Light",
+        "🌤️ Sky Light",
+        "💜 Lavender Light",
+        "🌿 Mint Light",
+        "🌊 Aqua Light",
+        "🌸 Rose Light",
+        "🍑 Peach Light",
+        "🌼 Amber Light",
+        "🩵 Ice Light",
+        "🌱 Sage Light",
+    }
 
     st.markdown(
         f"""
         <style>
+
+        /* ====================================================
+           MAIN APPLICATION
+           ==================================================== */
+
         .stApp {{
-            background-color: {theme["background"]};
-            color: {theme["text"]};
-        }}
-        
-        .stAppHeader  {{
-            background-color: {theme["background"]};
-            color: {theme["text"]};
+            background-color: {theme["background"]} !important;
+            color: {theme["text"]} !important;
         }}
 
+        .stAppHeader {{
+            background-color: {theme["background"]} !important;
+        }}
+
+        /* Main page text */
+        .stApp p,
+        .stApp label,
+        .stApp span,
+        .stApp h1,
+        .stApp h2,
+        .stApp h3,
+        .stApp h4,
+        .stApp h5,
+        .stApp h6,
+        .stApp li,
+        .stApp strong,
+        .stApp small {{
+            color: {theme["text"]} !important;
+        }}
+
+        /* Markdown */
+        [data-testid="stMarkdownContainer"] {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMarkdownContainer"] p,
+        [data-testid="stMarkdownContainer"] span,
+        [data-testid="stMarkdownContainer"] strong,
+        [data-testid="stMarkdownContainer"] li {{
+            color: {theme["text"]} !important;
+        }}
+
+        /* ====================================================
+           SIDEBAR
+           ==================================================== */
 
         [data-testid="stSidebar"] {{
-            background-color: {theme["sidebar"]};
+            background-color: {theme["sidebar"]} !important;
         }}
 
         [data-testid="stSidebar"] * {{
-            color: {theme["text"]};
+            color: {theme["text"]} !important;
         }}
+
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3,
+        [data-testid="stSidebar"] h4 {{
+            color: {theme["text"]} !important;
+        }}
+
+        /* ====================================================
+           BUTTONS
+           ==================================================== */
 
         .stButton > button {{
-            border-color: {theme["accent"]};
+            border-color: {theme["accent"]} !important;
         }}
 
-        a {{
-            color: {theme["accent"]};
+        .stButton > button:hover {{
+            border-color: {theme["accent"]} !important;
         }}
+
+        /* ====================================================
+           SELECTBOX - CLOSED SELECT
+           ==================================================== */
+
+        [data-baseweb="select"] > div {{
+            background-color: #1f2937 !important;
+            border-color: {theme["accent"]} !important;
+            color: #ffffff !important;
+        }}
+
+        [data-baseweb="select"] > div * {{
+            color: #ffffff !important;
+        }}
+
+        [data-baseweb="select"] span {{
+            color: #ffffff !important;
+        }}
+
+        [data-baseweb="select"] input {{
+            color: #ffffff !important;
+        }}
+
+        /* Selectbox arrow */
+        [data-baseweb="select"] svg {{
+            fill: #ffffff !important;
+            color: #ffffff !important;
+        }}
+
+        /* ====================================================
+           SELECTBOX - OPEN DROPDOWN
+           ==================================================== */
+
+        [data-baseweb="popover"] {{
+            background-color: #1f2937 !important;
+        }}
+
+        [data-baseweb="popover"] > div {{
+            background-color: #1f2937 !important;
+        }}
+
+        [data-baseweb="menu"] {{
+            background-color: #1f2937 !important;
+        }}
+
+        [data-baseweb="menu"] * {{
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }}
+
+        [role="listbox"] {{
+            background-color: #1f2937 !important;
+        }}
+
+        [role="option"] {{
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }}
+
+        [role="option"] * {{
+            color: #ffffff !important;
+        }}
+
+        [role="option"]:hover {{
+            background-color: {theme["accent"]} !important;
+            color: #ffffff !important;
+        }}
+
+        /* ====================================================
+           TEXT INPUTS
+           ==================================================== */
+
+        [data-baseweb="input"] {{
+            border-color: {theme["accent"]} !important;
+        }}
+
+        /* ====================================================
+           EXPANDERS
+           ==================================================== */
+
+        [data-testid="stExpander"] {{
+            border-color: {theme["accent"]} !important;
+        }}
+
+        /* ====================================================
+           FILE UPLOADER
+           ==================================================== */
+
+        [data-testid="stFileUploader"] {{
+            border-color: {theme["accent"]} !important;
+        }}
+
+        /* ====================================================
+           LINKS
+           ==================================================== */
+
+        a {{
+            color: {theme["accent"]} !important;
+        }}
+
+        /* ====================================================
+           DIVIDERS
+           ==================================================== */
+
+        hr {{
+            border-color: {theme["accent"]} !important;
+        }}
+        
+        /* Caption text */
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] * {{
+    color: {theme["text"]} !important;
+}}
+
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        f"""
+        <style>
+
+        [data-testid="stMetric"] {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetric"] label {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricLabel"] {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricLabel"] * {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricValue"] {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricValue"] * {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricValue"] div {{
+            color: {theme["text"]} !important;
+        }}
+
+        [data-testid="stMetricValue"] p {{
+            color: {theme["text"]} !important;
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
