@@ -25,9 +25,7 @@ class GeminiTranslationProvider(TranslationProvider):
             raise ValueError("Text cannot be empty.")
 
         if not target_language.strip():
-            raise ValueError(
-                "Target language cannot be empty."
-            )
+            raise ValueError("Target language cannot be empty.")
 
         response = self.client.models.generate_content(
             model=self.model,
@@ -42,8 +40,6 @@ class GeminiTranslationProvider(TranslationProvider):
         result = response.text.strip()
 
         if not result:
-            raise RuntimeError(
-                "Gemini returned an empty translation."
-            )
+            raise RuntimeError("Gemini returned an empty translation.")
 
         return result

@@ -64,120 +64,102 @@ THEMES = {
     # ========================================================
     # DARK THEMES — EXISTING
     # ========================================================
-
     "🌙 Dark": {
         "background": "#0e1117",
         "sidebar": "#161b22",
         "text": "#f5f7fa",
         "accent": "#58a6ff",
     },
-
     "🌌 Midnight Blue": {
         "background": "#07111f",
         "sidebar": "#081525",
         "text": "#f5f7fa",
         "accent": "#38bdf8",
     },
-
     "💜 Cosmic Purple": {
         "background": "#10091f",
         "sidebar": "#120a24",
         "text": "#faf7ff",
         "accent": "#d946ef",
     },
-
     "🌊 Ocean": {
         "background": "#061a1f",
         "sidebar": "#071e25",
         "text": "#effcff",
         "accent": "#22d3ee",
     },
-
     "🌿 Emerald": {
         "background": "#07170f",
         "sidebar": "#081b12",
         "text": "#f2fff6",
         "accent": "#34d399",
     },
-
     # ========================================================
     # LIGHT THEMES — NEW
     # ========================================================
-
     # ========================================================
     # LIGHT THEMES
     # ========================================================
-
     "☀️ Light": {
         "background": "#ffffff",
         "sidebar": "#f8fafc",
         "text": "#000000",
         "accent": "#2563eb",
     },
-
     "🌤️ Sky Light": {
         "background": "#f0f9ff",
         "sidebar": "#e0f2fe",
         "text": "#000000",
         "accent": "#0284c7",
     },
-
     "💜 Lavender Light": {
         "background": "#faf5ff",
         "sidebar": "#f3e8ff",
         "text": "#000000",
         "accent": "#9333ea",
     },
-
     "🌿 Mint Light": {
         "background": "#f0fdf4",
         "sidebar": "#dcfce7",
         "text": "#000000",
         "accent": "#16a34a",
     },
-
     "🌊 Aqua Light": {
         "background": "#ecfeff",
         "sidebar": "#cffafe",
         "text": "#000000",
         "accent": "#0891b2",
     },
-
     "🌸 Rose Light": {
         "background": "#fff1f2",
         "sidebar": "#ffe4e6",
         "text": "#000000",
         "accent": "#e11d48",
     },
-
     "🍑 Peach Light": {
         "background": "#fff7ed",
         "sidebar": "#ffedd5",
         "text": "#000000",
         "accent": "#ea580c",
     },
-
     "🌼 Amber Light": {
         "background": "#fffbeb",
         "sidebar": "#fef3c7",
         "text": "#000000",
         "accent": "#d97706",
     },
-
     "🩵 Ice Light": {
         "background": "#f8fafc",
         "sidebar": "#e2e8f0",
         "text": "#000000",
         "accent": "#475569",
     },
-
     "🌱 Sage Light": {
         "background": "#f6fdf8",
         "sidebar": "#e7f5ea",
         "text": "#000000",
         "accent": "#4d8b5b",
     },
-
 }
 
 
@@ -479,9 +461,10 @@ def apply_theme(theme_name: str) -> None:
 # Sidebar Navigation
 # ============================================================
 
+
 def save_generated_transcript(
-        video_path: Path,
-        segments: list,
+    video_path: Path,
+    segments: list,
 ) -> Path | None:
     """Save generated transcript with Whisper timestamps."""
 
@@ -495,14 +478,9 @@ def save_generated_transcript(
 
     generated_at = datetime.now()
 
-    filename_timestamp = generated_at.strftime(
-        "%Y%m%d_%H%M%S"
-    )
+    filename_timestamp = generated_at.strftime("%Y%m%d_%H%M%S")
 
-    transcript_path = (
-            TRANSCRIPT_DIR
-            / f"{video_path.stem}_{filename_timestamp}.txt"
-    )
+    transcript_path = TRANSCRIPT_DIR / f"{video_path.stem}_{filename_timestamp}.txt"
 
     lines = [
         f"Transcript: {video_path.name}",
@@ -511,28 +489,20 @@ def save_generated_transcript(
     ]
 
     for index, segment in enumerate(
-            segments,
-            start=1,
+        segments,
+        start=1,
     ):
-        start = float(
-            getattr(segment, "start", 0.0)
-        )
+        start = float(getattr(segment, "start", 0.0))
 
-        end = float(
-            getattr(segment, "end", 0.0)
-        )
+        end = float(getattr(segment, "end", 0.0))
 
-        transcript_text = str(
-            getattr(segment, "text", "")
-        ).strip()
+        transcript_text = str(getattr(segment, "text", "")).strip()
 
         if not transcript_text:
             continue
 
         lines.append(
-            f"{index:04d} | "
-            f"[{start:08.2f} --> {end:08.2f}] "
-            f"{transcript_text}"
+            f"{index:04d} | " f"[{start:08.2f} --> {end:08.2f}] " f"{transcript_text}"
         )
 
     transcript_path.write_text(
@@ -586,9 +556,7 @@ def render_sidebar() -> str:
             "Theme",
             theme_names,
             index=(
-                theme_names.index(current_theme)
-                if current_theme in theme_names
-                else 0
+                theme_names.index(current_theme) if current_theme in theme_names else 0
             ),
             key="sidebar_theme",
         )
@@ -714,10 +682,7 @@ def render_sidebar() -> str:
             "ollama",
         )
 
-        provider_keys = [
-            config["key"]
-            for config in translation_providers.values()
-        ]
+        provider_keys = [config["key"] for config in translation_providers.values()]
 
         provider_index = (
             provider_keys.index(current_provider)
@@ -746,9 +711,7 @@ def render_sidebar() -> str:
         # Model Selection
         # ----------------------------------------------------
 
-        current_model = st.session_state.get(
-            "translation_model"
-        )
+        current_model = st.session_state.get("translation_model")
 
         if current_model not in available_models:
             current_model = available_models[0]
@@ -827,8 +790,7 @@ def render_sidebar() -> str:
         language_name = next(
             (
                 name
-                for name, code
-                in CAPTION_LANGUAGES.items()
+                for name, code in CAPTION_LANGUAGES.items()
                 if code == current_language
             ),
             "English",
@@ -862,13 +824,9 @@ def render_sidebar() -> str:
 
         st.divider()
 
-        st.caption(
-            "AI Video Caption Generator"
-        )
+        st.caption("AI Video Caption Generator")
 
-        st.caption(
-            f"Version {APP_VERSION}"
-        )
+        st.caption(f"Version {APP_VERSION}")
 
     return page
 
@@ -876,6 +834,7 @@ def render_sidebar() -> str:
 # ============================================================
 # Upload
 # ============================================================
+
 
 def save_uploaded_video(uploaded_file) -> Path:
     """Save an uploaded video using its original filename."""
@@ -885,13 +844,9 @@ def save_uploaded_video(uploaded_file) -> Path:
         exist_ok=True,
     )
 
-    output_path = UPLOAD_DIR / Path(
-        uploaded_file.name
-    ).name
+    output_path = UPLOAD_DIR / Path(uploaded_file.name).name
 
-    output_path.write_bytes(
-        uploaded_file.getbuffer()
-    )
+    output_path.write_bytes(uploaded_file.getbuffer())
 
     return output_path
 
@@ -899,6 +854,7 @@ def save_uploaded_video(uploaded_file) -> Path:
 # ============================================================
 # Caption Agent Factory
 # ============================================================
+
 
 def create_caption_agent() -> CaptionAgent:
     """Create a fully configured CaptionAgent."""
@@ -946,9 +902,7 @@ def create_caption_agent() -> CaptionAgent:
         "deepseek": "DEEPSEEK_API_KEY",
     }
 
-    environment_variable = environment_variables.get(
-        provider_name
-    )
+    environment_variable = environment_variables.get(provider_name)
 
     if environment_variable:
         api_key = os.getenv(environment_variable)
@@ -964,21 +918,17 @@ def create_caption_agent() -> CaptionAgent:
     if api_key:
         provider_kwargs["api_key"] = api_key
 
-    translation_provider = (
-        TranslationProviderFactory.create(
-            provider_name,
-            **provider_kwargs,
-        )
+    translation_provider = TranslationProviderFactory.create(
+        provider_name,
+        **provider_kwargs,
     )
 
     # --------------------------------------------------------
     # Caption Generation
     # --------------------------------------------------------
 
-    caption_generation_service = (
-        CaptionGenerationService(
-            translation_provider=translation_provider,
-        )
+    caption_generation_service = CaptionGenerationService(
+        translation_provider=translation_provider,
     )
 
     # --------------------------------------------------------
@@ -993,10 +943,8 @@ def create_caption_agent() -> CaptionAgent:
     # FFmpeg
     # --------------------------------------------------------
 
-    video_caption_burn_service = (
-        VideoCaptionBurnService(
-            OUTPUT_DIR,
-        )
+    video_caption_burn_service = VideoCaptionBurnService(
+        OUTPUT_DIR,
     )
 
     # --------------------------------------------------------
@@ -1005,13 +953,9 @@ def create_caption_agent() -> CaptionAgent:
 
     return CaptionAgent(
         transcript_service=transcript_service,
-        caption_generation_service=(
-            caption_generation_service
-        ),
+        caption_generation_service=(caption_generation_service),
         caption_file_service=caption_file_service,
-        video_caption_burn_service=(
-            video_caption_burn_service
-        ),
+        video_caption_burn_service=(video_caption_burn_service),
     )
 
 
@@ -1019,14 +963,13 @@ def create_caption_agent() -> CaptionAgent:
 # Dashboard
 # ============================================================
 
+
 def render_dashboard() -> None:
     """Render the dashboard page."""
 
     st.title("🏠 Dashboard")
 
-    st.write(
-        "Overview of your AI Video Caption Generator."
-    )
+    st.write("Overview of your AI Video Caption Generator.")
 
     st.divider()
 
@@ -1075,32 +1018,24 @@ def render_dashboard() -> None:
     )
 
     if not recent_files:
-        st.info(
-            "No files available yet."
-        )
+        st.info("No files available yet.")
         return
 
     for file_info in recent_files:
-        st.write(
-            f"**{file_info['name']}**"
-        )
+        st.write(f"**{file_info['name']}**")
 
-        st.caption(
-            f"Type: {file_info['type']}  "
-            f"| Path: {file_info['path']}"
-        )
+        st.caption(f"Type: {file_info['type']}  " f"| Path: {file_info['path']}")
 
 
 # ============================================================
 # Caption Generator
 # ============================================================
 
+
 def render_caption_generator() -> None:
     """Render the complete caption generation workflow."""
 
-    st.title(
-        "🎬 AI Video Caption Generator"
-    )
+    st.title("🎬 AI Video Caption Generator")
 
     st.write(
         "Generate captions in your selected language "
@@ -1124,35 +1059,25 @@ def render_caption_generator() -> None:
             "mkv",
             "webm",
         ],
-        help=(
-            "Upload a video to generate captions."
-        ),
+        help=("Upload a video to generate captions."),
     )
 
     if uploaded_file is None:
-        st.info(
-            "Upload a video to begin the caption workflow."
-        )
+        st.info("Upload a video to begin the caption workflow.")
 
         return
 
-    st.success(
-        f"Selected video: {uploaded_file.name}"
-    )
+    st.success(f"Selected video: {uploaded_file.name}")
 
     st.video(uploaded_file)
 
     if st.button(
-            "📥 Save Video",
-            type="primary",
+        "📥 Save Video",
+        type="primary",
     ):
-        video_path = save_uploaded_video(
-            uploaded_file
-        )
+        video_path = save_uploaded_video(uploaded_file)
 
-        st.session_state[
-            "video_path"
-        ] = str(video_path)
+        st.session_state["video_path"] = str(video_path)
 
         # Clear old workflow results.
         st.session_state.pop(
@@ -1170,96 +1095,64 @@ def render_caption_generator() -> None:
             None,
         )
 
-        st.success(
-            f"Video saved: {video_path.name}"
-        )
+        st.success(f"Video saved: {video_path.name}")
 
     # ========================================================
     # 2. Current Video
     # ========================================================
 
-    video_path_value = st.session_state.get(
-        "video_path"
-    )
+    video_path_value = st.session_state.get("video_path")
 
     if not video_path_value:
         return
 
-    video_path = Path(
-        video_path_value
-    )
+    video_path = Path(video_path_value)
 
     st.divider()
 
-    st.subheader(
-        "🎬 Current Video"
-    )
+    st.subheader("🎬 Current Video")
 
-    st.write(
-        f"**Video:** `{video_path.name}`"
-    )
+    st.write(f"**Video:** `{video_path.name}`")
 
     # ========================================================
     # 3. Language Detection
     # ========================================================
 
-    st.subheader(
-        "🌐 Language Detection"
-    )
+    st.subheader("🌐 Language Detection")
 
-    if st.button(
-            "🔍 Detect Video Language"
-    ):
+    if st.button("🔍 Detect Video Language"):
 
-        with st.spinner(
-                "Detecting spoken language..."
-        ):
+        with st.spinner("Detecting spoken language..."):
 
             try:
 
                 agent = create_caption_agent()
 
-                detection = agent.detect_language(
-                    video_path
-                )
+                detection = agent.detect_language(video_path)
 
-                st.session_state[
-                    "detected_language"
-                ] = detection
+                st.session_state["detected_language"] = detection
 
             except Exception as exc:
 
-                st.error(
-                    f"Language detection failed: {exc}"
-                )
+                st.error(f"Language detection failed: {exc}")
 
-    detected_language = st.session_state.get(
-        "detected_language"
-    )
+    detected_language = st.session_state.get("detected_language")
 
     if detected_language:
-        language_name = (
-            detected_language.get(
-                "language_name",
-                detected_language.get(
-                    "language",
-                    "Unknown",
-                ),
-            )
-        )
-
-        language_code = (
+        language_name = detected_language.get(
+            "language_name",
             detected_language.get(
                 "language",
-                "",
-            )
+                "Unknown",
+            ),
         )
 
-        st.success(
-            f"Detected language: "
-            f"{language_name} "
-            f"({language_code})"
+        language_code = detected_language.get(
+            "language",
+            "",
         )
+
+        st.success(f"Detected language: " f"{language_name} " f"({language_code})")
 
     # ========================================================
     # 4. Caption Language
@@ -1267,32 +1160,18 @@ def render_caption_generator() -> None:
 
     st.divider()
 
-    st.subheader(
-        "💬 Caption Language"
-    )
+    st.subheader("💬 Caption Language")
 
     selected_language_name = st.selectbox(
         "Select the language for captions",
-        options=list(
-            CAPTION_LANGUAGES.keys()
-        ),
+        options=list(CAPTION_LANGUAGES.keys()),
     )
 
-    selected_language = (
-        CAPTION_LANGUAGES[
-            selected_language_name
-        ]
-    )
+    selected_language = CAPTION_LANGUAGES[selected_language_name]
 
-    st.session_state[
-        "caption_language"
-    ] = selected_language
+    st.session_state["caption_language"] = selected_language
 
-    st.info(
-        f"Caption language: "
-        f"{selected_language_name} "
-        f"({selected_language})"
-    )
+    st.info(f"Caption language: " f"{selected_language_name} " f"({selected_language})")
 
     # ========================================================
     # 5. Generate Captions
@@ -1300,9 +1179,7 @@ def render_caption_generator() -> None:
 
     st.divider()
 
-    st.subheader(
-        "✨ Generate Captions"
-    )
+    st.subheader("✨ Generate Captions")
 
     st.write(
         "The video will be transcribed internally, "
@@ -1311,30 +1188,22 @@ def render_caption_generator() -> None:
     )
 
     if st.button(
-            "✨ Generate Captions",
-            type="primary",
+        "✨ Generate Captions",
+        type="primary",
     ):
 
-        with st.spinner(
-                "Generating captions..."
-        ):
+        with st.spinner("Generating captions..."):
 
             try:
 
                 agent = create_caption_agent()
 
-                result = (
-                    agent.generate_caption_files(
-                        video_path=video_path,
-                        caption_language=(
-                            selected_language
-                        ),
-                    )
+                result = agent.generate_caption_files(
+                    video_path=video_path,
+                    caption_language=(selected_language),
                 )
 
-                st.session_state[
-                    "caption_result"
-                ] = result
+                st.session_state["caption_result"] = result
 
                 transcript_path = save_generated_transcript(
                     video_path=video_path,
@@ -1345,62 +1214,39 @@ def render_caption_generator() -> None:
                 )
 
                 if transcript_path:
-                    st.session_state[
-                        "transcript_path"
-                    ] = str(transcript_path)
+                    st.session_state["transcript_path"] = str(transcript_path)
 
-                st.success(
-                    "Captions generated successfully!"
-                )
+                st.success("Captions generated successfully!")
 
                 if transcript_path:
-                    st.info(
-                        f"Transcript saved: "
-                        f"{transcript_path.name}"
-                    )
+                    st.info(f"Transcript saved: " f"{transcript_path.name}")
 
             except Exception as exc:
 
-                st.error(
-                    f"Caption generation failed: {exc}"
-                )
+                st.error(f"Caption generation failed: {exc}")
 
     # ========================================================
     # 6. Caption Results
     # ========================================================
 
-    caption_result = st.session_state.get(
-        "caption_result"
-    )
+    caption_result = st.session_state.get("caption_result")
 
     if not caption_result:
         return
 
     st.divider()
 
-    st.subheader(
-        "📄 Generated Captions"
-    )
+    st.subheader("📄 Generated Captions")
 
-    srt_path = Path(
-        caption_result[
-            "srt_path"
-        ]
-    )
+    srt_path = Path(caption_result["srt_path"])
 
-    vtt_path = Path(
-        caption_result[
-            "vtt_path"
-        ]
-    )
+    vtt_path = Path(caption_result["vtt_path"])
 
     col1, col2 = st.columns(2)
 
     with col1:
 
-        st.write(
-            f"**SRT:** `{srt_path.name}`"
-        )
+        st.write(f"**SRT:** `{srt_path.name}`")
 
         if srt_path.is_file():
             st.download_button(
@@ -1412,9 +1258,7 @@ def render_caption_generator() -> None:
 
     with col2:
 
-        st.write(
-            f"**VTT:** `{vtt_path.name}`"
-        )
+        st.write(f"**VTT:** `{vtt_path.name}`")
 
         if vtt_path.is_file():
             st.download_button(
@@ -1428,9 +1272,7 @@ def render_caption_generator() -> None:
     # 7. Caption Preview
     # ========================================================
 
-    st.subheader(
-        "👀 Caption Preview"
-    )
+    st.subheader("👀 Caption Preview")
 
     segments = caption_result.get(
         "segments",
@@ -1440,8 +1282,8 @@ def render_caption_generator() -> None:
     if segments:
 
         for index, segment in enumerate(
-                segments[:10],
-                start=1,
+            segments[:10],
+            start=1,
         ):
             st.write(
                 f"**{index}.** "
@@ -1451,43 +1293,28 @@ def render_caption_generator() -> None:
             )
 
         if len(segments) > 10:
-            st.caption(
-                f"Showing first 10 of "
-                f"{len(segments)} captions."
-            )
+            st.caption(f"Showing first 10 of " f"{len(segments)} captions.")
 
     # ========================================================
     # 7. Saved Transcript
     # ========================================================
 
-    transcript_path_value = st.session_state.get(
-        "transcript_path"
-    )
+    transcript_path_value = st.session_state.get("transcript_path")
 
     if transcript_path_value:
-        transcript_path = Path(
-            transcript_path_value
-        )
+        transcript_path = Path(transcript_path_value)
 
         if transcript_path.is_file():
-            st.subheader(
-                "📝 Generated Transcript"
-            )
+            st.subheader("📝 Generated Transcript")
 
-            st.write(
-                f"**Transcript:** "
-                f"`{transcript_path.name}`"
-            )
+            st.write(f"**Transcript:** " f"`{transcript_path.name}`")
 
             st.download_button(
                 label="⬇️ Download Transcript",
                 data=transcript_path.read_bytes(),
                 file_name=transcript_path.name,
                 mime="text/plain",
-                key=(
-                    f"download_transcript_"
-                    f"{transcript_path}"
-                ),
+                key=(f"download_transcript_" f"{transcript_path}"),
             )
 
     # ========================================================
@@ -1496,96 +1323,55 @@ def render_caption_generator() -> None:
 
     st.divider()
 
-    st.subheader(
-        "🔥 Burn Captions Into Video"
-    )
+    st.subheader("🔥 Burn Captions Into Video")
 
     if st.button(
-            "🔥 Burn Captions Into Video",
-            type="primary",
+        "🔥 Burn Captions Into Video",
+        type="primary",
     ):
 
-        with st.spinner(
-                "Burning captions into video..."
-        ):
+        with st.spinner("Burning captions into video..."):
 
             try:
 
                 agent = create_caption_agent()
 
-                result = (
-                    agent.generate_captioned_video(
-                        video_path=video_path,
-                        caption_language=(
-                            selected_language
-                        ),
-                    )
+                result = agent.generate_captioned_video(
+                    video_path=video_path,
+                    caption_language=(selected_language),
                 )
 
-                st.session_state[
-                    "captioned_video_path"
-                ] = str(
-                    result[
-                        "output_video"
-                    ]
-                )
+                st.session_state["captioned_video_path"] = str(result["output_video"])
 
-                st.success(
-                    "Captioned video created successfully!"
-                )
+                st.success("Captioned video created successfully!")
 
             except Exception as exc:
 
-                st.error(
-                    f"Video captioning failed: {exc}"
-                )
+                st.error(f"Video captioning failed: {exc}")
 
     # ========================================================
     # 9. Final Video
     # ========================================================
 
-    captioned_video_value = (
-        st.session_state.get(
-            "captioned_video_path"
-        )
-    )
+    captioned_video_value = st.session_state.get("captioned_video_path")
 
     if captioned_video_value:
 
-        captioned_video_path = Path(
-            captioned_video_value
-        )
+        captioned_video_path = Path(captioned_video_value)
 
         if captioned_video_path.is_file():
             st.divider()
 
-            st.subheader(
-                "🎥 Final Captioned Video"
-            )
+            st.subheader("🎥 Final Captioned Video")
 
-            st.write(
-                f"**Output:** "
-                f"`{captioned_video_path.name}`"
-            )
+            st.write(f"**Output:** " f"`{captioned_video_path.name}`")
 
-            st.video(
-                str(
-                    captioned_video_path
-                )
-            )
+            st.video(str(captioned_video_path))
 
             st.download_button(
-                label=(
-                    "⬇️ Download "
-                    "Captioned Video"
-                ),
-                data=(
-                    captioned_video_path
-                    .read_bytes()
-                ),
-                file_name=(
-                    captioned_video_path.name
-                ),
+                label=("⬇️ Download " "Captioned Video"),
+                data=(captioned_video_path.read_bytes()),
+                file_name=(captioned_video_path.name),
                 mime="video/mp4",
             )
 
@@ -1594,21 +1380,18 @@ def render_caption_generator() -> None:
 # Captions Page
 # ============================================================
 
+
 def render_captions() -> None:
     """Render generated caption files."""
 
     st.title("📄 Captions")
 
-    st.write(
-        "Browse generated SRT and VTT caption files."
-    )
+    st.write("Browse generated SRT and VTT caption files.")
 
     st.divider()
 
     if not CAPTION_DIR.exists():
-        st.info(
-            "No caption files have been generated yet."
-        )
+        st.info("No caption files have been generated yet.")
 
         return
 
@@ -1616,32 +1399,22 @@ def render_captions() -> None:
         [
             path
             for path in CAPTION_DIR.iterdir()
-            if path.is_file()
-               and path.suffix.lower()
-               in {".srt", ".vtt"}
+            if path.is_file() and path.suffix.lower() in {".srt", ".vtt"}
         ],
         key=lambda path: path.stat().st_mtime,
         reverse=True,
     )
 
     if not caption_files:
-        st.info(
-            "No caption files have been generated yet."
-        )
+        st.info("No caption files have been generated yet.")
 
         return
 
     for caption_file in caption_files:
-        with st.expander(
-                f"📄 {caption_file.name}"
-        ):
-            st.write(
-                f"**Path:** `{caption_file}`"
-            )
+        with st.expander(f"📄 {caption_file.name}"):
+            st.write(f"**Path:** `{caption_file}`")
 
-            content = caption_file.read_text(
-                encoding="utf-8"
-            )
+            content = caption_file.read_text(encoding="utf-8")
 
             st.code(
                 content,
@@ -1650,16 +1423,12 @@ def render_captions() -> None:
 
             mime = (
                 "application/x-subrip"
-                if caption_file.suffix.lower()
-                   == ".srt"
+                if caption_file.suffix.lower() == ".srt"
                 else "text/vtt"
             )
 
             st.download_button(
-                label=(
-                    f"⬇️ Download "
-                    f"{caption_file.name}"
-                ),
+                label=(f"⬇️ Download " f"{caption_file.name}"),
                 data=content,
                 file_name=caption_file.name,
                 mime=mime,
@@ -1671,14 +1440,13 @@ def render_captions() -> None:
 # Settings
 # ============================================================
 
+
 def render_settings() -> None:
     """Render application settings."""
 
     st.title("⚙️ Settings")
 
-    st.write(
-        "Configure caption-generation preferences."
-    )
+    st.write("Configure caption-generation preferences.")
 
     st.divider()
 
@@ -1760,19 +1528,14 @@ def render_settings() -> None:
         },
     }
 
-    provider_names = list(
-        translation_providers.keys()
-    )
+    provider_names = list(translation_providers.keys())
 
     current_provider = st.session_state.get(
         "translation_provider",
         "ollama",
     )
 
-    provider_keys = [
-        config["key"]
-        for config in translation_providers.values()
-    ]
+    provider_keys = [config["key"] for config in translation_providers.values()]
 
     provider_index = (
         provider_keys.index(current_provider)
@@ -1784,26 +1547,17 @@ def render_settings() -> None:
         "AI provider",
         provider_names,
         index=provider_index,
-        help=(
-            "Select the AI provider used for "
-            "caption translation."
-        ),
+        help=("Select the AI provider used for " "caption translation."),
     )
 
-    provider_config = translation_providers[
-        selected_provider
-    ]
+    provider_config = translation_providers[selected_provider]
 
     provider_key = provider_config["key"]
     translation_model = provider_config["model"]
 
-    st.session_state[
-        "translation_provider"
-    ] = provider_key
+    st.session_state["translation_provider"] = provider_key
 
-    st.session_state[
-        "translation_model"
-    ] = translation_model
+    st.session_state["translation_model"] = translation_model
 
     st.text_input(
         "Translation model",
@@ -1812,8 +1566,7 @@ def render_settings() -> None:
     )
 
     st.caption(
-        f"Provider: **{selected_provider}**  |  "
-        f"Model: `{translation_model}`"
+        f"Provider: **{selected_provider}**  |  " f"Model: `{translation_model}`"
     )
 
     # ========================================================
@@ -1822,58 +1575,36 @@ def render_settings() -> None:
 
     if provider_key == "ollama":
 
-        st.success(
-            "🟢 Ollama is a local provider."
-        )
+        st.success("🟢 Ollama is a local provider.")
 
-        st.caption(
-            "No cloud API key is required."
-        )
+        st.caption("No cloud API key is required.")
 
     elif provider_key == "openai":
 
         if os.getenv("OPENAI_API_KEY"):
-            st.success(
-                "🟢 OpenAI API key configured."
-            )
+            st.success("🟢 OpenAI API key configured.")
         else:
-            st.warning(
-                "🔴 OpenAI API key is missing."
-            )
+            st.warning("🔴 OpenAI API key is missing.")
 
-        st.caption(
-            "API key is read from OPENAI_API_KEY."
-        )
+        st.caption("API key is read from OPENAI_API_KEY.")
 
     elif provider_key == "anthropic":
 
         if os.getenv("ANTHROPIC_API_KEY"):
-            st.success(
-                "🟢 Anthropic API key configured."
-            )
+            st.success("🟢 Anthropic API key configured.")
         else:
-            st.warning(
-                "🔴 Anthropic API key is missing."
-            )
+            st.warning("🔴 Anthropic API key is missing.")
 
-        st.caption(
-            "API key is read from ANTHROPIC_API_KEY."
-        )
+        st.caption("API key is read from ANTHROPIC_API_KEY.")
 
     elif provider_key == "gemini":
 
         if os.getenv("GEMINI_API_KEY"):
-            st.success(
-                "🟢 Gemini API key configured."
-            )
+            st.success("🟢 Gemini API key configured.")
         else:
-            st.warning(
-                "🔴 Gemini API key is missing."
-            )
+            st.warning("🔴 Gemini API key is missing.")
 
-        st.caption(
-            "API key is read from GEMINI_API_KEY."
-        )
+        st.caption("API key is read from GEMINI_API_KEY.")
 
     st.divider()
 
@@ -1886,8 +1617,8 @@ def render_settings() -> None:
     columns = st.columns(4)
 
     for column, (
-            provider_name,
-            config,
+        provider_name,
+        config,
     ) in zip(
         columns,
         translation_providers.items(),
@@ -1895,13 +1626,9 @@ def render_settings() -> None:
 
         with column:
 
-            st.markdown(
-                f"### {provider_name}"
-            )
+            st.markdown(f"### {provider_name}")
 
-            st.caption(
-                config["model"]
-            )
+            st.caption(config["model"])
 
             if config["key"] == "ollama":
 
@@ -1910,9 +1637,7 @@ def render_settings() -> None:
             elif config["key"] == "openai":
 
                 status = (
-                    "🟢 Configured"
-                    if os.getenv("OPENAI_API_KEY")
-                    else "🔴 Missing"
+                    "🟢 Configured" if os.getenv("OPENAI_API_KEY") else "🔴 Missing"
                 )
 
                 st.write(status)
@@ -1920,9 +1645,7 @@ def render_settings() -> None:
             elif config["key"] == "anthropic":
 
                 status = (
-                    "🟢 Configured"
-                    if os.getenv("ANTHROPIC_API_KEY")
-                    else "🔴 Missing"
+                    "🟢 Configured" if os.getenv("ANTHROPIC_API_KEY") else "🔴 Missing"
                 )
 
                 st.write(status)
@@ -1930,9 +1653,7 @@ def render_settings() -> None:
             elif config["key"] == "gemini":
 
                 status = (
-                    "🟢 Configured"
-                    if os.getenv("GEMINI_API_KEY")
-                    else "🔴 Missing"
+                    "🟢 Configured" if os.getenv("GEMINI_API_KEY") else "🔴 Missing"
                 )
 
                 st.write(status)
@@ -1943,27 +1664,17 @@ def render_settings() -> None:
     # Caption Language
     # ========================================================
 
-    st.subheader(
-        "🌐 Default Caption Language"
-    )
+    st.subheader("🌐 Default Caption Language")
 
     default_language = st.selectbox(
         "Default language",
-        options=list(
-            CAPTION_LANGUAGES.keys()
-        ),
+        options=list(CAPTION_LANGUAGES.keys()),
         index=0,
     )
 
-    st.session_state[
-        "default_caption_language"
-    ] = CAPTION_LANGUAGES[
-        default_language
-    ]
+    st.session_state["default_caption_language"] = CAPTION_LANGUAGES[default_language]
 
-    st.success(
-        "Settings are saved for this session."
-    )
+    st.success("Settings are saved for this session.")
 
     st.divider()
 
@@ -1971,9 +1682,7 @@ def render_settings() -> None:
     # Directories
     # ========================================================
 
-    st.subheader(
-        "📁 Application Directories"
-    )
+    st.subheader("📁 Application Directories")
 
     st.code(
         f"Uploads:  {UPLOAD_DIR}\n"
@@ -1987,20 +1696,17 @@ def render_settings() -> None:
 # Help
 # ============================================================
 
+
 def render_help() -> None:
     """Render the help page."""
 
     st.title("❓ Help")
 
-    st.write(
-        "Learn how to use the AI Video Caption Generator."
-    )
+    st.write("Learn how to use the AI Video Caption Generator.")
 
     st.divider()
 
-    st.subheader(
-        "🚀 How to Use"
-    )
+    st.subheader("🚀 How to Use")
 
     steps = [
         "Upload your video.",
@@ -2014,78 +1720,48 @@ def render_help() -> None:
     ]
 
     for index, step in enumerate(
-            steps,
-            start=1,
+        steps,
+        start=1,
     ):
-        st.write(
-            f"**{index}.** {step}"
-        )
+        st.write(f"**{index}.** {step}")
 
     st.divider()
 
-    st.subheader(
-        "🎬 Supported Video Formats"
-    )
+    st.subheader("🎬 Supported Video Formats")
 
-    st.write(
-        "MP4, MOV, AVI, MKV, and WebM."
-    )
+    st.write("MP4, MOV, AVI, MKV, and WebM.")
 
     st.divider()
 
-    st.subheader(
-        "📄 Caption Formats"
-    )
+    st.subheader("📄 Caption Formats")
 
-    st.write(
-        "SRT and VTT."
-    )
+    st.write("SRT and VTT.")
 
     st.divider()
 
-    st.subheader(
-        "🤖 AI Processing"
-    )
+    st.subheader("🤖 AI Processing")
 
-    st.write(
-        "Whisper provides internal timestamped "
-        "transcription."
-    )
+    st.write("Whisper provides internal timestamped " "transcription.")
 
-    st.write(
-        "Ollama provides local AI translation."
-    )
+    st.write("Ollama provides local AI translation.")
 
     st.divider()
 
-    st.subheader(
-        "🔥 FFmpeg"
-    )
+    st.subheader("🔥 FFmpeg")
 
-    st.write(
-        "FFmpeg permanently burns captions into "
-        "the final video."
-    )
+    st.write("FFmpeg permanently burns captions into " "the final video.")
 
     st.divider()
 
-    st.subheader(
-        "🛠️ Troubleshooting"
-    )
+    st.subheader("🛠️ Troubleshooting")
 
-    with st.expander(
-            "Ollama connection error"
-    ):
+    with st.expander("Ollama connection error"):
         st.code(
-            "ollama --version\n"
-            "ollama list\n"
-            "ollama serve",
+            "ollama --version\n" "ollama list\n" "ollama serve",
             language="powershell",
         )
 
-    with st.expander(
-            "FFmpeg connection error"
-    ):
+    with st.expander("FFmpeg connection error"):
         st.code(
             "ffmpeg -version",
             language="powershell",
@@ -2096,25 +1772,21 @@ def render_help() -> None:
 # About
 # ============================================================
 
+
 def render_about() -> None:
     """Render the About page."""
 
     st.title("ℹ️ About")
 
-    st.write(
-        "## 🎬 AI Video Caption Generator"
-    )
+    st.write("## 🎬 AI Video Caption Generator")
 
     st.write(
-        "An AI-powered application for generating "
-        "multilingual captions from videos."
+        "An AI-powered application for generating " "multilingual captions from videos."
     )
 
     st.divider()
 
-    st.subheader(
-        "✨ Core Workflow"
-    )
+    st.subheader("✨ Core Workflow")
 
     st.code(
         "Video\n"
@@ -2137,9 +1809,7 @@ def render_about() -> None:
 
     st.divider()
 
-    st.subheader(
-        "🧰 Technology Stack"
-    )
+    st.subheader("🧰 Technology Stack")
 
     technologies = [
         "Python",
@@ -2153,20 +1823,13 @@ def render_about() -> None:
     ]
 
     for technology in technologies:
-        st.write(
-            f"• {technology}"
-        )
+        st.write(f"• {technology}")
 
     st.divider()
 
-    st.subheader(
-        "📦 Project Scope"
-    )
+    st.subheader("📦 Project Scope")
 
-    st.write(
-        "The application is focused specifically "
-        "on video caption generation."
-    )
+    st.write("The application is focused specifically " "on video caption generation.")
 
     st.write(
         "Transcript data is used internally during "
@@ -2176,15 +1839,13 @@ def render_about() -> None:
 
     st.divider()
 
-    st.caption(
-        f"AI Video Caption Generator • "
-        f"v{APP_VERSION}"
-    )
+    st.caption(f"AI Video Caption Generator • " f"v{APP_VERSION}")
 
 
 # ============================================================
 # Main Router
 # ============================================================
+
 
 def main() -> None:
     """Run the selected application page."""

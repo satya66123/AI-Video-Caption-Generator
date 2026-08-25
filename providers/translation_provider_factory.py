@@ -51,9 +51,7 @@ class TranslationProviderFactory:
         normalized_provider = provider.strip().lower()
 
         if not normalized_provider:
-            raise ValueError(
-                "Translation provider cannot be empty."
-            )
+            raise ValueError("Translation provider cannot be empty.")
 
         if normalized_provider == "ollama":
             return OllamaTranslationProvider(
@@ -95,6 +93,4 @@ class TranslationProviderFactory:
                 **kwargs,
             )
 
-        raise ValueError(
-            f"Unsupported translation provider: {provider}"
-        )
+        raise ValueError(f"Unsupported translation provider: {provider}")

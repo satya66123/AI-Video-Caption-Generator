@@ -32,9 +32,7 @@ def test_help_renders_title() -> None:
     ):
         main()
 
-        mock_st.title.assert_called_once_with(
-            "❓ Help"
-        )
+        mock_st.title.assert_called_once_with("❓ Help")
 
 
 def test_help_renders_description() -> None:
@@ -62,9 +60,7 @@ def test_help_renders_how_to_use_section() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "🚀 How to Use"
-        )
+        mock_st.subheader.assert_any_call("🚀 How to Use")
 
 
 def test_help_renders_all_workflow_steps() -> None:
@@ -92,9 +88,7 @@ def test_help_renders_all_workflow_steps() -> None:
             expected_steps,
             start=1,
         ):
-            mock_st.write.assert_any_call(
-                f"**{index}.** {step}"
-            )
+            mock_st.write.assert_any_call(f"**{index}.** {step}")
 
 
 def test_help_renders_video_formats() -> None:
@@ -107,13 +101,9 @@ def test_help_renders_video_formats() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "🎬 Supported Video Formats"
-        )
+        mock_st.subheader.assert_any_call("🎬 Supported Video Formats")
 
-        mock_st.write.assert_any_call(
-            "MP4, MOV, AVI, MKV, and WebM."
-        )
+        mock_st.write.assert_any_call("MP4, MOV, AVI, MKV, and WebM.")
 
 
 def test_help_renders_caption_formats() -> None:
@@ -126,13 +116,9 @@ def test_help_renders_caption_formats() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "📄 Caption Formats"
-        )
+        mock_st.subheader.assert_any_call("📄 Caption Formats")
 
-        mock_st.write.assert_any_call(
-            "The application generates both SRT and VTT."
-        )
+        mock_st.write.assert_any_call("The application generates both SRT and VTT.")
 
 
 def test_help_renders_ai_processing() -> None:
@@ -145,13 +131,10 @@ def test_help_renders_ai_processing() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "🤖 AI Processing"
-        )
+        mock_st.subheader.assert_any_call("🤖 AI Processing")
 
         mock_st.write.assert_any_call(
-            "Whisper is used for internal timestamped "
-            "transcription."
+            "Whisper is used for internal timestamped " "transcription."
         )
 
         mock_st.write.assert_any_call(
@@ -170,13 +153,10 @@ def test_help_renders_ffmpeg_information() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "🔥 FFmpeg"
-        )
+        mock_st.subheader.assert_any_call("🔥 FFmpeg")
 
         mock_st.write.assert_any_call(
-            "FFmpeg permanently burns the selected captions "
-            "into the final video."
+            "FFmpeg permanently burns the selected captions " "into the final video."
         )
 
 
@@ -190,9 +170,7 @@ def test_help_renders_troubleshooting_section() -> None:
     ):
         main()
 
-        mock_st.subheader.assert_any_call(
-            "🛠️ Troubleshooting"
-        )
+        mock_st.subheader.assert_any_call("🛠️ Troubleshooting")
 
 
 def test_help_renders_ollama_troubleshooting() -> None:
@@ -205,9 +183,7 @@ def test_help_renders_ollama_troubleshooting() -> None:
     ):
         main()
 
-        mock_st.expander.assert_any_call(
-            "Ollama connection error"
-        )
+        mock_st.expander.assert_any_call("Ollama connection error")
 
 
 def test_help_renders_translategemma_troubleshooting() -> None:
@@ -220,9 +196,7 @@ def test_help_renders_translategemma_troubleshooting() -> None:
     ):
         main()
 
-        mock_st.expander.assert_any_call(
-            "TranslateGemma model missing"
-        )
+        mock_st.expander.assert_any_call("TranslateGemma model missing")
 
 
 def test_help_renders_ffmpeg_troubleshooting() -> None:
@@ -235,9 +209,7 @@ def test_help_renders_ffmpeg_troubleshooting() -> None:
     ):
         main()
 
-        mock_st.expander.assert_any_call(
-            "FFmpeg not found"
-        )
+        mock_st.expander.assert_any_call("FFmpeg not found")
 
 
 def test_help_renders_ollama_command() -> None:
@@ -253,9 +225,7 @@ def test_help_renders_ollama_command() -> None:
         assert mock_st.code.call_count == 3
 
         mock_st.code.assert_any_call(
-            "ollama --version\n"
-            "ollama list\n"
-            "ollama serve",
+            "ollama --version\n" "ollama list\n" "ollama serve",
             language="powershell",
         )
 

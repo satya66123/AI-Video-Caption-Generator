@@ -24,15 +24,13 @@ from providers.deepseek_translation_provider import (
 
 def test_supported_providers() -> None:
     """Verify all supported providers are registered."""
-    assert (
-        TranslationProviderFactory.SUPPORTED_PROVIDERS
-        == (
-            "ollama",
-            "openai",
-            "anthropic",
-            "gemini",
-        )
+    assert TranslationProviderFactory.SUPPORTED_PROVIDERS == (
+        "ollama",
+        "openai",
+        "anthropic",
+        "gemini",
     )
+
 
 def test_supported_providers() -> None:
     """Verify all supported translation providers."""
@@ -46,6 +44,7 @@ def test_supported_providers() -> None:
         "cohere",
         "deepseek",
     )
+
 
 def test_create_mistral_provider() -> None:
     """Create a Mistral provider."""
@@ -98,10 +97,8 @@ def test_create_deepseek_provider() -> None:
         DeepSeekTranslationProvider,
     )
 
-@patch(
-    "providers.translation_provider_factory."
-    "OllamaTranslationProvider"
-)
+
+@patch("providers.translation_provider_factory." "OllamaTranslationProvider")
 def test_create_ollama_provider(
     mock_provider,
 ) -> None:
@@ -113,10 +110,7 @@ def test_create_ollama_provider(
     mock_provider.assert_called_once_with()
 
 
-@patch(
-    "providers.translation_provider_factory."
-    "OpenAITranslationProvider"
-)
+@patch("providers.translation_provider_factory." "OpenAITranslationProvider")
 def test_create_openai_provider(
     mock_provider,
 ) -> None:
@@ -128,10 +122,7 @@ def test_create_openai_provider(
     mock_provider.assert_called_once_with()
 
 
-@patch(
-    "providers.translation_provider_factory."
-    "AnthropicTranslationProvider"
-)
+@patch("providers.translation_provider_factory." "AnthropicTranslationProvider")
 def test_create_anthropic_provider(
     mock_provider,
 ) -> None:
@@ -143,10 +134,7 @@ def test_create_anthropic_provider(
     mock_provider.assert_called_once_with()
 
 
-@patch(
-    "providers.translation_provider_factory."
-    "GeminiTranslationProvider"
-)
+@patch("providers.translation_provider_factory." "GeminiTranslationProvider")
 def test_create_gemini_provider(
     mock_provider,
 ) -> None:
@@ -172,16 +160,13 @@ def test_create_is_case_insensitive(
 ) -> None:
     """Provider names are case insensitive."""
     with patch(
-        "providers.translation_provider_factory."
-        "OllamaTranslationProvider"
+        "providers.translation_provider_factory." "OllamaTranslationProvider"
     ) as ollama:
         with patch(
-            "providers.translation_provider_factory."
-            "OpenAITranslationProvider"
+            "providers.translation_provider_factory." "OpenAITranslationProvider"
         ) as openai:
             with patch(
-                "providers.translation_provider_factory."
-                "AnthropicTranslationProvider"
+                "providers.translation_provider_factory." "AnthropicTranslationProvider"
             ) as anthropic:
                 with patch(
                     "providers.translation_provider_factory."

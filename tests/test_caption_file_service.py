@@ -28,10 +28,7 @@ def test_save_vtt(tmp_path: Path) -> None:
     result = service.save_vtt(
         "gm.mp4",
         "en",
-        "WEBVTT\n\n"
-        "1\n"
-        "00:00:00.000 --> 00:00:02.000\n"
-        "Hello\n",
+        "WEBVTT\n\n" "1\n" "00:00:00.000 --> 00:00:02.000\n" "Hello\n",
     )
 
     assert result == tmp_path / "gm_en.vtt"

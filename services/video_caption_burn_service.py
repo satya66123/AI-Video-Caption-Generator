@@ -44,14 +44,10 @@ class VideoCaptionBurnService:
         captions = Path(caption_path)
 
         if not video.is_file():
-            raise FileNotFoundError(
-                f"Video not found: {video}"
-            )
+            raise FileNotFoundError(f"Video not found: {video}")
 
         if not captions.is_file():
-            raise FileNotFoundError(
-                f"Caption file not found: {captions}"
-            )
+            raise FileNotFoundError(f"Caption file not found: {captions}")
 
         output_path = self.build_output_path(
             video,
@@ -99,15 +95,10 @@ class VideoCaptionBurnService:
             )
 
             raise RuntimeError(
-                "FFmpeg failed to burn captions into "
-                "the video.\n"
-                f"{error_message}"
+                "FFmpeg failed to burn captions into " "the video.\n" f"{error_message}"
             ) from exc
 
         if not output_path.is_file():
-            raise RuntimeError(
-                "FFmpeg completed but output video "
-                "was not created."
-            )
+            raise RuntimeError("FFmpeg completed but output video " "was not created.")
 
         return output_path

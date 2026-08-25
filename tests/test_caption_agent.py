@@ -27,6 +27,7 @@ def test_caption_agent_detect_language(tmp_path: Path) -> None:
     assert result["confidence"] == 0.95
     mock_service.detect.assert_called_once_with(video_path)
 
+
 def test_select_caption_language() -> None:
     agent = CaptionAgent(
         language_detection_service=MagicMock(),

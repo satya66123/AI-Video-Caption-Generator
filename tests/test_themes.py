@@ -19,7 +19,6 @@ def test_expected_themes_exist():
         "💜 Cosmic Purple",
         "🌊 Ocean",
         "🌿 Emerald",
-
         # Light themes
         "☀️ Light",
         "🌤️ Sky Light",

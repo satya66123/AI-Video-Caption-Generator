@@ -9,9 +9,7 @@ from services.language_detection_service import (
 
 
 def test_video_not_found() -> None:
-    with patch(
-        "services.language_detection_service.whisper.load_model"
-    ):
+    with patch("services.language_detection_service.whisper.load_model"):
         service = LanguageDetectionService()
 
         with pytest.raises(FileNotFoundError):

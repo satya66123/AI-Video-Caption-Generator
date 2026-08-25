@@ -23,9 +23,7 @@ class AnthropicTranslationProvider(TranslationProvider):
             raise ValueError("Text cannot be empty.")
 
         if not target_language.strip():
-            raise ValueError(
-                "Target language cannot be empty."
-            )
+            raise ValueError("Target language cannot be empty.")
 
         message = self.client.messages.create(
             model=self.model,
@@ -46,8 +44,6 @@ class AnthropicTranslationProvider(TranslationProvider):
         result = message.content[0].text.strip()
 
         if not result:
-            raise RuntimeError(
-                "Anthropic returned an empty translation."
-            )
+            raise RuntimeError("Anthropic returned an empty translation.")
 
         return result

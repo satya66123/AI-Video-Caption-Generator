@@ -14,9 +14,7 @@ def test_save_uploaded_video(tmp_path, monkeypatch) -> None:
         tmp_path,
     )
 
-    result = save_uploaded_video(
-        uploaded_file
-    )
+    result = save_uploaded_video(uploaded_file)
 
     assert result == tmp_path / "sample.mp4"
     assert result.is_file()
@@ -36,9 +34,7 @@ def test_save_uploaded_video_removes_path_components(
         tmp_path,
     )
 
-    result = save_uploaded_video(
-        uploaded_file
-    )
+    result = save_uploaded_video(uploaded_file)
 
     assert result.name == "sample.mp4"
     assert result.is_file()

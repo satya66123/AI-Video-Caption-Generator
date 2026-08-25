@@ -8,9 +8,7 @@ def main() -> None:
 
     st.title("❓ Help")
 
-    st.write(
-        "Learn how to use the AI Video Caption Generator."
-    )
+    st.write("Learn how to use the AI Video Caption Generator.")
 
     st.divider()
 
@@ -37,26 +35,19 @@ def main() -> None:
 
     st.subheader("🎬 Supported Video Formats")
 
-    st.write(
-        "MP4, MOV, AVI, MKV, and WebM."
-    )
+    st.write("MP4, MOV, AVI, MKV, and WebM.")
 
     st.divider()
 
     st.subheader("📄 Caption Formats")
 
-    st.write(
-        "The application generates both SRT and VTT."
-    )
+    st.write("The application generates both SRT and VTT.")
 
     st.divider()
 
     st.subheader("🤖 AI Processing")
 
-    st.write(
-        "Whisper is used for internal timestamped "
-        "transcription."
-    )
+    st.write("Whisper is used for internal timestamped " "transcription.")
 
     st.write(
         "TranslateGemma 12B running locally through "
@@ -67,36 +58,25 @@ def main() -> None:
 
     st.subheader("🔥 FFmpeg")
 
-    st.write(
-        "FFmpeg permanently burns the selected captions "
-        "into the final video."
-    )
+    st.write("FFmpeg permanently burns the selected captions " "into the final video.")
 
     st.divider()
 
     st.subheader("🛠️ Troubleshooting")
 
-    with st.expander(
-        "Ollama connection error"
-    ):
+    with st.expander("Ollama connection error"):
         st.code(
-            "ollama --version\n"
-            "ollama list\n"
-            "ollama serve",
+            "ollama --version\n" "ollama list\n" "ollama serve",
             language="powershell",
         )
 
-    with st.expander(
-        "TranslateGemma model missing"
-    ):
+    with st.expander("TranslateGemma model missing"):
         st.code(
             "ollama pull translategemma:12b",
             language="powershell",
         )
 
-    with st.expander(
-        "FFmpeg not found"
-    ):
+    with st.expander("FFmpeg not found"):
         st.code(
             "ffmpeg -version",
             language="powershell",

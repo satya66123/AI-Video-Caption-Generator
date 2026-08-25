@@ -9,7 +9,6 @@ from config.caption_config import (
     SUPPORTED_CAPTION_LANGUAGES,
 )
 
-
 TRANSLATION_PROVIDERS = {
     "Ollama": {
         "key": "ollama",
@@ -85,9 +84,7 @@ def main() -> None:
 
     st.title("⚙️ Settings")
 
-    st.write(
-        "Configure caption-generation preferences."
-    )
+    st.write("Configure caption-generation preferences.")
 
     st.divider()
 
@@ -136,24 +133,17 @@ def main() -> None:
 
     st.subheader("🤖 Translation Provider")
 
-    provider_names = list(
-        TRANSLATION_PROVIDERS.keys()
-    )
+    provider_names = list(TRANSLATION_PROVIDERS.keys())
 
     current_provider = st.session_state.get(
         "translation_provider",
         "ollama",
     )
 
-    provider_keys = [
-        config["key"]
-        for config in TRANSLATION_PROVIDERS.values()
-    ]
+    provider_keys = [config["key"] for config in TRANSLATION_PROVIDERS.values()]
 
     if current_provider in provider_keys:
-        current_provider_index = provider_keys.index(
-            current_provider
-        )
+        current_provider_index = provider_keys.index(current_provider)
     else:
         current_provider_index = 0
 
@@ -161,34 +151,23 @@ def main() -> None:
         "AI provider",
         provider_names,
         index=current_provider_index,
-        help=(
-            "Select the AI provider used for "
-            "caption translation."
-        ),
+        help=("Select the AI provider used for " "caption translation."),
     )
 
-    provider_config = TRANSLATION_PROVIDERS[
-        translation_provider
-    ]
+    provider_config = TRANSLATION_PROVIDERS[translation_provider]
 
     provider_key = provider_config["key"]
     translation_model = provider_config["model"]
 
-    st.session_state[
-        "translation_provider"
-    ] = provider_key
+    st.session_state["translation_provider"] = provider_key
 
-    st.session_state[
-        "translation_model"
-    ] = translation_model
+    st.session_state["translation_model"] = translation_model
 
     # ---------------------------------------------------------
     # Selected Provider
     # ---------------------------------------------------------
 
-    st.markdown(
-        f"### {translation_provider}"
-    )
+    st.markdown(f"### {translation_provider}")
 
     st.text_input(
         "Default model",
@@ -197,8 +176,7 @@ def main() -> None:
     )
 
     st.caption(
-        f"Provider: **{translation_provider}**  |  "
-        f"Model: **{translation_model}**"
+        f"Provider: **{translation_provider}**  |  " f"Model: **{translation_model}**"
     )
 
     status = _get_api_key_status(provider_key)
@@ -206,15 +184,9 @@ def main() -> None:
     st.write(f"Status: {status}")
 
     if provider_key == "ollama":
-        st.info(
-            "Ollama runs locally and does not require "
-            "a cloud API key."
-        )
+        st.info("Ollama runs locally and does not require " "a cloud API key.")
     else:
-        st.info(
-            "The API key is read from the environment "
-            "and is never displayed."
-        )
+        st.info("The API key is read from the environment " "and is never displayed.")
 
     # ---------------------------------------------------------
     # Available Providers
@@ -224,34 +196,26 @@ def main() -> None:
 
     st.subheader("🌐 Available AI Providers")
 
-    provider_items = list(
-        TRANSLATION_PROVIDERS.items()
-    )
+    provider_items = list(TRANSLATION_PROVIDERS.items())
 
     for start in range(0, len(provider_items), 4):
-        row_items = provider_items[start:start + 4]
+        row_items = provider_items[start : start + 4]
 
         provider_columns = st.columns(4)
 
         for column, (
-                provider_name,
-                config,
+            provider_name,
+            config,
         ) in zip(
             provider_columns,
             row_items,
         ):
             with column:
-                st.markdown(
-                    f"### {provider_name}"
-                )
+                st.markdown(f"### {provider_name}")
 
-                st.caption(
-                    f"`{config['model']}`"
-                )
+                st.caption(f"`{config['model']}`")
 
-                provider_status = _get_api_key_status(
-                    config["key"]
-                )
+                provider_status = _get_api_key_status(config["key"])
 
                 st.write(provider_status)
 
@@ -263,9 +227,7 @@ def main() -> None:
 
     st.subheader("💬 Default Caption Language")
 
-    language_options = list(
-        SUPPORTED_CAPTION_LANGUAGES.keys()
-    )
+    language_options = list(SUPPORTED_CAPTION_LANGUAGES.keys())
 
     current_language = st.session_state.get(
         "default_caption_language",
@@ -275,31 +237,22 @@ def main() -> None:
     language_index = (
         language_options.index(current_language)
         if current_language in language_options
-        else language_options.index(
-            DEFAULT_CAPTION_LANGUAGE
-        )
+        else language_options.index(DEFAULT_CAPTION_LANGUAGE)
     )
 
     default_language = st.selectbox(
         "Default caption language",
         language_options,
         index=language_index,
-        format_func=lambda code: (
-            f"{SUPPORTED_CAPTION_LANGUAGES[code]} "
-            f"({code})"
-        ),
+        format_func=lambda code: (f"{SUPPORTED_CAPTION_LANGUAGES[code]} " f"({code})"),
     )
 
     st.session_state["translation_provider"] = provider_key
     st.session_state["translation_model"] = translation_model
 
-    st.session_state[
-        "default_caption_language"
-    ] = default_language
+    st.session_state["default_caption_language"] = default_language
 
-    st.success(
-        "Settings saved for this session."
-    )
+    st.success("Settings saved for this session.")
 
     st.divider()
 

@@ -51,6 +51,4 @@ def test_empty_transcript_segments_are_rejected() -> None:
         agent.get_caption_segments(transcript)
         assert False, "Expected ValueError"
     except ValueError as exc:
-        assert str(exc) == (
-            "Transcript does not contain caption segments."
-        )
+        assert str(exc) == ("Transcript does not contain caption segments.")

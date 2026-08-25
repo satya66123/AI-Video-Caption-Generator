@@ -53,19 +53,13 @@ class OllamaTranslationProvider(TranslationProvider):
 
         try:
             with urllib.request.urlopen(request) as response:
-                result = json.loads(
-                    response.read().decode("utf-8")
-                )
+                result = json.loads(response.read().decode("utf-8"))
         except urllib.error.URLError as exc:
-            raise RuntimeError(
-                "Unable to connect to Ollama."
-            ) from exc
+            raise RuntimeError("Unable to connect to Ollama.") from exc
 
         translated_text = result.get("response", "").strip()
 
         if not translated_text:
-            raise RuntimeError(
-                "Ollama returned an empty translation."
-            )
+            raise RuntimeError("Ollama returned an empty translation.")
 
         return translated_text

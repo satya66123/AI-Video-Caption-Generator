@@ -40,9 +40,7 @@ class CaptionService:
         storage_path = self.get_storage_path(video_id)
 
         if not storage_path.is_file():
-            raise FileNotFoundError(
-                f"Caption record not found: {storage_path}"
-            )
+            raise FileNotFoundError(f"Caption record not found: {storage_path}")
 
         with storage_path.open("r", encoding="utf-8") as file:
             data = json.load(file)

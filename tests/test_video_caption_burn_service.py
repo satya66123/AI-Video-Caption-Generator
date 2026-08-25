@@ -12,9 +12,7 @@ from services.video_caption_burn_service import (
 
 def test_build_output_path(tmp_path: Path) -> None:
     """Build the expected captioned-video output path."""
-    service = VideoCaptionBurnService(
-        tmp_path / "exports"
-    )
+    service = VideoCaptionBurnService(tmp_path / "exports")
 
     video_path = tmp_path / "gm.mp4"
 
@@ -23,20 +21,14 @@ def test_build_output_path(tmp_path: Path) -> None:
         "en",
     )
 
-    assert result == (
-        tmp_path
-        / "exports"
-        / "gm_en_captioned.mp4"
-    )
+    assert result == (tmp_path / "exports" / "gm_en_captioned.mp4")
 
 
 def test_missing_video_is_rejected(
     tmp_path: Path,
 ) -> None:
     """Reject a missing video."""
-    service = VideoCaptionBurnService(
-        tmp_path / "exports"
-    )
+    service = VideoCaptionBurnService(tmp_path / "exports")
 
     video_path = tmp_path / "missing.mp4"
     caption_path = tmp_path / "gm_en.srt"
@@ -58,9 +50,7 @@ def test_missing_caption_is_rejected(
     tmp_path: Path,
 ) -> None:
     """Reject a missing caption file."""
-    service = VideoCaptionBurnService(
-        tmp_path / "exports"
-    )
+    service = VideoCaptionBurnService(tmp_path / "exports")
 
     video_path = tmp_path / "gm.mp4"
     caption_path = tmp_path / "missing.srt"
@@ -75,25 +65,17 @@ def test_missing_caption_is_rejected(
         )
 
 
-@patch(
-    "services.video_caption_burn_service.subprocess.run"
-)
+@patch("services.video_caption_burn_service.subprocess.run")
 def test_burn_calls_ffmpeg(
     mock_run,
     tmp_path: Path,
 ) -> None:
     """Verify the FFmpeg command used for caption burning."""
-    service = VideoCaptionBurnService(
-        tmp_path / "exports"
-    )
+    service = VideoCaptionBurnService(tmp_path / "exports")
 
     video_path = tmp_path / "gm.mp4"
     caption_path = tmp_path / "gm_en.srt"
-    output_path = (
-        tmp_path
-        / "exports"
-        / "gm_en_captioned.mp4"
-    )
+    output_path = tmp_path / "exports" / "gm_en_captioned.mp4"
 
     video_path.write_bytes(b"video")
 
@@ -104,9 +86,7 @@ def test_burn_calls_ffmpeg(
 
     def create_output(*args, **kwargs):
         """Create a fake FFmpeg output."""
-        output_path.write_bytes(
-            b"captioned video"
-        )
+        output_path.write_bytes(b"captioned video")
 
     mock_run.side_effect = create_output
 
@@ -129,21 +109,13 @@ def test_burn_calls_ffmpeg(
 
     # Find the FFmpeg video-filter argument.
     filter_index = command.index("-vf")
-    subtitle_filter = command[
-        filter_index + 1
-    ]
+    subtitle_filter = command[filter_index + 1]
 
     # The service uses an absolute POSIX-style path
     # and escapes the Windows drive-letter colon.
-    expected_path = (
-        caption_path.resolve()
-        .as_posix()
-        .replace(":", r"\:")
-    )
+    expected_path = caption_path.resolve().as_posix().replace(":", r"\:")
 
-    expected_filter = (
-        f"subtitles=filename='{expected_path}'"
-    )
+    expected_filter = f"subtitles=filename='{expected_path}'"
 
     assert subtitle_filter == expected_filter
 
@@ -152,17 +124,13 @@ def test_burn_calls_ffmpeg(
     assert str(output_path) in command
 
 
-@patch(
-    "services.video_caption_burn_service.subprocess.run"
-)
+@patch("services.video_caption_burn_service.subprocess.run")
 def test_ffmpeg_failure_is_converted_to_runtime_error(
     mock_run,
     tmp_path: Path,
 ) -> None:
     """Convert an FFmpeg failure into RuntimeError."""
-    service = VideoCaptionBurnService(
-        tmp_path / "exports"
-    )
+    service = VideoCaptionBurnService(tmp_path / "exports")
 
     video_path = tmp_path / "gm.mp4"
     caption_path = tmp_path / "gm_en.srt"
@@ -174,9 +142,7 @@ def test_ffmpeg_failure_is_converted_to_runtime_error(
         encoding="utf-8",
     )
 
-    mock_run.side_effect = __import__(
-        "subprocess"
-    ).CalledProcessError(
+    mock_run.side_effect = __import__("subprocess").CalledProcessError(
         returncode=1,
         cmd=["ffmpeg"],
         stderr="FFmpeg test error",

@@ -15,9 +15,7 @@ def test_dashboard_statistics(tmp_path: Path) -> None:
     captions.mkdir()
     outputs.mkdir()
 
-    (uploads / "video.mp4").write_bytes(
-        b"video"
-    )
+    (uploads / "video.mp4").write_bytes(b"video")
     (uploads / "ignored.txt").write_text(
         "test",
         encoding="utf-8",
@@ -32,9 +30,7 @@ def test_dashboard_statistics(tmp_path: Path) -> None:
         encoding="utf-8",
     )
 
-    (outputs / "video_en_captioned.mp4").write_bytes(
-        b"video"
-    )
+    (outputs / "video_en_captioned.mp4").write_bytes(b"video")
 
     agent = DashboardAgent(
         upload_dir=uploads,
@@ -80,18 +76,14 @@ def test_recent_files(
     captions.mkdir()
     outputs.mkdir()
 
-    (uploads / "video.mp4").write_bytes(
-        b"video"
-    )
+    (uploads / "video.mp4").write_bytes(b"video")
 
     (captions / "video_en.srt").write_text(
         "srt",
         encoding="utf-8",
     )
 
-    (outputs / "video_en_captioned.mp4").write_bytes(
-        b"video"
-    )
+    (outputs / "video_en_captioned.mp4").write_bytes(b"video")
 
     agent = DashboardAgent(
         upload_dir=uploads,
@@ -99,16 +91,11 @@ def test_recent_files(
         output_dir=outputs,
     )
 
-    result = agent.get_recent_files(
-        limit=5
-    )
+    result = agent.get_recent_files(limit=5)
 
     assert len(result) == 3
 
-    names = [
-        item["name"]
-        for item in result
-    ]
+    names = [item["name"] for item in result]
 
     assert "video.mp4" in names
     assert "video_en.srt" in names
@@ -123,9 +110,7 @@ def test_recent_files_limit(
     uploads.mkdir()
 
     for index in range(5):
-        (
-            uploads / f"video_{index}.mp4"
-        ).write_bytes(b"video")
+        (uploads / f"video_{index}.mp4").write_bytes(b"video")
 
     agent = DashboardAgent(
         upload_dir=uploads,
@@ -133,9 +118,7 @@ def test_recent_files_limit(
         output_dir=tmp_path / "outputs",
     )
 
-    result = agent.get_recent_files(
-        limit=2
-    )
+    result = agent.get_recent_files(limit=2)
 
     assert len(result) == 2
 
@@ -150,9 +133,7 @@ def test_recent_files_zero_limit(
         output_dir=tmp_path / "outputs",
     )
 
-    result = agent.get_recent_files(
-        limit=0
-    )
+    result = agent.get_recent_files(limit=0)
 
     assert result == []
 
@@ -167,9 +148,7 @@ def test_recent_files_negative_limit(
         output_dir=tmp_path / "outputs",
     )
 
-    result = agent.get_recent_files(
-        limit=-1
-    )
+    result = agent.get_recent_files(limit=-1)
 
     assert result == []
 
@@ -201,9 +180,7 @@ def test_recent_files_excludes_gitkeep(
         encoding="utf-8",
     )
 
-    (uploads / "video.mp4").write_bytes(
-        b"video"
-    )
+    (uploads / "video.mp4").write_bytes(b"video")
 
     (captions / "video_en.srt").write_text(
         "srt",
@@ -216,14 +193,9 @@ def test_recent_files_excludes_gitkeep(
         output_dir=outputs,
     )
 
-    result = agent.get_recent_files(
-        limit=10
-    )
+    result = agent.get_recent_files(limit=10)
 
-    names = [
-        item["name"]
-        for item in result
-    ]
+    names = [item["name"] for item in result]
 
     assert ".gitkeep" not in names
     assert "video.mp4" in names
@@ -279,9 +251,7 @@ def test_count_files_without_extension_filter(
         encoding="utf-8",
     )
 
-    result = DashboardAgent._count_files(
-        directory
-    )
+    result = DashboardAgent._count_files(directory)
 
     assert result == 3
 
@@ -293,13 +263,9 @@ def test_count_files_with_extension_filter(
     directory = tmp_path / "files"
     directory.mkdir()
 
-    (directory / "one.mp4").write_bytes(
-        b"video"
-    )
+    (directory / "one.mp4").write_bytes(b"video")
 
-    (directory / "two.mp4").write_bytes(
-        b"video"
-    )
+    (directory / "two.mp4").write_bytes(b"video")
 
     (directory / "three.txt").write_text(
         "text",
@@ -321,9 +287,7 @@ def test_count_files_is_case_insensitive(
     directory = tmp_path / "files"
     directory.mkdir()
 
-    (directory / "video.MP4").write_bytes(
-        b"video"
-    )
+    (directory / "video.MP4").write_bytes(b"video")
 
     (directory / "caption.SRT").write_text(
         "caption",
@@ -347,8 +311,6 @@ def test_count_files_missing_directory(
     """Return zero when the directory does not exist."""
     directory = tmp_path / "missing"
 
-    result = DashboardAgent._count_files(
-        directory
-    )
+    result = DashboardAgent._count_files(directory)
 
     assert result == 0

@@ -31,6 +31,7 @@ class CaptionRecord:
         """Convert the record to a JSON-compatible dictionary."""
         return asdict(self)
 
+
 @dataclass
 class CaptionSegment:
     """A single timestamped caption segment."""

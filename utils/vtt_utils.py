@@ -34,9 +34,7 @@ def generate_vtt(segments: list[CaptionSegment]) -> str:
             raise ValueError("Caption start time cannot be negative.")
 
         if segment.end <= segment.start:
-            raise ValueError(
-                "Caption end time must be greater than start time."
-            )
+            raise ValueError("Caption end time must be greater than start time.")
 
         if not segment.text.strip():
             raise ValueError("Caption text cannot be empty.")

@@ -52,10 +52,6 @@ def test_prepare_caption_segments() -> None:
     assert result["segments"][0].text == "Hello everyone"
     assert result["segments"][1].text == "Welcome"
 
-    transcript_service.transcribe.assert_called_once_with(
-        Path("video.mp4")
-    )
+    transcript_service.transcribe.assert_called_once_with(Path("video.mp4"))
 
-    language_service.detect.assert_called_once_with(
-        Path("video.mp4")
-    )
+    language_service.detect.assert_called_once_with(Path("video.mp4"))

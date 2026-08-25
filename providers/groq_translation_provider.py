@@ -23,9 +23,7 @@ class GroqTranslationProvider(TranslationProvider):
             raise ValueError("Text cannot be empty.")
 
         if not target_language.strip():
-            raise ValueError(
-                "Target language cannot be empty."
-            )
+            raise ValueError("Target language cannot be empty.")
 
         response = self.client.chat.completions.create(
             model=self.model,
@@ -42,15 +40,9 @@ class GroqTranslationProvider(TranslationProvider):
             ],
         )
 
-        result = (
-            response.choices[0]
-            .message.content
-            .strip()
-        )
+        result = response.choices[0].message.content.strip()
 
         if not result:
-            raise RuntimeError(
-                "Groq returned an empty translation."
-            )
+            raise RuntimeError("Groq returned an empty translation.")
 
         return result

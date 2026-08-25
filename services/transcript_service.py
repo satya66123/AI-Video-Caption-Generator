@@ -20,9 +20,7 @@ class TranscriptService:
         if self._model is None:
             import whisper
 
-            self._model = whisper.load_model(
-                self.model_name
-            )
+            self._model = whisper.load_model(self.model_name)
 
         return self._model
 
@@ -39,9 +37,7 @@ class TranscriptService:
         path = Path(video_path)
 
         if not path.is_file():
-            raise FileNotFoundError(
-                f"Video not found: {path}"
-            )
+            raise FileNotFoundError(f"Video not found: {path}")
 
         model = self._load_model()
 

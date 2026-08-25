@@ -9,9 +9,7 @@ def main() -> None:
     """Render the dashboard."""
     st.title("📊 Dashboard")
 
-    st.write(
-        "Overview of your video caption generation activity."
-    )
+    st.write("Overview of your video caption generation activity.")
 
     st.divider()
 
@@ -49,27 +47,18 @@ def main() -> None:
 
     # Do not show Git placeholder files.
     recent_files = [
-        file_info
-        for file_info in recent_files
-        if file_info["name"] != ".gitkeep"
+        file_info for file_info in recent_files if file_info["name"] != ".gitkeep"
     ]
 
     if not recent_files:
-        st.info(
-            "No files available yet."
-        )
+        st.info("No files available yet.")
         return
 
     for file_info in recent_files:
 
-        st.write(
-            f"**{file_info['name']}**"
-        )
+        st.write(f"**{file_info['name']}**")
 
-        st.caption(
-            f"Type: {file_info['type']}  "
-            f"| Path: {file_info['path']}"
-        )
+        st.caption(f"Type: {file_info['type']}  " f"| Path: {file_info['path']}")
 
 
 if __name__ == "__main__":

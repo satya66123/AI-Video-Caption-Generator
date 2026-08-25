@@ -13,7 +13,6 @@ def test_caption_architecture() -> None:
         "config/caption_config.py",
         "core/caption_models.py",
         "services/caption_generation_service.py",
-
     ]
     expected_files = py_
 
@@ -52,6 +51,7 @@ def test_ollama_translation_provider_import() -> None:
 
     assert OllamaTranslationProvider is not None
 
+
 def test_caption_generation_service_import() -> None:
     """Verify the CaptionGenerationService can be imported."""
     from services.caption_generation_service import (
@@ -59,6 +59,7 @@ def test_caption_generation_service_import() -> None:
     )
 
     assert CaptionGenerationService is not None
+
 
 def test_caption_agent_import() -> None:
     """Verify the CaptionAgent can be imported."""

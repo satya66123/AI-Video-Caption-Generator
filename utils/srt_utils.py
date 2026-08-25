@@ -34,9 +34,7 @@ def generate_srt(segments: list[CaptionSegment]) -> str:
             raise ValueError("Caption start time cannot be negative.")
 
         if segment.end <= segment.start:
-            raise ValueError(
-                "Caption end time must be greater than start time."
-            )
+            raise ValueError("Caption end time must be greater than start time.")
 
         if not segment.text.strip():
             raise ValueError("Caption text cannot be empty.")
@@ -44,10 +42,6 @@ def generate_srt(segments: list[CaptionSegment]) -> str:
         start = format_srt_timestamp(segment.start)
         end = format_srt_timestamp(segment.end)
 
-        blocks.append(
-            f"{index}\n"
-            f"{start} --> {end}\n"
-            f"{segment.text.strip()}"
-        )
+        blocks.append(f"{index}\n" f"{start} --> {end}\n" f"{segment.text.strip()}")
 
     return "\n\n".join(blocks) + "\n"

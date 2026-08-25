@@ -11,9 +11,7 @@ class CohereTranslationProvider(TranslationProvider):
         model: str = "command-a-03-2025",
         api_key: str | None = None,
     ) -> None:
-        self.client = cohere.ClientV2(
-            api_key=api_key
-        )
+        self.client = cohere.ClientV2(api_key=api_key)
         self.model = model
 
     def translate(
@@ -25,9 +23,7 @@ class CohereTranslationProvider(TranslationProvider):
             raise ValueError("Text cannot be empty.")
 
         if not target_language.strip():
-            raise ValueError(
-                "Target language cannot be empty."
-            )
+            raise ValueError("Target language cannot be empty.")
 
         response = self.client.chat(
             model=self.model,
@@ -44,13 +40,9 @@ class CohereTranslationProvider(TranslationProvider):
             ],
         )
 
-        result = (
-            response.message.content[0].text.strip()
-        )
+        result = response.message.content[0].text.strip()
 
         if not result:
-            raise RuntimeError(
-                "Cohere returned an empty translation."
-            )
+            raise RuntimeError("Cohere returned an empty translation.")
 
         return result

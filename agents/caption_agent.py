@@ -21,25 +21,18 @@ class CaptionAgent:
         self,
         language_detection_service: LanguageDetectionService | None = None,
         transcript_service: Any | None = None,
-        caption_generation_service: (
-            CaptionGenerationService | None
-        ) = None,
-            caption_file_service: CaptionFileService | None = None,
-            video_caption_burn_service: VideoCaptionBurnService | None = None,
+        caption_generation_service: CaptionGenerationService | None = None,
+        caption_file_service: CaptionFileService | None = None,
+        video_caption_burn_service: VideoCaptionBurnService | None = None,
     ) -> None:
         """Initialize the caption agent."""
-        self.caption_file_service = (
-                caption_file_service
-                or CaptionFileService()
-        )
+        self.caption_file_service = caption_file_service or CaptionFileService()
 
         self.video_caption_burn_service = (
-                video_caption_burn_service
-                or VideoCaptionBurnService()
+            video_caption_burn_service or VideoCaptionBurnService()
         )
         self.language_detection_service = (
-            language_detection_service
-            or LanguageDetectionService()
+            language_detection_service or LanguageDetectionService()
         )
 
         # Transcript is an internal processing dependency.
@@ -48,9 +41,7 @@ class CaptionAgent:
 
         # Caption generation is kept injectable so tests can use
         # a mocked service and production can use TranslateGemma.
-        self.caption_generation_service = (
-            caption_generation_service
-        )
+        self.caption_generation_service = caption_generation_service
 
     def select_caption_language(
         self,
@@ -60,38 +51,30 @@ class CaptionAgent:
         normalized_language = language_code.strip().lower()
 
         if not validate_caption_language(normalized_language):
-            raise ValueError(
-                f"Unsupported caption language: {language_code}"
-            )
+            raise ValueError(f"Unsupported caption language: {language_code}")
 
         return normalized_language
 
     def generate_caption_files(
-            self,
-            video_path: str | Path,
-            caption_language: str = DEFAULT_CAPTION_LANGUAGE,
+        self,
+        video_path: str | Path,
+        caption_language: str = DEFAULT_CAPTION_LANGUAGE,
     ) -> dict[str, Any]:
         """
         Generate translated SRT and VTT caption files.
 
         Transcript data remains internal and is not persisted.
         """
-        selected_language = self.select_caption_language(
-            caption_language
-        )
+        selected_language = self.select_caption_language(caption_language)
 
         translated_segments = self.generate_captions(
             video_path=video_path,
             caption_language=selected_language,
         )
 
-        srt_content = generate_srt(
-            translated_segments
-        )
+        srt_content = generate_srt(translated_segments)
 
-        vtt_content = generate_vtt(
-            translated_segments
-        )
+        vtt_content = generate_vtt(translated_segments)
 
         srt_path = self.caption_file_service.save_srt(
             video_path=video_path,
@@ -114,9 +97,9 @@ class CaptionAgent:
         }
 
     def generate_captioned_video(
-            self,
-            video_path: str | Path,
-            caption_language: str = DEFAULT_CAPTION_LANGUAGE,
+        self,
+        video_path: str | Path,
+        caption_language: str = DEFAULT_CAPTION_LANGUAGE,
     ) -> dict[str, Any]:
         """
         Generate captions and permanently burn them into the video.
@@ -147,22 +130,16 @@ class CaptionAgent:
         and is not stored as transcript history.
         """
         if self.transcript_service is None:
-            raise RuntimeError(
-                "Transcript service is not configured."
-            )
+            raise RuntimeError("Transcript service is not configured.")
 
-        return self.transcript_service.transcribe(
-            video_path
-        )
+        return self.transcript_service.transcribe(video_path)
 
     def detect_language(
         self,
         video_path: str | Path,
     ) -> dict[str, object]:
         """Detect the spoken language of a video."""
-        return self.language_detection_service.detect(
-            video_path
-        )
+        return self.language_detection_service.detect(video_path)
 
     def prepare_caption_workflow(
         self,
@@ -176,15 +153,11 @@ class CaptionAgent:
         of the workflow result. It is not persisted as transcript
         history.
         """
-        selected_language = self.select_caption_language(
-            caption_language
-        )
+        selected_language = self.select_caption_language(caption_language)
 
         transcript = self.transcribe(video_path)
 
-        detected_language = self.detect_language(
-            video_path
-        )
+        detected_language = self.detect_language(video_path)
 
         return {
             "video_path": str(video_path),
@@ -201,9 +174,7 @@ class CaptionAgent:
         segments = transcript.get("segments", [])
 
         if not segments:
-            raise ValueError(
-                "Transcript does not contain caption segments."
-            )
+            raise ValueError("Transcript does not contain caption segments.")
 
         caption_segments: list[CaptionSegment] = []
 
@@ -229,19 +200,13 @@ class CaptionAgent:
         The transcript remains an internal processing artifact
         and is not persisted as transcript history.
         """
-        selected_language = self.select_caption_language(
-            caption_language
-        )
+        selected_language = self.select_caption_language(caption_language)
 
         transcript = self.transcribe(video_path)
 
-        caption_segments = self.get_caption_segments(
-            transcript
-        )
+        caption_segments = self.get_caption_segments(transcript)
 
-        detected_language = self.detect_language(
-            video_path
-        )
+        detected_language = self.detect_language(video_path)
 
         return {
             "video_path": str(video_path),
@@ -268,9 +233,7 @@ class CaptionAgent:
         Transcript data is not persisted.
         """
         if self.caption_generation_service is None:
-            raise RuntimeError(
-                "Caption generation service is not configured."
-            )
+            raise RuntimeError("Caption generation service is not configured.")
 
         prepared = self.prepare_caption_segments(
             video_path=video_path,

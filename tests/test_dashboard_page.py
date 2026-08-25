@@ -61,9 +61,7 @@ def test_dashboard_renders_title() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -72,9 +70,7 @@ def test_dashboard_renders_title() -> None:
 
             main()
 
-            mock_st.title.assert_called_once_with(
-                "📊 Dashboard"
-            )
+            mock_st.title.assert_called_once_with("📊 Dashboard")
 
 
 def test_dashboard_renders_description() -> None:
@@ -86,9 +82,7 @@ def test_dashboard_renders_description() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -111,9 +105,7 @@ def test_dashboard_renders_statistics() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -151,9 +143,7 @@ def test_dashboard_requests_recent_files() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -176,9 +166,7 @@ def test_dashboard_renders_recent_files() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -187,23 +175,15 @@ def test_dashboard_renders_recent_files() -> None:
 
             main()
 
-            mock_st.write.assert_any_call(
-                "**gm_en_captioned.mp4**"
-            )
+            mock_st.write.assert_any_call("**gm_en_captioned.mp4**")
 
-            mock_st.write.assert_any_call(
-                "**gm_en.srt**"
-            )
+            mock_st.write.assert_any_call("**gm_en.srt**")
 
             mock_st.caption.assert_any_call(
-                "Type: .mp4  | Path: "
-                "outputs/gm_en_captioned.mp4"
+                "Type: .mp4  | Path: " "outputs/gm_en_captioned.mp4"
             )
 
-            mock_st.caption.assert_any_call(
-                "Type: .srt  | Path: "
-                "captions/gm_en.srt"
-            )
+            mock_st.caption.assert_any_call("Type: .srt  | Path: " "captions/gm_en.srt")
 
 
 def test_dashboard_filters_gitkeep() -> None:
@@ -235,9 +215,7 @@ def test_dashboard_filters_gitkeep() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -247,19 +225,12 @@ def test_dashboard_filters_gitkeep() -> None:
             main()
 
             rendered_write_calls = [
-                call.args[0]
-                for call in mock_st.write.call_args_list
-                if call.args
+                call.args[0] for call in mock_st.write.call_args_list if call.args
             ]
 
-            assert not any(
-                ".gitkeep" in value
-                for value in rendered_write_calls
-            )
+            assert not any(".gitkeep" in value for value in rendered_write_calls)
 
-            mock_st.write.assert_any_call(
-                "**gm.mp4**"
-            )
+            mock_st.write.assert_any_call("**gm.mp4**")
 
 
 def test_dashboard_empty_recent_files() -> None:
@@ -280,9 +251,7 @@ def test_dashboard_empty_recent_files() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -291,9 +260,7 @@ def test_dashboard_empty_recent_files() -> None:
 
             main()
 
-            mock_st.info.assert_called_once_with(
-                "No files available yet."
-            )
+            mock_st.info.assert_called_once_with("No files available yet.")
 
 
 def test_dashboard_only_gitkeep_files() -> None:
@@ -320,9 +287,7 @@ def test_dashboard_only_gitkeep_files() -> None:
         "pages.dashboard_agent.DashboardAgent",
         return_value=dashboard,
     ):
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,
@@ -331,9 +296,7 @@ def test_dashboard_only_gitkeep_files() -> None:
 
             main()
 
-            mock_st.info.assert_called_once_with(
-                "No files available yet."
-            )
+            mock_st.info.assert_called_once_with("No files available yet.")
 
 
 def test_dashboard_uses_dashboard_agent() -> None:
@@ -346,9 +309,7 @@ def test_dashboard_uses_dashboard_agent() -> None:
         return_value=dashboard,
     ) as mock_agent:
 
-        with patch(
-            "pages.dashboard_agent.st"
-        ) as mock_st:
+        with patch("pages.dashboard_agent.st") as mock_st:
 
             setup_streamlit_columns(
                 mock_st,

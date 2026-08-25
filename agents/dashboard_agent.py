@@ -27,26 +27,14 @@ class DashboardAgent:
         if not directory.exists():
             return 0
 
-        files = [
-            path
-            for path in directory.iterdir()
-            if path.is_file()
-        ]
+        files = [path for path in directory.iterdir() if path.is_file()]
 
         if extensions is None:
             return len(files)
 
-        normalized_extensions = {
-            extension.lower()
-            for extension in extensions
-        }
+        normalized_extensions = {extension.lower() for extension in extensions}
 
-        return sum(
-            1
-            for path in files
-            if path.suffix.lower()
-            in normalized_extensions
-        )
+        return sum(1 for path in files if path.suffix.lower() in normalized_extensions)
 
     def get_statistics(self) -> dict[str, int]:
         """Return dashboard file statistics."""
@@ -81,8 +69,8 @@ class DashboardAgent:
         }
 
     def get_recent_files(
-            self,
-            limit: int = 5,
+        self,
+        limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Return the most recently modified output files."""
         if limit <= 0:
@@ -103,8 +91,7 @@ class DashboardAgent:
             files.extend(
                 path
                 for path in directory.iterdir()
-                if path.is_file()
-                and path.name != ".gitkeep"
+                if path.is_file() and path.name != ".gitkeep"
             )
 
         files.sort(

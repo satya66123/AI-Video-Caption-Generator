@@ -8,13 +8,10 @@ def main() -> None:
 
     st.title("ℹ️ About")
 
-    st.write(
-        "## 🎬 AI Video Caption Generator"
-    )
+    st.write("## 🎬 AI Video Caption Generator")
 
     st.write(
-        "An AI-powered application for generating "
-        "multilingual captions from videos."
+        "An AI-powered application for generating " "multilingual captions from videos."
     )
 
     st.divider()
@@ -62,10 +59,7 @@ def main() -> None:
 
     st.subheader("📦 Project Scope")
 
-    st.write(
-        "The application is focused specifically on "
-        "video caption generation."
-    )
+    st.write("The application is focused specifically on " "video caption generation.")
 
     st.write(
         "Transcript data is used internally during "
@@ -75,9 +69,7 @@ def main() -> None:
 
     st.divider()
 
-    st.caption(
-        "AI Video Caption Generator"
-    )
+    st.caption("AI Video Caption Generator")
 
 
 if __name__ == "__main__":
