@@ -1041,10 +1041,6 @@ The application uses a provider abstraction so translation logic is separated fr
         ┌───────────┬───────┴───────┬───────────┐
         ↓           ↓               ↓           ↓
      Ollama      OpenAI         Anthropic     Gemini
-        │
-        ├── qwen2.5:1.5b
-        ├── gemma3:4b
-        └── mistral:latest
 
         ┌───────────┬───────────┬───────────┐
         ↓           ↓           ↓           ↓
@@ -1835,6 +1831,59 @@ Users can:
 The GitHub Actions test workflow is passing.
 
 ---
+
+# 🚀 v1.4.1 Release
+
+v1.4.1 introduces the new tab-based frontend, expanded theme system,
+and enhanced multi-model AI Settings while preserving the existing
+caption-generation core.
+
+![AI Video Caption Generator v1.4.1](docs/screenshots/AI-Video-Caption-Generator-v1.4.1-pic.png)
+
+[![Version](https://img.shields.io/badge/Version-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
+[![Tests](https://img.shields.io/badge/267%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Pass Rate](https://img.shields.io/badge/Pass%20Rate-100%25-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+
+## v1.4.1 Features
+
+- 🖥️ Tab-based frontend using `apptab.py`
+- 🏠 Dashboard remains the default tab
+- 🎬 Caption Generator tab
+- 📄 Captions tab
+- ⚙️ Settings tab
+- ❓ Help tab
+- ℹ️ About tab
+- 🎨 **15 application themes**
+- 🌙 5 dark themes
+- ☀️ 10 light themes
+- 🖤 Improved text visibility for light themes
+- 🔽 Improved dropdown/selectbox text visibility
+- 📝 Improved caption text visibility
+- 🕐 Improved Recent Files readability
+- 🤖 **8 AI providers**
+- 🧠 Multiple models per provider
+- 🔀 Dynamic Provider → Model selection
+- 🌐 Original spoken-language detection
+- 📄 SRT and VTT generation preserved
+- 🔥 FFmpeg caption burning preserved
+- 💾 Original video preservation preserved
+- 🛠️ Help and Troubleshooting expanded
+- ℹ️ About documentation expanded
+- 📁 Project folder documentation added
+- 🧪 **267 automated tests passing**
+
+## v1.4.1 Verification
+
+```text
+267 passed
+0 failed
+100% pass rate
+19.83 seconds
+```
+
+---
+
 
 # 🗺️ Future Improvements
 
