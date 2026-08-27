@@ -1,12 +1,21 @@
 # 📸 AI Video Caption Generator — Screenshots
 
-[![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
-[![Tests](https://img.shields.io/badge/Tests-267%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
-[![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
-[![Version](https://img.shields.io/badge/Version-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
-[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+[![Version](https://img.shields.io/badge/version-v1.4.1-orange.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
+[![Tests](https://img.shields.io/badge/tests-267%20passed-success.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Pass Rate](https://img.shields.io/badge/pass%20rate-100%25-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
+[![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-app-red.svg)](https://streamlit.io/)
+[![Whisper](https://img.shields.io/badge/Whisper-speech--to--text-purple.svg)](https://github.com/openai/whisper)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-video%20processing-green.svg)](https://ffmpeg.org/)
+[![Ollama](https://img.shields.io/badge/Ollama-local%20LLM-black.svg)](https://ollama.com/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-supported-412991.svg)](https://openai.com/)
+[![Anthropic](https://img.shields.io/badge/Anthropic-supported-D97757.svg)](https://www.anthropic.com/)
+[![Gemini](https://img.shields.io/badge/Gemini-supported-4285F4.svg)](https://gemini.google.com/)
+[![Mistral](https://img.shields.io/badge/Mistral-supported-FF7000.svg)](https://mistral.ai/)
+[![Groq](https://img.shields.io/badge/Groq-supported-F55036.svg)](https://groq.com/)
+[![Cohere](https://img.shields.io/badge/Cohere-supported-39594D.svg)](https://cohere.com/)
+[![DeepSeek](https://img.shields.io/badge/DeepSeek-supported-4D6BFE.svg)](https://www.deepseek.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/blob/main/LICENSE)
 
 A visual walkthrough of the **AI Video Caption Generator**, with the complete
 application screenshots kept together and **release/version screenshots kept
