@@ -385,6 +385,171 @@ GitHub Actions CI
 
 ---
 
+
+---
+
+# 📜 Screenshots by Release Version
+
+The screenshot documentation preserves the application's visual evolution
+from **v1.0.0 through v1.4.1**. Existing screenshots remain unchanged, while
+the current v1.4.1 release screenshot is shown separately above.
+
+## 🎬 v1.0.0 — Initial Release
+
+**Core Ollama-based caption-generation application**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-pic.png"
+       alt="AI Video Caption Generator v1.4.1 Release"
+       width="900">
+</p>
+
+
+The original screenshot set documents the initial application workflow:
+
+- 🏠 Dashboard
+- 🎬 Caption Generator
+- 📤 Video Upload
+- 💾 Original Video Saved
+- 🌐 Language Detection
+- 📝 Caption Generation
+- ✅ Captions Generated
+- 📄 SRT/VTT Captions
+- 🔥 FFmpeg Caption Burning
+- 🎥 Captioned Video
+- ⚙️ Settings
+- ❓ Help
+- ℹ️ About
+
+These historical screenshots are retained in the sections below.
+
+---
+
+## 🚀 v1.1.0 — Multi-Provider AI Translation
+
+**Release focus:** multi-provider AI translation and provider configuration.
+
+Historical screenshots from the existing application UI remain applicable to
+the v1.1.0 workflow:
+
+<p align="center">
+  <img src="screenshots/dashboard.png" alt="AI Video Caption Generator v1.1.0 Dashboard" width="800">
+</p>
+
+<p align="center">
+  <img src="screenshots/initalcaptiongenratorpage.png" alt="AI Video Caption Generator v1.1.0 Caption Generator" width="800">
+</p>
+
+---
+
+## 🚀 v1.2.0 — Timestamped Transcript Saving
+
+**Release focus:** timestamped transcript persistence and caption workflow
+improvements.
+
+<p align="center">
+  <img src="screenshots/detectlanguage.png" alt="AI Video Caption Generator v1.2.0 Language Detection" width="800">
+</p>
+
+<p align="center">
+  <img src="screenshots/captionsgenratedsucessfully.png" alt="AI Video Caption Generator v1.2.0 Captions Generated" width="800">
+</p>
+
+---
+
+## 🚀 v1.2.1 — Frontend / Application Improvements
+
+**Release focus:** frontend and application improvements.
+
+<p align="center">
+  <img src="screenshots/aftervideoupload.png" alt="AI Video Caption Generator v1.2.1 Upload" width="800">
+</p>
+
+<p align="center">
+  <img src="screenshots/captions.png" alt="AI Video Caption Generator v1.2.1 Captions" width="800">
+</p>
+
+---
+
+## 🚀 v1.3.0 — Multi-Provider + Multi-Model AI Translation
+
+**Release focus:** expanded provider architecture and multi-model AI
+translation.
+
+<p align="center">
+  <img src="screenshots/settings.png" alt="AI Video Caption Generator v1.3.0 Settings" width="800">
+</p>
+
+<p align="center">
+  <img src="screenshots/generatingcaptions.png" alt="AI Video Caption Generator v1.3.0 Caption Processing" width="800">
+</p>
+
+---
+
+## 🚀 v1.4.0 — Custom Application Themes
+
+**Release focus:** custom application theme selection.
+
+<p align="center">
+  <img src="screenshots/settings.png" alt="AI Video Caption Generator v1.4.0 Settings and Themes" width="800">
+</p>
+
+<p align="center">
+  <img src="screenshots/dashboard.png" alt="AI Video Caption Generator v1.4.0 Dashboard" width="800">
+</p>
+
+---
+
+## 🚀 v1.4.1 — Current Release
+
+**Release focus:** tab-based frontend, 15 themes, multi-provider/model
+Settings, Help/About improvements and UI readability.
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.4.1-pic.png"
+       alt="AI Video Caption Generator v1.4.1 Release"
+       width="900">
+</p>
+
+### v1.4.1 Visual Updates
+
+- 🖥️ `app.py` + `apptab.py` tab-based frontend
+- 🏠 Dashboard as default tab
+- 🎨 15 themes
+- 🌙 5 dark themes
+- ☀️ 10 light themes
+- 🖤 Light-theme text improvements
+- 🔽 Dropdown/selectbox readability improvements
+- 📝 Caption text visibility improvements
+- 🕐 Recent Files readability improvements
+- 🤖 8 AI providers
+- 🧠 Provider-specific model selection
+- ⚙️ Enhanced Settings
+- ❓ Enhanced Help and Troubleshooting
+- ℹ️ Enhanced About
+- 🧪 267 tests passing
+
+> **Screenshot asset note:** The repository's existing screenshots are reused
+> for the historical release sections above because separate version-specific
+> screenshot files for v1.1.0–v1.4.0 were not provided here. The v1.4.1
+> release image is explicitly versioned as `AI-Video-Caption-Generator-v1.4.1-pic.png`.
+
+---
+
+# 📊 Version Screenshot Matrix
+
+| Version | Visual Documentation | Main Visual Focus |
+|---|---|---|
+| **v1.0.0** | Existing screenshot set | Core caption workflow |
+| **v1.1.0** | Existing UI screenshots | Multi-provider translation |
+| **v1.2.0** | Existing UI screenshots | Timestamped transcript saving |
+| **v1.2.1** | Existing UI screenshots | Frontend/application improvements |
+| **v1.3.0** | Existing UI screenshots | Multi-provider + multi-model |
+| **v1.4.0** | Existing UI screenshots | Theme selection |
+| **v1.4.1** | Dedicated release image + existing UI screenshots | Tabs + 15 themes + multi-model Settings |
+
+---
+
 # 📜 Release Screenshot History
 
 ```text
