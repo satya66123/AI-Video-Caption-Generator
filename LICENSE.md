@@ -1,7 +1,6 @@
 MIT License
 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub License](https://img.shields.io/github/license/satya66123/AI-Video-Caption-Generator)]
 [![Version](https://img.shields.io/badge/Version-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
 [![Tests](https://img.shields.io/badge/Tests-267%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 
