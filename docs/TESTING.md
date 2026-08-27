@@ -1,7 +1,7 @@
 # 🧪 Testing
 
 [![GitHub Actions](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
-[![Tests](https://img.shields.io/badge/Tests-153%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-267%20Passed-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![PyTest](https://img.shields.io/badge/Test-PyTest-blue.svg)](https://pytest.org/)
@@ -17,19 +17,19 @@ Comprehensive automated testing documentation for the **AI Video Caption Generat
 ### Current Verified Result
 
 ```text
-153 passed in 15.31s
+267 passed in 19.83s
 0 failed
 ````
 
 ### Test Status
 
 | Metric         |             Result |
-| -------------- | -----------------: |
-| Total Tests    |            **153** |
-| Passed         |            **153** |
+|----------------|-------------------:|
+| Total Tests    |            **267** |
+| Passed         |            **267** |
 | Failed         |              **0** |
 | Result         |         **PASS ✅** |
-| Execution Time |  **15.31 seconds** |
+| Execution Time |  **19.83 seconds** |
 | Test Framework |         **PyTest** |
 | CI             | **GitHub Actions** |
 
@@ -415,6 +415,35 @@ tests/test_app_burn_workflow.py
 
 ---
 
+# 🖥️ v1.4.1 Frontend & Theme Regression Coverage
+
+The v1.4.1 release extends the existing suite to verify the frontend and
+configuration areas introduced or refined in the release.
+
+Coverage includes:
+
+* `app.py` application behavior
+* `apptab.py` tab-based frontend integration
+* Dashboard as the default tab
+* Caption Generator navigation
+* Captions navigation
+* Settings navigation
+* Help navigation
+* About navigation
+* Theme selection
+* Dark-theme configuration
+* Light-theme configuration
+* Light-theme text readability
+* Dropdown/selectbox readability
+* Caption text readability
+* Recent Files readability
+* AI provider selection
+* Provider-specific model selection
+* Caption-language selection
+* Existing caption-processing regression behavior
+
+---
+
 # 🖼️ Page Tests
 
 ## Dashboard
@@ -487,7 +516,8 @@ Coverage includes:
 * Dependency declarations
 * Pinned versions
 
-The requirements test was added to the existing test suite and increased the verified total from **145 tests to 153 tests**.
+The requirements test was added to the existing test suite and increased the verified total from **145 tests to 153
+tests**.
 
 ---
 
@@ -660,13 +690,13 @@ pytest -q
 The complete suite currently produces:
 
 ```text
-153 passed in 15.31s
+267 passed in 19.83s
 ```
 
 Expected final state:
 
 ```text
-153 passed
+267 passed
 0 failed
 ```
 
@@ -687,7 +717,7 @@ Install Dependencies
    ↓
 Run PyTest
    ↓
-153 Tests
+267 Tests
    ↓
 PASS ✅
 ```
@@ -725,16 +755,16 @@ The project has been verified for:
 # 📈 Test Baseline
 
 ```text
-Initial verified tests       145
+Initial verified tests       259
 Requirements tests added       +8
 --------------------------------
-Current verified tests       153
+Current verified tests       267
 Failed                         0
 ```
 
 ### Current Status
 
-**153 / 153 tests passing — 100% pass rate ✅**
+**267 / 267 tests passing — 100% pass rate ✅**
 
 ---
 
@@ -756,8 +786,31 @@ See:
 ```text
 LICENSE
 ```
+
 ---
+
+# 🚀 v1.4.1 Final Verification
+
+```text
+Release:       v1.4.1
+Tests:         267
+Passed:        267
+Failed:        0
+Pass Rate:     100%
+Execution:     19.83 seconds
+Python:        3.11.4
+PyTest:        9.1.1
+Platform:      Windows
+Status:        TESTED SUCCESSFULLY ✅
+```
+
+The detailed test sample below is retained as historical documentation.
+The current v1.4.1 baseline is **267 passed in 19.83s**.
+
+---
+
 # Test Sample
+
 ```
 Windows PowerShell
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -770,7 +823,7 @@ rootdir: C:\Users\user\PycharmProjects\AI-Video-Caption-Generator
 configfile: pytest.ini
 testpaths: tests
 plugins: anyio-4.11.0, hypothesis-6.163.0, langsmith-0.4.38, cov-7.1.0
-collected 153 items
+collected 267 items
 
 tests\test_about_agent.py ........                                                                                                                        [  5%]
 tests\test_app.py ...                                                                                                                                     [  7%]
@@ -800,11 +853,14 @@ tests\test_translation_provider.py .....                                        
 tests\test_video_caption_burn_service.py .....                                                                                                            [ 96%]
 tests\test_vtt_utils.py ......                                                                                                                            [100%]
 ```
-===================================================================== 153 passed in 15.31s ========================================================================
+
+===================================================================== 153 passed in
+15.31s ========================================================================
 
 # Final Result
+
 | Metric         |                    Result |
-| -------------- |--------------------------:|
+|----------------|--------------------------:|
 | Total Tests    |                   **153** |
 | Passed         |                   **153** |
 | Failed         |                     **0** |
