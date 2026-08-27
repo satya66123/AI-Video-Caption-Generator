@@ -1499,490 +1499,6 @@ def render_captions() -> None:
 
 
 # ============================================================
-# Settings
-# ============================================================
-
-
-def render_settings() -> None:
-    """Render application settings."""
-
-    st.title("⚙️ Settings")
-
-    st.write(
-        "Configure caption-generation preferences, "
-        "AI providers, models, and output options."
-    )
-
-    st.divider()
-
-    # ========================================================
-    # Theme
-    # ========================================================
-
-    st.subheader("🎨 Application Theme")
-
-    st.caption("Select the visual theme used throughout the application.")
-
-    theme_names = list(THEMES.keys())
-
-    current_theme = st.session_state.get(
-        "theme",
-        theme_names[0],
-    )
-
-    theme_index = (
-        theme_names.index(current_theme) if current_theme in theme_names else 0
-    )
-
-    selected_theme = st.selectbox(
-        "Theme",
-        options=theme_names,
-        index=theme_index,
-        key="settings_theme",
-        help=("Choose a dark or light theme for the application."),
-    )
-
-    st.session_state["theme"] = selected_theme
-
-    theme_config = THEMES[selected_theme]
-
-    st.caption(f"Selected theme: **{selected_theme}**")
-
-    st.write(
-        f"Background: `{theme_config['background']}`  |  "
-        f"Sidebar: `{theme_config['sidebar']}`  |  "
-        f"Text: `{theme_config['text']}`  |  "
-        f"Accent: `{theme_config['accent']}`"
-    )
-
-    st.divider()
-
-    # ========================================================
-    # Whisper Model
-    # ========================================================
-
-    st.subheader("📝 Whisper Model")
-
-    st.caption(
-        "Select the Whisper model used for speech "
-        "transcription and language detection."
-    )
-
-    whisper_models = [
-        "tiny",
-        "base",
-        "small",
-        "medium",
-        "large",
-    ]
-
-    current_whisper = st.session_state.get(
-        "whisper_model",
-        "base",
-    )
-
-    whisper_index = (
-        whisper_models.index(current_whisper)
-        if current_whisper in whisper_models
-        else whisper_models.index("base")
-    )
-
-    whisper_model = st.selectbox(
-        "Whisper model",
-        whisper_models,
-        index=whisper_index,
-        help=(
-            "Larger models may improve transcription "
-            "quality but require more resources."
-        ),
-    )
-
-    st.session_state["whisper_model"] = whisper_model
-
-    st.info(f"Selected Whisper model: **{whisper_model}**")
-
-    st.divider()
-
-    # ========================================================
-    # Translation Provider
-    # ========================================================
-
-    st.subheader("🤖 Translation Provider")
-
-    st.caption("Select the AI provider used for caption translation.")
-
-    TRANSLATION_PROVIDERS = {
-        "Ollama": {
-            "key": "ollama",
-            "models": [
-                "qwen2.5:1.5b",
-                "qwen3:latest",
-                "llama3.1:latest",
-                "llama3:8b",
-                "mistral:latest",
-                "gemma2:2b",
-                "gemma3:4b",
-                "phi3:latest",
-                "deepseek-coder:latest",
-            ],
-            "environment_variable": None,
-        },
-        "OpenAI": {
-            "key": "openai",
-            "models": [
-                "gpt-5-mini",
-                "gpt-5",
-            ],
-            "environment_variable": "OPENAI_API_KEY",
-        },
-        "Anthropic": {
-            "key": "anthropic",
-            "models": [
-                "claude-sonnet-4-5",
-                "claude-opus-4-1",
-                "claude-haiku-4-5",
-            ],
-            "environment_variable": "ANTHROPIC_API_KEY",
-        },
-        "Gemini": {
-            "key": "gemini",
-            "models": [
-                "gemini-3.6-flash",
-                "gemini-3.6-pro",
-            ],
-            "environment_variable": "GEMINI_API_KEY",
-        },
-        "Mistral": {
-            "key": "mistral",
-            "models": [
-                "mistral-large-latest",
-                "mistral-medium-latest",
-                "mistral-small-latest",
-            ],
-            "environment_variable": "MISTRAL_API_KEY",
-        },
-        "Groq": {
-            "key": "groq",
-            "models": [
-                "llama-3.3-70b-versatile",
-                "llama-3.1-8b-instant",
-                "mixtral-8x7b-32768",
-            ],
-            "environment_variable": "GROQ_API_KEY",
-        },
-        "Cohere": {
-            "key": "cohere",
-            "models": [
-                "command-a-03-2025",
-                "command-r-plus",
-                "command-r",
-            ],
-            "environment_variable": "COHERE_API_KEY",
-        },
-        "DeepSeek": {
-            "key": "deepseek",
-            "models": [
-                "deepseek-chat",
-                "deepseek-reasoner",
-            ],
-            "environment_variable": "DEEPSEEK_API_KEY",
-        },
-    }
-
-    # ========================================================
-    # Translation Provider
-    # ========================================================
-
-    st.subheader("🤖 Translation Provider")
-
-    provider_names = list(TRANSLATION_PROVIDERS.keys())
-
-    current_provider = st.session_state.get(
-        "translation_provider",
-        "ollama",
-    )
-
-    provider_keys = [config["key"] for config in TRANSLATION_PROVIDERS.values()]
-
-    provider_index = (
-        provider_keys.index(current_provider)
-        if current_provider in provider_keys
-        else 0
-    )
-
-    selected_provider = st.selectbox(
-        "AI provider",
-        provider_names,
-        index=provider_index,
-        key="settings_translation_provider",
-    )
-
-    provider_config = TRANSLATION_PROVIDERS[selected_provider]
-
-    provider_key = provider_config["key"]
-
-    st.session_state["translation_provider"] = provider_key
-
-    # ========================================================
-    # Model Selection
-    # ========================================================
-
-    st.subheader("🧠 AI Model")
-
-    available_models = provider_config["models"]
-
-    current_model = st.session_state.get(
-        "translation_model",
-        available_models[0],
-    )
-
-    model_index = (
-        available_models.index(current_model)
-        if current_model in available_models
-        else 0
-    )
-
-    selected_model = st.selectbox(
-        "Translation model",
-        available_models,
-        index=model_index,
-        key="settings_translation_model",
-    )
-
-    st.session_state["translation_model"] = selected_model
-
-    st.caption(f"Provider: **{selected_provider}**  |  " f"Model: **{selected_model}**")
-
-    # ========================================================
-    # Provider Status
-    # ========================================================
-
-    st.markdown("### 🔐 Provider Status")
-
-    if provider_key == "ollama":
-
-        st.success("🟢 Local")
-
-    elif provider_key == "openai":
-
-        if os.getenv("OPENAI_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "anthropic":
-
-        if os.getenv("ANTHROPIC_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "gemini":
-
-        if os.getenv("GEMINI_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "mistral":
-
-        if os.getenv("MISTRAL_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "groq":
-
-        if os.getenv("GROQ_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "cohere":
-
-        if os.getenv("COHERE_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    elif provider_key == "deepseek":
-
-        if os.getenv("DEEPSEEK_API_KEY"):
-            st.success("🟢 API key configured")
-        else:
-            st.warning("🔴 API key missing")
-
-    st.divider()
-
-    # ========================================================
-    # Available AI Providers
-    # ========================================================
-
-    st.subheader("🌐 Available AI Providers")
-
-    columns = st.columns(4)
-
-    for index, (
-        provider_name,
-        config,
-    ) in enumerate(TRANSLATION_PROVIDERS.items()):
-        with columns[index % 4]:
-
-            st.markdown(f"### {provider_name}")
-
-            models = config.get(
-                "models",
-                [],
-            )
-
-            st.caption(f"{len(models)} models available")
-
-            if models:
-                with st.expander("🧠 Models"):
-                    for model in models:
-                        st.write(f"• {model}")
-
-            provider_key = config["key"]
-
-            if provider_key == "ollama":
-
-                st.success("🟢 Local")
-
-            elif provider_key == "openai":
-
-                if os.getenv("OPENAI_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "anthropic":
-
-                if os.getenv("ANTHROPIC_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "gemini":
-
-                if os.getenv("GEMINI_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "mistral":
-
-                if os.getenv("MISTRAL_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "groq":
-
-                if os.getenv("GROQ_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "cohere":
-
-                if os.getenv("COHERE_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-            elif provider_key == "deepseek":
-
-                if os.getenv("DEEPSEEK_API_KEY"):
-                    st.success("🟢 API key configured")
-                else:
-                    st.warning("🔴 API key missing")
-
-    # ========================================================
-    # Caption Language
-    # ========================================================
-
-    st.subheader("🌐 Default Caption Language")
-
-    st.caption("Select the default target language for " "generated captions.")
-
-    language_names = list(CAPTION_LANGUAGES.keys())
-
-    current_language_code = st.session_state.get(
-        "default_caption_language",
-        CAPTION_LANGUAGES["English"],
-    )
-
-    language_codes = list(CAPTION_LANGUAGES.values())
-
-    language_index = (
-        language_codes.index(current_language_code)
-        if current_language_code in language_codes
-        else 0
-    )
-
-    default_language = st.selectbox(
-        "Default language",
-        options=language_names,
-        index=language_index,
-        format_func=lambda language: (
-            f"{language} " f"({CAPTION_LANGUAGES[language]})"
-        ),
-    )
-
-    st.session_state["default_caption_language"] = CAPTION_LANGUAGES[default_language]
-
-    st.success("Settings are saved for this session.")
-
-    st.divider()
-
-    # ========================================================
-    # Application Directories
-    # ========================================================
-
-    st.subheader("📁 Application Directories")
-
-    st.caption("Directories used by the video caption " "generation workflow.")
-
-    st.code(
-        f"Uploads:     {UPLOAD_DIR}\n"
-        f"Captions:    {CAPTION_DIR}\n"
-        f"Outputs:     {OUTPUT_DIR}\n"
-        f"Transcripts: {TRANSCRIPT_DIR}",
-        language="text",
-    )
-
-    st.divider()
-
-    # ========================================================
-    # Session Summary
-    # ========================================================
-
-    st.subheader("📋 Current Session Configuration")
-
-    summary_columns = st.columns(3)
-
-    with summary_columns[0]:
-        st.metric(
-            "Whisper",
-            whisper_model,
-        )
-
-    with summary_columns[1]:
-        st.metric(
-            "AI Provider",
-            selected_provider,
-        )
-
-    with summary_columns[2]:
-        st.metric(
-            "Caption Language",
-            default_language,
-        )
-
-    st.caption("Configuration changes apply to the current " "application session.")
-
-
-# ============================================================
 # Help
 # ============================================================
 
@@ -2029,11 +1545,70 @@ def render_help() -> None:
 
     st.divider()
 
+    # ========================================================
+    # AI Processing
+    # ========================================================
+
     st.subheader("🤖 AI Processing")
 
-    st.write("Whisper provides internal timestamped " "transcription.")
+    st.write(
+        "AI-powered caption translation is supported through "
+        "multiple providers and selectable models."
+    )
 
-    st.write("Ollama provides local AI translation.")
+    help_translation_providers = {
+        "Ollama": [
+            "qwen2.5:1.5b",
+            "gemma2:2b",
+            "gemma3:4b",
+            "mistral:latest",
+            "phi3:latest",
+            "qwen3:latest",
+            "llama3.1:latest",
+            "llama3:8b",
+            "deepseek-coder:latest",
+        ],
+        "OpenAI": [
+            "gpt-5-mini",
+            "gpt-4o",
+            "gpt-4o-mini",
+        ],
+        "Anthropic": [
+            "claude-sonnet-4-5",
+            "claude-haiku-4-5",
+            "claude-opus-4-1",
+        ],
+        "Gemini": [
+            "gemini-3.6-flash",
+            "gemini-2.5-flash",
+            "gemini-2.5-pro",
+        ],
+        "Mistral": [
+            "mistral-medium-latest",
+            "mistral-large-latest",
+            "mistral-small-latest",
+        ],
+        "Groq": [
+            "llama-3.3-70b-versatile",
+            "llama-3.1-8b-instant",
+            "mixtral-8x7b-32768",
+        ],
+        "Cohere": [
+            "command-a-03-2025",
+            "command-r-plus",
+            "command-r",
+        ],
+        "DeepSeek": [
+            "deepseek-chat",
+            "deepseek-reasoner",
+            "deepseek-v4-flash",
+        ],
+    }
+
+    for provider_name, models in help_translation_providers.items():
+        with st.expander(f"🤖 {provider_name} " f"({len(models)} models)"):
+            for model in models:
+                st.write(f"• {model}")
 
     st.divider()
 
@@ -2043,19 +1618,237 @@ def render_help() -> None:
 
     st.divider()
 
+    # ========================================================
+    # Troubleshooting
+    # ========================================================
+
     st.subheader("🛠️ Troubleshooting")
 
-    with st.expander("Ollama connection error"):
-        st.code(
-            "ollama --version\n" "ollama list\n" "ollama serve",
-            language="powershell",
+    troubleshooting_items = [
+        (
+            "🎥 Video upload fails",
+            [
+                "Make sure the selected file is a supported video format.",
+                "Verify that the uploaded file is not corrupted.",
+                "Check that the application has permission to access the upload directory.",
+            ],
+        ),
+        (
+            "📝 Transcription fails",
+            [
+                "Check that the selected Whisper model is available.",
+                "Try a smaller Whisper model if system resources are limited.",
+                "Verify that the video contains a usable audio track.",
+            ],
+        ),
+        (
+            "🌐 Original language is not detected",
+            [
+                "Make sure the video contains clear spoken audio.",
+                "Try processing the video again.",
+                "Check the Whisper model configuration.",
+            ],
+        ),
+        (
+            "🤖 AI translation fails",
+            [
+                "Verify that the selected provider is correctly configured.",
+                "For cloud providers, check that the required API key is available.",
+                "For Ollama, verify that the Ollama service is running.",
+                "Verify that the selected model is available for the selected provider.",
+            ],
+        ),
+        (
+            "🦙 Ollama model is unavailable",
+            [
+                "Make sure Ollama is running locally.",
+                "Verify that the selected model has been downloaded.",
+                "Check that the model name exactly matches the installed Ollama model.",
+            ],
+        ),
+        (
+            "🔑 API key error",
+            [
+                "Verify that the provider API key is configured in the environment.",
+                "Restart the application after changing environment variables.",
+                "Make sure the API key belongs to the selected provider.",
+            ],
+        ),
+        (
+            "📄 SRT/VTT files are not generated",
+            [
+                "Check that transcription completed successfully.",
+                "Verify that caption generation returned caption segments.",
+                "Check the Captions output directory.",
+            ],
+        ),
+        (
+            "🎬 Caption burn fails",
+            [
+                "Make sure FFmpeg is installed and available.",
+                "Verify that the generated SRT file exists.",
+                "Check that the source video can be processed by FFmpeg.",
+                "Try generating the caption files again before burning them.",
+            ],
+        ),
+        (
+            "💾 Generated files are missing",
+            [
+                "Check the Uploads, Captions, Outputs, and Transcripts directories.",
+                "Verify that the workflow completed successfully.",
+                "Check the application status and error messages.",
+            ],
+        ),
+        (
+            "🎨 Theme text is not visible",
+            [
+                "Open Settings and select the required theme.",
+                "For light themes, caption and interface text should use the configured light-theme text color.",
+                "Refresh the application after changing the theme.",
+            ],
+        ),
+        (
+            "🧠 Wrong model is selected",
+            [
+                "Open Settings.",
+                "Select the required AI provider.",
+                "Select the required model from the provider's model list.",
+                "The selected provider and model are stored in the current session.",
+            ],
+        ),
+        (
+            "🔄 Settings are not reflected",
+            [
+                "Settings are maintained for the current application session.",
+                "Verify the selected provider, model, Whisper model, language, and theme.",
+                "Refresh the application if a UI change is not immediately visible.",
+            ],
+        ),
+    ]
+
+    for title, solutions in troubleshooting_items:
+
+        with st.expander(title):
+
+            for solution in solutions:
+                st.write(f"• {solution}")
+
+    # ========================================================
+    # Configuration Diagnostics
+    # ========================================================
+
+    TRANSLATION_PROVIDERS = {
+        "Ollama": {
+            "key": "ollama",
+            "models": [
+                "qwen2.5:1.5b",
+                "gemma2:2b",
+                "gemma3:4b",
+                "mistral:latest",
+                "phi3:latest",
+                "qwen3:latest",
+                "llama3.1:latest",
+                "llama3:8b",
+                "deepseek-coder:latest",
+            ],
+            "environment_variable": None,
+        },
+        "OpenAI": {
+            "key": "openai",
+            "models": [
+                "gpt-5-mini",
+                "gpt-4o",
+                "gpt-4o-mini",
+            ],
+            "environment_variable": "OPENAI_API_KEY",
+        },
+        "Anthropic": {
+            "key": "anthropic",
+            "models": [
+                "claude-sonnet-4-5",
+                "claude-haiku-4-5",
+                "claude-opus-4-1",
+            ],
+            "environment_variable": "ANTHROPIC_API_KEY",
+        },
+        "Gemini": {
+            "key": "gemini",
+            "models": [
+                "gemini-3.6-flash",
+                "gemini-2.5-flash",
+                "gemini-2.5-pro",
+            ],
+            "environment_variable": "GEMINI_API_KEY",
+        },
+        "Mistral": {
+            "key": "mistral",
+            "models": [
+                "mistral-medium-latest",
+                "mistral-large-latest",
+                "mistral-small-latest",
+            ],
+            "environment_variable": "MISTRAL_API_KEY",
+        },
+        "Groq": {
+            "key": "groq",
+            "models": [
+                "llama-3.3-70b-versatile",
+                "llama-3.1-8b-instant",
+                "mixtral-8x7b-32768",
+            ],
+            "environment_variable": "GROQ_API_KEY",
+        },
+        "Cohere": {
+            "key": "cohere",
+            "models": [
+                "command-a-03-2025",
+                "command-r-plus",
+                "command-r",
+            ],
+            "environment_variable": "COHERE_API_KEY",
+        },
+        "DeepSeek": {
+            "key": "deepseek",
+            "models": [
+                "deepseek-chat",
+                "deepseek-reasoner",
+                "deepseek-v4-flash",
+            ],
+            "environment_variable": "DEEPSEEK_API_KEY",
+        },
+    }
+
+    st.subheader("🔍 Configuration Diagnostics")
+
+    diagnostic_columns = st.columns(4)
+
+    with diagnostic_columns[0]:
+        st.metric(
+            "AI Providers",
+            len(TRANSLATION_PROVIDERS),
         )
 
-    with st.expander("FFmpeg connection error"):
-        st.code(
-            "ffmpeg -version",
-            language="powershell",
+    with diagnostic_columns[1]:
+        st.metric(
+            "Themes",
+            len(THEMES),
         )
+
+    with diagnostic_columns[2]:
+        st.metric(
+            "Caption Languages",
+            len(CAPTION_LANGUAGES),
+        )
+
+    with diagnostic_columns[3]:
+        st.metric(
+            "Application Version",
+            APP_VERSION,
+        )
+
+    st.caption(
+        "Use these values to quickly verify the current " "application configuration."
+    )
 
 
 # ============================================================
@@ -2301,16 +2094,6 @@ def render_about() -> None:
     st.divider()
 
     # ========================================================
-    # Current Release
-    # ========================================================
-
-    st.subheader("🚀 Current Release")
-
-    st.success(f"AI Video Caption Generator v{APP_VERSION}")
-
-    st.caption("Stable release • 267 tests passing • " "15 themes")
-
-    # ========================================================
     # Application Settings
     # ========================================================
 
@@ -2396,6 +2179,507 @@ def render_about() -> None:
             st.write(f"• {language}")
 
     st.divider()
+
+    # ========================================================
+    # Project Folders
+    # ========================================================
+
+    st.subheader("📁 Project Folders")
+
+    st.write(
+        "The application uses dedicated folders for "
+        "uploaded videos, captions, generated outputs, "
+        "and transcripts."
+    )
+
+    project_folders = [
+        (
+            "📤 Uploads",
+            UPLOAD_DIR,
+            "Stores uploaded video files.",
+        ),
+        (
+            "📄 Captions",
+            CAPTION_DIR,
+            "Stores generated SRT and VTT caption files.",
+        ),
+        (
+            "🎬 Outputs",
+            OUTPUT_DIR,
+            "Stores final videos with burned captions.",
+        ),
+        (
+            "📝 Transcripts",
+            TRANSCRIPT_DIR,
+            "Stores generated transcript files.",
+        ),
+    ]
+
+    folder_columns = st.columns(2)
+
+    for index, (
+        folder_name,
+        folder_path,
+        description,
+    ) in enumerate(project_folders):
+
+        with folder_columns[index % 2]:
+
+            st.markdown(f"### {folder_name}")
+
+            st.code(
+                str(folder_path),
+                language="text",
+            )
+
+            st.caption(description)
+
+    st.divider()
+
+    # ========================================================
+    # Current Release
+    # ========================================================
+
+    st.subheader("🚀 Current Release")
+
+    st.success(f"AI Video Caption Generator v{APP_VERSION}")
+
+    st.caption("Stable release • 267 tests passing • " "15 themes")
+
+
+# ============================================================
+# Settings
+# ============================================================
+
+
+def render_settings() -> None:
+    """Render application settings."""
+
+    st.title("⚙️ Settings")
+
+    st.write(
+        "Configure caption-generation preferences, "
+        "AI providers, models, and output options."
+    )
+
+    st.divider()
+
+    # ========================================================
+    # Theme
+    # ========================================================
+
+    st.subheader("🎨 Application Theme")
+
+    st.caption("Select the visual theme used throughout the application.")
+
+    theme_names = list(THEMES.keys())
+
+    current_theme = st.session_state.get(
+        "theme",
+        theme_names[0],
+    )
+
+    theme_index = (
+        theme_names.index(current_theme) if current_theme in theme_names else 0
+    )
+
+    selected_theme = st.selectbox(
+        "Theme",
+        options=theme_names,
+        index=theme_index,
+        key="settings_theme",
+        help=("Choose a dark or light theme for the application."),
+    )
+
+    st.session_state["theme"] = selected_theme
+
+    theme_config = THEMES[selected_theme]
+
+    st.caption(f"Selected theme: **{selected_theme}**")
+
+    st.write(
+        f"Background: `{theme_config['background']}`  |  "
+        f"Sidebar: `{theme_config['sidebar']}`  |  "
+        f"Text: `{theme_config['text']}`  |  "
+        f"Accent: `{theme_config['accent']}`"
+    )
+
+    st.divider()
+
+    # ========================================================
+    # Whisper Model
+    # ========================================================
+
+    st.subheader("📝 Whisper Model")
+
+    st.caption(
+        "Select the Whisper model used for speech "
+        "transcription and language detection."
+    )
+
+    whisper_models = [
+        "tiny",
+        "base",
+        "small",
+        "medium",
+        "large",
+    ]
+
+    current_whisper = st.session_state.get(
+        "whisper_model",
+        "base",
+    )
+
+    whisper_index = (
+        whisper_models.index(current_whisper)
+        if current_whisper in whisper_models
+        else whisper_models.index("base")
+    )
+
+    whisper_model = st.selectbox(
+        "Whisper model",
+        whisper_models,
+        index=whisper_index,
+        help=(
+            "Larger models may improve transcription "
+            "quality but require more resources."
+        ),
+    )
+
+    st.session_state["whisper_model"] = whisper_model
+
+    st.info(f"Selected Whisper model: **{whisper_model}**")
+
+    st.divider()
+
+    # ========================================================
+    # Translation Provider
+    # ========================================================
+
+    st.subheader("🤖 Translation Provider")
+
+    st.caption("Select the AI provider used for caption translation.")
+
+    TRANSLATION_PROVIDERS = {
+        "Ollama": {
+            "key": "ollama",
+            "models": [
+                "qwen2.5:1.5b",
+                "gemma2:2b",
+                "gemma3:4b",
+                "mistral:latest",
+                "phi3:latest",
+                "qwen3:latest",
+                "llama3.1:latest",
+                "llama3:8b",
+                "deepseek-coder:latest",
+            ],
+            "environment_variable": None,
+        },
+        "OpenAI": {
+            "key": "openai",
+            "models": [
+                "gpt-5-mini",
+                "gpt-4o",
+                "gpt-4o-mini",
+            ],
+            "environment_variable": "OPENAI_API_KEY",
+        },
+        "Anthropic": {
+            "key": "anthropic",
+            "models": [
+                "claude-sonnet-4-5",
+                "claude-haiku-4-5",
+                "claude-opus-4-1",
+            ],
+            "environment_variable": "ANTHROPIC_API_KEY",
+        },
+        "Gemini": {
+            "key": "gemini",
+            "models": [
+                "gemini-3.6-flash",
+                "gemini-2.5-flash",
+                "gemini-2.5-pro",
+            ],
+            "environment_variable": "GEMINI_API_KEY",
+        },
+        "Mistral": {
+            "key": "mistral",
+            "models": [
+                "mistral-medium-latest",
+                "mistral-large-latest",
+                "mistral-small-latest",
+            ],
+            "environment_variable": "MISTRAL_API_KEY",
+        },
+        "Groq": {
+            "key": "groq",
+            "models": [
+                "llama-3.3-70b-versatile",
+                "llama-3.1-8b-instant",
+                "mixtral-8x7b-32768",
+            ],
+            "environment_variable": "GROQ_API_KEY",
+        },
+        "Cohere": {
+            "key": "cohere",
+            "models": [
+                "command-a-03-2025",
+                "command-r-plus",
+                "command-r",
+            ],
+            "environment_variable": "COHERE_API_KEY",
+        },
+        "DeepSeek": {
+            "key": "deepseek",
+            "models": [
+                "deepseek-chat",
+                "deepseek-reasoner",
+                "deepseek-v4-flash",
+            ],
+            "environment_variable": "DEEPSEEK_API_KEY",
+        },
+    }
+
+    # ========================================================
+    # Translation Provider
+    # ========================================================
+
+    st.subheader("🤖 Translation Provider")
+
+    provider_names = list(TRANSLATION_PROVIDERS.keys())
+
+    current_provider = st.session_state.get(
+        "translation_provider",
+        "ollama",
+    )
+
+    provider_keys = [config["key"] for config in TRANSLATION_PROVIDERS.values()]
+
+    provider_index = (
+        provider_keys.index(current_provider)
+        if current_provider in provider_keys
+        else 0
+    )
+
+    selected_provider = st.selectbox(
+        "AI provider",
+        provider_names,
+        index=provider_index,
+        key="settings_translation_provider",
+    )
+
+    provider_config = TRANSLATION_PROVIDERS[selected_provider]
+
+    provider_key = provider_config["key"]
+
+    st.session_state["translation_provider"] = provider_key
+
+    # ========================================================
+    # Model Selection
+    # ========================================================
+
+    st.subheader("🧠 AI Model")
+
+    available_models = provider_config["models"]
+
+    current_model = st.session_state.get(
+        "translation_model",
+        available_models[0],
+    )
+
+    model_index = (
+        available_models.index(current_model)
+        if current_model in available_models
+        else 0
+    )
+
+    selected_model = st.selectbox(
+        "Translation model",
+        available_models,
+        index=model_index,
+        key="settings_translation_model",
+    )
+
+    st.session_state["translation_model"] = selected_model
+
+    st.caption(f"Provider: **{selected_provider}**  |  " f"Model: **{selected_model}**")
+
+    # ========================================================
+    # Provider Status
+    # ========================================================
+
+    st.markdown("### 🔐 Provider Status")
+
+    if provider_key == "ollama":
+
+        st.success("🟢 Local")
+
+    elif provider_key == "openai":
+
+        if os.getenv("OPENAI_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "anthropic":
+
+        if os.getenv("ANTHROPIC_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "gemini":
+
+        if os.getenv("GEMINI_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "mistral":
+
+        if os.getenv("MISTRAL_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "groq":
+
+        if os.getenv("GROQ_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "cohere":
+
+        if os.getenv("COHERE_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    elif provider_key == "deepseek":
+
+        if os.getenv("DEEPSEEK_API_KEY"):
+            st.success("🟢 API key configured")
+        else:
+            st.warning("🔴 API key missing")
+
+    st.divider()
+
+    # ========================================================
+    # Available AI Providers
+    # ========================================================
+
+    st.subheader("🌐 Available AI Providers")
+
+    columns = st.columns(4)
+
+    for index, (
+        provider_name,
+        config,
+    ) in enumerate(TRANSLATION_PROVIDERS.items()):
+        with columns[index % 4]:
+
+            st.markdown(f"### {provider_name}")
+
+            models = config.get(
+                "models",
+                [],
+            )
+
+            st.caption(f"{len(models)} models available")
+
+            if models:
+                with st.expander("🧠 Models"):
+                    for model in models:
+                        st.write(f"• {model}")
+
+            provider_key = config["key"]
+
+            if provider_key == "ollama":
+
+                st.success("🟢 Local")
+
+            elif provider_key == "openai":
+
+                if os.getenv("OPENAI_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "anthropic":
+
+                if os.getenv("ANTHROPIC_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "gemini":
+
+                if os.getenv("GEMINI_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "mistral":
+
+                if os.getenv("MISTRAL_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "groq":
+
+                if os.getenv("GROQ_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "cohere":
+
+                if os.getenv("COHERE_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+            elif provider_key == "deepseek":
+
+                if os.getenv("DEEPSEEK_API_KEY"):
+                    st.success("🟢 API key configured")
+                else:
+                    st.warning("🔴 API key missing")
+
+    # ========================================================
+    # Caption Language
+    # ========================================================
+
+    st.subheader("🌐 Default Caption Language")
+
+    st.caption("Select the default target language for " "generated captions.")
+
+    language_names = list(CAPTION_LANGUAGES.keys())
+
+    current_language_code = st.session_state.get(
+        "default_caption_language",
+        CAPTION_LANGUAGES["English"],
+    )
+
+    language_codes = list(CAPTION_LANGUAGES.values())
+
+    language_index = (
+        language_codes.index(current_language_code)
+        if current_language_code in language_codes
+        else 0
+    )
+
+    default_language = st.selectbox(
+        "Default language",
+        options=language_names,
+        index=language_index,
+        format_func=lambda language: (
+            f"{language} " f"({CAPTION_LANGUAGES[language]})"
+        ),
+    )
 
 
 # ============================================================
