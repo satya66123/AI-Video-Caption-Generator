@@ -6,49 +6,168 @@
 [![Version](https://img.shields.io/badge/Version-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
-[![Ollama](https://img.shields.io/badge/AI-Ollama-black.svg)](https://ollama.com/)
-[![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991.svg)](https://openai.com/)
-[![Anthropic](https://img.shields.io/badge/AI-Anthropic-orange.svg)](https://www.anthropic.com/)
-[![Gemini](https://img.shields.io/badge/AI-Gemini-4285F4.svg)](https://ai.google.dev/)
-[![Mistral](https://img.shields.io/badge/AI-Mistral-orange.svg)](https://mistral.ai/)
-[![Groq](https://img.shields.io/badge/AI-Groq-black.svg)](https://groq.com/)
-[![Cohere](https://img.shields.io/badge/AI-Cohere-purple.svg)](https://cohere.com/)
-[![DeepSeek](https://img.shields.io/badge/AI-DeepSeek-blue.svg)](https://www.deepseek.com/)
-[![Whisper](https://img.shields.io/badge/Speech-Whisper-blueviolet.svg)](https://github.com/openai/whisper)
-[![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-green.svg)](https://ffmpeg.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-A visual walkthrough of the **AI Video Caption Generator**, including the current
-**v1.4.1 frontend, themes, multi-provider/model Settings, Help, About, and complete
-caption-processing workflow**.
+A visual walkthrough of the **AI Video Caption Generator**, with the complete
+application screenshots kept together and **release/version screenshots kept
+separate**.
 
-> **Note:** Existing v1.0.0–v1.4.1 screenshots are preserved. v1.4.1 adds the
-> current-release screenshot and updated verification information.
-
----
-
-## 📑 Screenshot Index
-
-| # | Screenshot | Feature |
-|---:|---|---|
-| 1 | 🚀 [v1.4.1 Release](#-v141-release) | Current release |
-| 2 | 🏠 [Dashboard](#-dashboard) | Dashboard |
-| 3 | 🎬 [Caption Generator](#-caption-generator) | Main workflow |
-| 4 | 📤 [Video Upload](#-video-upload) | Upload |
-| 5 | 💾 [Original Video Saved](#-original-video-saved) | Storage |
-| 6 | 🌐 [Language Detection](#-language-detection) | Original language |
-| 7 | 📝 [Generating Captions](#-generating-captions) | Caption processing |
-| 8 | ✅ [Captions Generated](#-captions-generated-successfully) | Successful generation |
-| 9 | 📄 [Captions](#-captions) | SRT/VTT |
-| 10 | 🔥 [Caption Burning](#-caption-burning) | FFmpeg |
-| 11 | 🎥 [Captioned Video](#-captioned-video) | Final output |
-| 12 | ⚙️ [Settings](#-settings) | Configuration |
-| 13 | ❓ [Help](#-help) | Help |
-| 14 | ℹ️ [About](#-about) | Project information |
+> **Important:** General application screenshots below are not reused as
+> version-release screenshots. Each release section has its own version image
+> filename. Add the corresponding release image to `screenshots/` when available.
 
 ---
 
-# 🚀 v1.4.1 Release
+# 📑 Screenshot Structure
+
+```text
+docs/screenshots/
+│
+├── General Application Screenshots
+│   ├── dashboard.png
+│   ├── initalcaptiongenratorpage.png
+│   ├── aftervideoupload.png
+│   ├── aftervideosaved.png
+│   ├── detectlanguage.png
+│   ├── generatingcaptions.png
+│   ├── captionsgenratedsucessfully.png
+│   ├── captions.png
+│   ├── burningvideo.png
+│   ├── captionedvideo.png
+│   ├── settings.png
+│   ├── help.png
+│   └── about.png
+│
+└── Version Release Screenshots
+    ├── AI-Video-Caption-Generator-pic.png
+    ├── AI-Video-Caption-Generator-v1.1.0-pic.png
+    ├── AI-Video-Caption-Generator-v1.2.0-pic.png
+    ├── AI-Video-Caption-Generator-v1.2.1-pic.png
+    ├── AI-Video-Caption-Generator-v1.3.0-pic.png
+    ├── AI-Video-Caption-Generator-v1.4.0-pic.png
+    └── AI-Video-Caption-Generator-v1.4.1-pic.png
+```
+
+---
+
+# 🚀 Release / Version Screenshots
+
+## 🎬 v1.0.0 — Initial Release
+
+**Core Ollama-based AI Video Caption Generator**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-pic.png"
+       alt="AI Video Caption Generator v1.0.0"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.0.0)
+
+This is the dedicated **v1.0.0 release image**. It is intentionally kept
+separate from the general Dashboard, Caption Generator, Settings, Help and
+About screenshots.
+
+---
+
+## 🚀 v1.1.0 — Multi-Provider AI Translation
+
+**Dedicated release screenshot**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.1.0-pic.png"
+       alt="AI Video Caption Generator v1.1.0"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.1.0)
+
+**Release focus:** multi-provider AI translation and provider configuration.
+
+> Add `AI-Video-Caption-Generator-v1.1.0-pic.png` to
+> `docs/screenshots/` when the dedicated v1.1.0 image is available.
+
+---
+
+## 🚀 v1.2.0 — Timestamped Transcript Saving
+
+**Dedicated release screenshot**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.2.0-pic.png"
+       alt="AI Video Caption Generator v1.2.0"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.2.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.2.0)
+
+**Release focus:** timestamped transcript persistence and caption workflow
+improvements.
+
+> Add `AI-Video-Caption-Generator-v1.2.0-pic.png` to
+> `docs/screenshots/` when the dedicated v1.2.0 image is available.
+
+---
+
+## 🚀 v1.2.1 — Frontend / Application Improvements
+
+**Dedicated release screenshot**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.2.1-pic.png"
+       alt="AI Video Caption Generator v1.2.1"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.2.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.2.1)
+
+**Release focus:** frontend and application improvements.
+
+> Add `AI-Video-Caption-Generator-v1.2.1-pic.png` to
+> `docs/screenshots/` when the dedicated v1.2.1 image is available.
+
+---
+
+## 🚀 v1.3.0 — Multi-Provider + Multi-Model AI Translation
+
+**Dedicated release screenshot**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.3.0-pic.png"
+       alt="AI Video Caption Generator v1.3.0"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.3.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.3.0)
+
+**Release focus:** expanded provider architecture and multi-model AI
+translation.
+
+> Add `AI-Video-Caption-Generator-v1.3.0-pic.png` to
+> `docs/screenshots/` when the dedicated v1.3.0 image is available.
+
+---
+
+## 🚀 v1.4.0 — Custom Application Themes
+
+**Dedicated release screenshot**
+
+<p align="center">
+  <img src="screenshots/AI-Video-Caption-Generator-v1.4.0-pic.png"
+       alt="AI Video Caption Generator v1.4.0"
+       width="900">
+</p>
+
+[![Version](https://img.shields.io/badge/Version-v1.4.0-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.0)
+
+**Release focus:** custom application theme selection.
+
+> Add `AI-Video-Caption-Generator-v1.4.0-pic.png` to
+> `docs/screenshots/` when the dedicated v1.4.0 image is available.
+
+---
+
+## 🚀 v1.4.1 — Current Release
 
 **Tab-Based Frontend + 15 Themes + Multi-Provider / Multi-Model AI**
 
@@ -61,83 +180,33 @@ caption-processing workflow**.
 [![Version](https://img.shields.io/badge/Version-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
 [![Tests](https://img.shields.io/badge/267%20Tests-Passing-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
 [![Pass Rate](https://img.shields.io/badge/Pass%20Rate-100%25-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions)
-[![Status](https://img.shields.io/badge/Status-Tested%20Successfully-brightgreen.svg)](https://github.com/satya66123/AI-Video-Caption-Generator)
 
-## v1.4.1 Key Features
+### v1.4.1 Release Features
 
-- 🖥️ Added `apptab.py` tab-based frontend
-- 🏠 Dashboard remains the default tab
-- 🎬 Caption Generator
-- 📄 Captions
-- ⚙️ Settings
-- ❓ Help
-- ℹ️ About
-- 🎨 **15 application themes**
+- 🖥️ `app.py` + `apptab.py` tab-based frontend
+- 🏠 Dashboard as the default tab
+- 🎨 15 application themes
 - 🌙 5 dark themes
 - ☀️ 10 light themes
 - 🖤 Improved light-theme text visibility
 - 🔽 Improved dropdown/selectbox readability
 - 📝 Improved caption text visibility
 - 🕐 Improved Recent Files readability
-- 🤖 **8 AI providers**
+- 🤖 8 AI providers
 - 🧠 Provider-specific multi-model selection
 - 🌐 Original spoken-language detection
-- 📄 Transcript, SRT and VTT generation
-- 🔥 FFmpeg caption burning
-- 💾 Original video preservation
-- 🛠️ Expanded Help and Troubleshooting
-- ℹ️ Expanded About documentation
-- 📁 Project-folder documentation
-
-### v1.4.1 AI Providers
-
-```text
-Ollama
-OpenAI
-Anthropic
-Gemini
-Mistral
-Groq
-Cohere
-DeepSeek
-```
-
-### v1.4.1 Themes
-
-```text
-🌙 Dark
-🌌 Midnight Blue
-💜 Cosmic Purple
-🌊 Ocean
-🌿 Emerald
-
-☀️ Light
-🌤️ Sky Light
-💜 Lavender Light
-🌿 Mint Light
-🌊 Aqua Light
-🌸 Rose Light
-🍑 Peach Light
-🌼 Amber Light
-🩵 Ice Light
-🌱 Sage Light
-```
-
-### v1.4.1 Frontend Structure
-
-```text
-app.py
-   ↓
-apptab.py
-   ↓
-Tab Navigation
-   ↓
-Existing Agents / Services / Providers
-   ↓
-Existing Caption Workflow
-```
+- ⚙️ Enhanced Settings
+- ❓ Enhanced Help and Troubleshooting
+- ℹ️ Enhanced About
+- 🧪 267 tests passing
 
 ---
+
+# 🖼️ General Application Screenshots
+
+The following screenshots document the application UI itself. They are
+**unified/general screenshots**, not release-version screenshots.
+
 
 # 🏠 Dashboard
 
@@ -328,6 +397,8 @@ folders, technology stack and testing status.
 
 ---
 
+---
+
 # 🔄 Complete Visual Workflow
 
 ```text
@@ -364,8 +435,6 @@ folders, technology stack and testing status.
 [![CI](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml/badge.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/actions/workflows/python-app.yml)
 [![Release](https://img.shields.io/badge/Release-v1.4.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.4.1)
 
-## v1.4.1 Test Result
-
 ```text
 267 collected
 267 passed
@@ -374,196 +443,23 @@ folders, technology stack and testing status.
 19.83 seconds
 ```
 
-Verified environment:
-
-```text
-Python 3.11.4
-PyTest 9.1.1
-Windows
-GitHub Actions CI
-```
-
 ---
 
+# 📜 Release Screenshot Matrix
 
----
-
-# 📜 Screenshots by Release Version
-
-The screenshot documentation preserves the application's visual evolution
-from **v1.0.0 through v1.4.1**. Existing screenshots remain unchanged, while
-the current v1.4.1 release screenshot is shown separately above.
-
-## 🎬 v1.0.0 — Initial Release
-
-**Core Ollama-based caption-generation application**
-
-<p align="center">
-  <img src="screenshots/AI-Video-Caption-Generator-pic.png"
-       alt="AI Video Caption Generator v1.4.1 Release"
-       width="900">
-</p>
-
-
-The original screenshot set documents the initial application workflow:
-
-- 🏠 Dashboard
-- 🎬 Caption Generator
-- 📤 Video Upload
-- 💾 Original Video Saved
-- 🌐 Language Detection
-- 📝 Caption Generation
-- ✅ Captions Generated
-- 📄 SRT/VTT Captions
-- 🔥 FFmpeg Caption Burning
-- 🎥 Captioned Video
-- ⚙️ Settings
-- ❓ Help
-- ℹ️ About
-
-These historical screenshots are retained in the sections below.
-
----
-
-## 🚀 v1.1.0 — Multi-Provider AI Translation
-
-**Release focus:** multi-provider AI translation and provider configuration.
-
-Historical screenshots from the existing application UI remain applicable to
-the v1.1.0 workflow:
-
-<p align="center">
-  <img src="screenshots/dashboard.png" alt="AI Video Caption Generator v1.1.0 Dashboard" width="800">
-</p>
-
-<p align="center">
-  <img src="screenshots/initalcaptiongenratorpage.png" alt="AI Video Caption Generator v1.1.0 Caption Generator" width="800">
-</p>
-
----
-
-## 🚀 v1.2.0 — Timestamped Transcript Saving
-
-**Release focus:** timestamped transcript persistence and caption workflow
-improvements.
-
-<p align="center">
-  <img src="screenshots/detectlanguage.png" alt="AI Video Caption Generator v1.2.0 Language Detection" width="800">
-</p>
-
-<p align="center">
-  <img src="screenshots/captionsgenratedsucessfully.png" alt="AI Video Caption Generator v1.2.0 Captions Generated" width="800">
-</p>
-
----
-
-## 🚀 v1.2.1 — Frontend / Application Improvements
-
-**Release focus:** frontend and application improvements.
-
-<p align="center">
-  <img src="screenshots/aftervideoupload.png" alt="AI Video Caption Generator v1.2.1 Upload" width="800">
-</p>
-
-<p align="center">
-  <img src="screenshots/captions.png" alt="AI Video Caption Generator v1.2.1 Captions" width="800">
-</p>
-
----
-
-## 🚀 v1.3.0 — Multi-Provider + Multi-Model AI Translation
-
-**Release focus:** expanded provider architecture and multi-model AI
-translation.
-
-<p align="center">
-  <img src="screenshots/settings.png" alt="AI Video Caption Generator v1.3.0 Settings" width="800">
-</p>
-
-<p align="center">
-  <img src="screenshots/generatingcaptions.png" alt="AI Video Caption Generator v1.3.0 Caption Processing" width="800">
-</p>
-
----
-
-## 🚀 v1.4.0 — Custom Application Themes
-
-**Release focus:** custom application theme selection.
-
-<p align="center">
-  <img src="screenshots/settings.png" alt="AI Video Caption Generator v1.4.0 Settings and Themes" width="800">
-</p>
-
-<p align="center">
-  <img src="screenshots/dashboard.png" alt="AI Video Caption Generator v1.4.0 Dashboard" width="800">
-</p>
-
----
-
-## 🚀 v1.4.1 — Current Release
-
-**Release focus:** tab-based frontend, 15 themes, multi-provider/model
-Settings, Help/About improvements and UI readability.
-
-<p align="center">
-  <img src="screenshots/AI-Video-Caption-Generator-v1.4.1-pic.png"
-       alt="AI Video Caption Generator v1.4.1 Release"
-       width="900">
-</p>
-
-### v1.4.1 Visual Updates
-
-- 🖥️ `app.py` + `apptab.py` tab-based frontend
-- 🏠 Dashboard as default tab
-- 🎨 15 themes
-- 🌙 5 dark themes
-- ☀️ 10 light themes
-- 🖤 Light-theme text improvements
-- 🔽 Dropdown/selectbox readability improvements
-- 📝 Caption text visibility improvements
-- 🕐 Recent Files readability improvements
-- 🤖 8 AI providers
-- 🧠 Provider-specific model selection
-- ⚙️ Enhanced Settings
-- ❓ Enhanced Help and Troubleshooting
-- ℹ️ Enhanced About
-- 🧪 267 tests passing
-
-> **Screenshot asset note:** The repository's existing screenshots are reused
-> for the historical release sections above because separate version-specific
-> screenshot files for v1.1.0–v1.4.0 were not provided here. The v1.4.1
-> release image is explicitly versioned as `AI-Video-Caption-Generator-v1.4.1-pic.png`.
-
----
-
-# 📊 Version Screenshot Matrix
-
-| Version | Visual Documentation | Main Visual Focus |
+| Version | Dedicated Version Image | General App Screenshots |
 |---|---|---|
-| **v1.0.0** | Existing screenshot set | Core caption workflow |
-| **v1.1.0** | Existing UI screenshots | Multi-provider translation |
-| **v1.2.0** | Existing UI screenshots | Timestamped transcript saving |
-| **v1.2.1** | Existing UI screenshots | Frontend/application improvements |
-| **v1.3.0** | Existing UI screenshots | Multi-provider + multi-model |
-| **v1.4.0** | Existing UI screenshots | Theme selection |
-| **v1.4.1** | Dedicated release image + existing UI screenshots | Tabs + 15 themes + multi-model Settings |
+| **v1.0.0** | `AI-Video-Caption-Generator-pic.png` | Separate |
+| **v1.1.0** | `AI-Video-Caption-Generator-v1.1.0-pic.png` | Separate |
+| **v1.2.0** | `AI-Video-Caption-Generator-v1.2.0-pic.png` | Separate |
+| **v1.2.1** | `AI-Video-Caption-Generator-v1.2.1-pic.png` | Separate |
+| **v1.3.0** | `AI-Video-Caption-Generator-v1.3.0-pic.png` | Separate |
+| **v1.4.0** | `AI-Video-Caption-Generator-v1.4.0-pic.png` | Separate |
+| **v1.4.1** | `AI-Video-Caption-Generator-v1.4.1-pic.png` | Separate |
 
----
-
-# 📜 Release Screenshot History
-
-```text
-v1.0.0  → Initial application screenshots
-v1.1.0  → Caption workflow improvements
-v1.2.0  → Caption / SRT / VTT improvements
-v1.2.1  → Frontend/application improvements
-v1.3.0  → Provider / translation improvements
-v1.4.0  → Themes + multi-provider / multi-model improvements
-v1.4.1  → Tab frontend + 15 themes + Settings / Help / About
-```
-
-Existing screenshots from earlier releases remain preserved in
-`docs/screenshots/`.
+> Only the dedicated v1.0.0 and v1.4.1 release image filenames were present in
+> the supplied documentation. The other release-image references are deliberately
+> kept separate and are not replaced with Dashboard/Settings/etc. screenshots.
 
 ---
 
