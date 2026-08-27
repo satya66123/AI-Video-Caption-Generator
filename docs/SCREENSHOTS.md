@@ -109,25 +109,6 @@ improvements.
 
 ---
 
-## 🚀 v1.2.1 — Frontend / Application Improvements
-
-**Dedicated release screenshot**
-
-<p align="center">
-  <img src="screenshots/AI-Video-Caption-Generator-v1.2.1-pic.png"
-       alt="AI Video Caption Generator v1.2.1"
-       width="900">
-</p>
-
-[![Version](https://img.shields.io/badge/Version-v1.2.1-blue.svg)](https://github.com/satya66123/AI-Video-Caption-Generator/releases/tag/v1.2.1)
-
-**Release focus:** frontend and application improvements.
-
-> Add `AI-Video-Caption-Generator-v1.2.1-pic.png` to
-> `docs/screenshots/` when the dedicated v1.2.1 image is available.
-
----
-
 ## 🚀 v1.3.0 — Multi-Provider + Multi-Model AI Translation
 
 **Dedicated release screenshot**
