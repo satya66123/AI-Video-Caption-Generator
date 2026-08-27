@@ -22,7 +22,7 @@ A visual walkthrough of the **AI Video Caption Generator**, including the curren
 **v1.4.1 frontend, themes, multi-provider/model Settings, Help, About, and complete
 caption-processing workflow**.
 
-> **Note:** Existing v1.0.0–v1.4.0 screenshots are preserved. v1.4.1 adds the
+> **Note:** Existing v1.0.0–v1.4.1 screenshots are preserved. v1.4.1 adds the
 > current-release screenshot and updated verification information.
 
 ---
